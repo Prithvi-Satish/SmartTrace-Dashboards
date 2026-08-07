@@ -1,17 +1,41 @@
-// SmartTrace™ Mock Dataset for Dashboards 2 & 4
+// SmartTrace™ Mock Dataset for Compliance & Digital Twin Machine Management
+
+export const CYCLE_PHASES = [
+  "1. Cycle Created",
+  "2. Operator Login",
+  "3. Door Open",
+  "4. Camera Inspection",
+  "5. Bag Validation",
+  "6. Door Closed",
+  "7. Door Lock",
+  "8. Negative Pressure",
+  "9. Environmental Stabilization",
+  "10. Flash Evaporator Warm-up",
+  "11. VHP Injection",
+  "12. Diffusion",
+  "13. CT Monitoring",
+  "14. Hold",
+  "15. Aeration",
+  "16. Residual H₂O₂ Verification",
+  "17. Unlock",
+  "18. Transfer",
+  "19. Cycle Complete",
+  "20. Logs Archived"
+];
 
 export const INITIAL_MACHINES = [
   {
     id: "ABIOT-SAFE-01",
-    name: "Sterilizer 01 (Central Ward)",
-    location: "Main Waste Processing Room",
+    name: "Sterilizer 01 (Central Sterilization)",
+    location: "Main Waste Processing Room - Basement 1",
     department: "Central Sterilization",
     status: "Running", // Running, Idle, Alarm, Maintenance
-    phase: "VHP Injection",
+    currentPhaseStep: 11, // VHP Injection
+    phase: "11. VHP Injection",
     temperature: 58.4, // °C
     targetTemp: 60.0,
     humidity: 42.1, // % RH
-    pressure: -12.5, // kPa (Negative pressure)
+    pressure: -12.5, // mbar (Negative pressure)
     h2o2: 450, // ppm
     residualH2o2: 0.8, // ppm
     cycleTimeRemaining: "14 min",
@@ -21,14 +45,48 @@ export const INITIAL_MACHINES = [
     currentBagId: "BAG-2026-8841",
     cassetteId: "CASS-H2O2-09",
     activeAlarmsCount: 0,
+    
+    // Detailed Machine Identity & Metadata
+    serialNumber: "SN-E-SAFE-2025-0019A",
+    procurementDate: "2025-03-15",
+    installationDate: "2025-04-02",
+    firmwareVersion: "v3.4.12-secure",
+    softwareVersion: "SmartTrace-Edge-v2.8",
+    hospitalId: "APOLLO-BLR-04",
+    gpsCoordinates: "12.9716° N, 77.5946° E",
+
+    // Component Health (Digital Twin)
+    pumpHealth: 94,
+    fanHealth: 98,
+    motorHealth: 91,
+    doorCycles: 1420,
+    filterLife: 88,
+    catalystLife: 82,
+    calibrationStatus: "VALID (IQ/OQ/PQ)",
+    lastCalibrationDate: "2026-05-10",
+    nextCalibrationDate: "2026-11-10",
+
+    // IoT Connectivity & Cryptographic Security
+    connectivityMode: "eSIM Cellular (LTE-M)",
+    signalStrength: "-74 dBm (Excellent)",
+    hardwareKeyId: "ATECC608A-ECDSA-KEY-0941",
+    latestHashSignature: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+
+    // Maintenance Records
+    maintenanceRecords: [
+      { id: "MNT-2026-05", date: "2026-05-10", type: "Annual Calibration & IQ/OQ/PQ", engineer: "S. Patel (ENG-08)", status: "PASSED", docName: "IQ_OQ_PQ_Certificate_Unit01.pdf" },
+      { id: "MNT-2026-02", date: "2026-02-14", type: "Vaporizer Nozzle Cleaning & Filter Replacement", engineer: "R. Sharma (ENG-02)", status: "PASSED", docName: "Maintenance_Log_2026_02.pdf" },
+      { id: "MNT-2025-11", date: "2025-11-05", type: "Sensor Calibration (Pressure & Temp)", engineer: "S. Patel (ENG-08)", status: "PASSED", docName: "Calibration_Report_Nov2025.pdf" }
+    ]
   },
   {
     id: "ABIOT-SAFE-02",
     name: "Sterilizer 02 (ICU Wing)",
-    location: "Block B - Level 2",
+    location: "Block B - Level 2 (Intensive Care Unit)",
     department: "Intensive Care Unit",
     status: "Alarm",
-    phase: "CT Monitoring",
+    currentPhaseStep: 13, // CT Monitoring
+    phase: "13. CT Monitoring",
     temperature: 64.2,
     targetTemp: 60.0,
     humidity: 38.5,
@@ -43,14 +101,43 @@ export const INITIAL_MACHINES = [
     cassetteId: "CASS-H2O2-04",
     activeAlarmsCount: 1,
     alarmMessage: "Temp Over-range (>62°C Warning)",
+
+    serialNumber: "SN-E-SAFE-2025-0044B",
+    procurementDate: "2025-06-20",
+    installationDate: "2025-07-01",
+    firmwareVersion: "v3.4.12-secure",
+    softwareVersion: "SmartTrace-Edge-v2.8",
+    hospitalId: "APOLLO-BLR-04",
+    gpsCoordinates: "12.9718° N, 77.5948° E",
+
+    pumpHealth: 82,
+    fanHealth: 89,
+    motorHealth: 84,
+    doorCycles: 2150,
+    filterLife: 62,
+    catalystLife: 70,
+    calibrationStatus: "VALID (IQ/OQ/PQ)",
+    lastCalibrationDate: "2026-04-18",
+    nextCalibrationDate: "2026-10-18",
+
+    connectivityMode: "eSIM Cellular (NB-IoT)",
+    signalStrength: "-82 dBm (Good)",
+    hardwareKeyId: "ATECC608A-ECDSA-KEY-1120",
+    latestHashSignature: "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
+
+    maintenanceRecords: [
+      { id: "MNT-2026-04", date: "2026-04-18", type: "Biannual Sensor & Pump Servicing", engineer: "M. Verma (ENG-14)", status: "PASSED", docName: "IQ_OQ_PQ_Certificate_Unit02.pdf" },
+      { id: "MNT-2025-10", date: "2025-10-22", type: "Catalyst Filter Replacement", engineer: "R. Sharma (ENG-02)", status: "PASSED", docName: "Filter_Replacement_Oct2025.pdf" }
+    ]
   },
   {
     id: "ABIOT-SAFE-03",
     name: "Sterilizer 03 (OT Complex)",
-    location: "Operation Theatre 4",
+    location: "Operation Theatre Complex - Wing A",
     department: "Surgical Suite",
     status: "Running",
-    phase: "Aeration",
+    currentPhaseStep: 15, // Aeration
+    phase: "15. Aeration",
     temperature: 45.0,
     targetTemp: 45.0,
     humidity: 50.0,
@@ -64,14 +151,42 @@ export const INITIAL_MACHINES = [
     currentBagId: "BAG-2026-8843",
     cassetteId: "CASS-H2O2-11",
     activeAlarmsCount: 0,
+
+    serialNumber: "SN-E-SAFE-2025-0089C",
+    procurementDate: "2025-08-10",
+    installationDate: "2025-08-25",
+    firmwareVersion: "v3.4.15-secure",
+    softwareVersion: "SmartTrace-Edge-v2.8",
+    hospitalId: "APOLLO-BLR-04",
+    gpsCoordinates: "12.9720° N, 77.5950° E",
+
+    pumpHealth: 96,
+    fanHealth: 95,
+    motorHealth: 97,
+    doorCycles: 980,
+    filterLife: 91,
+    catalystLife: 93,
+    calibrationStatus: "VALID (IQ/OQ/PQ)",
+    lastCalibrationDate: "2026-06-01",
+    nextCalibrationDate: "2026-12-01",
+
+    connectivityMode: "eSIM Cellular (LTE-M)",
+    signalStrength: "-68 dBm (Excellent)",
+    hardwareKeyId: "ATECC608A-ECDSA-KEY-0892",
+    latestHashSignature: "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969",
+
+    maintenanceRecords: [
+      { id: "MNT-2026-06", date: "2026-06-01", type: "Commissioning & IQ/OQ/PQ Validation", engineer: "S. Patel (ENG-08)", status: "PASSED", docName: "Validation_Certificate_OT3.pdf" }
+    ]
   },
   {
     id: "ABIOT-SAFE-04",
-    name: "Sterilizer 04 (Oncology)",
-    location: "Block C - Level 1",
+    name: "Sterilizer 04 (Oncology Unit)",
+    location: "Block C - Level 1 (Oncology)",
     department: "Oncology & Chemo Unit",
     status: "Idle",
-    phase: "Ready for Load",
+    currentPhaseStep: 1, // Cycle Created / Ready
+    phase: "1. Ready for Load",
     temperature: 28.5,
     targetTemp: 0.0,
     humidity: 55.0,
@@ -85,13 +200,41 @@ export const INITIAL_MACHINES = [
     currentBagId: "N/A",
     cassetteId: "CASS-H2O2-09",
     activeAlarmsCount: 0,
+
+    serialNumber: "SN-E-SAFE-2025-0102D",
+    procurementDate: "2025-09-05",
+    installationDate: "2025-09-20",
+    firmwareVersion: "v3.4.12-secure",
+    softwareVersion: "SmartTrace-Edge-v2.8",
+    hospitalId: "APOLLO-BLR-04",
+    gpsCoordinates: "12.9715° N, 77.5942° E",
+
+    pumpHealth: 90,
+    fanHealth: 92,
+    motorHealth: 88,
+    doorCycles: 1100,
+    filterLife: 78,
+    catalystLife: 85,
+    calibrationStatus: "VALID (IQ/OQ/PQ)",
+    lastCalibrationDate: "2026-03-12",
+    nextCalibrationDate: "2026-09-12",
+
+    connectivityMode: "Fallback WPA3 Enterprise Wi-Fi",
+    signalStrength: "-70 dBm (Good)",
+    hardwareKeyId: "ATECC608A-ECDSA-KEY-0711",
+    latestHashSignature: "cb5d7711f77b4f7a080dabe7498e7c8ec251441ea6fd7861925d6b9d77d86355",
+
+    maintenanceRecords: [
+      { id: "MNT-2026-03", date: "2026-03-12", type: "Door Seal & Gasket Inspection", engineer: "R. Sharma (ENG-02)", status: "PASSED", docName: "Seal_Inspection_Log.pdf" }
+    ]
   },
   {
     id: "ABIOT-SAFE-05",
-    name: "Sterilizer 05 (ER Dept)",
-    location: "Emergency Response Ward",
+    name: "Sterilizer 05 (Emergency Ward)",
+    location: "Emergency Response Ward - Ground Floor",
     department: "Trauma & Emergency",
     status: "Maintenance",
+    currentPhaseStep: 1, // Standby / Calibration Due
     phase: "Calibration Scheduled",
     temperature: 24.1,
     targetTemp: 0.0,
@@ -107,6 +250,34 @@ export const INITIAL_MACHINES = [
     cassetteId: "N/A",
     activeAlarmsCount: 1,
     alarmMessage: "Annual Sensor Calibration Overdue (2 days)",
+
+    serialNumber: "SN-E-SAFE-2024-0012Z",
+    procurementDate: "2024-11-01",
+    installationDate: "2024-11-15",
+    firmwareVersion: "v3.2.0-secure",
+    softwareVersion: "SmartTrace-Edge-v2.5",
+    hospitalId: "APOLLO-BLR-04",
+    gpsCoordinates: "12.9712° N, 77.5940° E",
+
+    pumpHealth: 74,
+    fanHealth: 81,
+    motorHealth: 76,
+    doorCycles: 3410,
+    filterLife: 45,
+    catalystLife: 52,
+    calibrationStatus: "OVERDUE (Recalibration Required)",
+    lastCalibrationDate: "2025-08-05",
+    nextCalibrationDate: "2026-08-05",
+
+    connectivityMode: "eSIM Cellular (NB-IoT)",
+    signalStrength: "-79 dBm (Good)",
+    hardwareKeyId: "ATECC608A-ECDSA-KEY-0012",
+    latestHashSignature: "d41d8cd98f00b204e9800998ecf8427e997528e5352c8031d279d479e00eb2d8",
+
+    maintenanceRecords: [
+      { id: "MNT-2025-08", date: "2025-08-05", type: "Annual Calibration & IQ/OQ/PQ", engineer: "S. Patel (ENG-08)", status: "PASSED", docName: "Calibration_Cert_2025.pdf" },
+      { id: "MNT-2025-02", date: "2025-02-19", type: "Vacuum Pump Replacement", engineer: "M. Verma (ENG-14)", status: "PASSED", docName: "Pump_Replacement_Report.pdf" }
+    ]
   }
 ];
 
@@ -121,54 +292,13 @@ export const HOURLY_WASTE_DATA = [
   { time: "20:00", wasteKg: 50, cycles: 4, passRate: 100 },
 ];
 
-export const MACHINE_UTILIZATION_DATA = [
-  { machine: "Unit 01", running: 78, downtime: 5, idle: 17 },
-  { machine: "Unit 02", running: 65, downtime: 15, idle: 20 },
-  { machine: "Unit 03", running: 84, downtime: 2, idle: 14 },
-  { machine: "Unit 04", running: 42, downtime: 8, idle: 50 },
-  { machine: "Unit 05", running: 10, downtime: 75, idle: 15 },
-];
-
-export const ALARMS_FEED = [
-  {
-    id: "ALM-9081",
-    timestamp: "15:38:12",
-    machineId: "ABIOT-SAFE-02",
-    severity: "Warning", // Critical, Warning, Info
-    category: "Temperature",
-    message: "Chamber temperature peaked at 64.2°C during CT Monitoring",
-    status: "Unacknowledged",
-    location: "ICU Wing"
-  },
-  {
-    id: "ALM-9078",
-    timestamp: "14:20:05",
-    machineId: "ABIOT-SAFE-05",
-    severity: "Critical",
-    category: "Calibration",
-    message: "Pressure transducer calibration overdue by 48 hours (CPCB Rule 4)",
-    status: "Acknowledged",
-    location: "Emergency Ward"
-  },
-  {
-    id: "ALM-9065",
-    timestamp: "11:05:44",
-    machineId: "ABIOT-SAFE-01",
-    severity: "Info",
-    category: "Consumable",
-    message: "H₂O₂ Cassette level down to 18%. Replacement recommended.",
-    status: "Resolved",
-    location: "Main Waste Processing"
-  }
-];
-
 export const AUDIT_TRAIL_LOGS = [
   {
     cycleId: "CYC-2026-09411",
     machineId: "ABIOT-SAFE-01",
     barcode: "BMW-98124501",
     bagId: "BAG-2026-8841",
-    bagCategory: "Yellow Bag",
+    bagCategory: "Yellow Bag (Infectious)",
     cassetteId: "CASS-H2O2-09",
     department: "Central Sterilization",
     operator: "Rajesh Kumar",
@@ -177,6 +307,8 @@ export const AUDIT_TRAIL_LOGS = [
     duration: "45 min",
     aiResult: "Bag Intact (99.2% Conf)",
     cpcbStatus: "PASSED",
+    hashChain: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    signatureVerified: true,
     downloadable: true
   },
   {
@@ -184,7 +316,7 @@ export const AUDIT_TRAIL_LOGS = [
     machineId: "ABIOT-SAFE-03",
     barcode: "BMW-98124498",
     bagId: "BAG-2026-8839",
-    bagCategory: "Red Bag",
+    bagCategory: "Red Bag (Contaminated Plastic)",
     cassetteId: "CASS-H2O2-11",
     department: "Surgical Suite",
     operator: "Vikram Singh",
@@ -193,6 +325,8 @@ export const AUDIT_TRAIL_LOGS = [
     duration: "45 min",
     aiResult: "Bag Intact (98.7% Conf)",
     cpcbStatus: "PASSED",
+    hashChain: "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969",
+    signatureVerified: true,
     downloadable: true
   },
   {
@@ -200,7 +334,7 @@ export const AUDIT_TRAIL_LOGS = [
     machineId: "ABIOT-SAFE-02",
     barcode: "BMW-98124477",
     bagId: "BAG-2026-8830",
-    bagCategory: "Yellow Bag",
+    bagCategory: "Yellow Bag (Infectious)",
     cassetteId: "CASS-H2O2-04",
     department: "Intensive Care Unit",
     operator: "Ananya Sharma",
@@ -209,6 +343,8 @@ export const AUDIT_TRAIL_LOGS = [
     duration: "45 min",
     aiResult: "Bag Intact (97.4% Conf)",
     cpcbStatus: "PASSED",
+    hashChain: "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
+    signatureVerified: true,
     downloadable: true
   },
   {
@@ -216,7 +352,7 @@ export const AUDIT_TRAIL_LOGS = [
     machineId: "ABIOT-SAFE-02",
     barcode: "BMW-98124412",
     bagId: "BAG-2026-8815",
-    bagCategory: "Yellow Bag",
+    bagCategory: "Yellow Bag (Infectious)",
     cassetteId: "CASS-H2O2-04",
     department: "Intensive Care Unit",
     operator: "Ananya Sharma",
@@ -225,6 +361,8 @@ export const AUDIT_TRAIL_LOGS = [
     duration: "40 min (Aborted)",
     aiResult: "Overfill Flagged",
     cpcbStatus: "FLAGGED",
+    hashChain: "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+    signatureVerified: true,
     downloadable: true
   },
   {
@@ -232,7 +370,7 @@ export const AUDIT_TRAIL_LOGS = [
     machineId: "ABIOT-SAFE-04",
     barcode: "BMW-98124390",
     bagId: "BAG-2026-8802",
-    bagCategory: "Red Bag",
+    bagCategory: "Red Bag (Contaminated Plastic)",
     cassetteId: "CASS-H2O2-09",
     department: "Oncology & Chemo Unit",
     operator: "Rajesh Kumar",
@@ -241,6 +379,8 @@ export const AUDIT_TRAIL_LOGS = [
     duration: "45 min",
     aiResult: "Bag Intact (99.5% Conf)",
     cpcbStatus: "PASSED",
+    hashChain: "cb5d7711f77b4f7a080dabe7498e7c8ec251441ea6fd7861925d6b9d77d86355",
+    signatureVerified: true,
     downloadable: true
   }
 ];
