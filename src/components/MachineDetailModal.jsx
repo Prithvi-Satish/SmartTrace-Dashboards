@@ -131,6 +131,34 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
         {/* Tab Content Body */}
         <div className="p-4 sm:p-6 space-y-4 max-h-[65vh] overflow-y-auto">
           
+          {/* Active Alarm or Maintenance Warning Banner */}
+          {(machine.status === 'Alarm' || machine.status === 'Maintenance' || machine.alarmMessage) && (
+            <div className={`p-4 rounded-xl border flex items-start space-x-3 shadow-sm ${
+              machine.status === 'Alarm'
+                ? 'bg-rose-50 border-rose-300 text-rose-900 dark:bg-rose-950/40 dark:border-rose-800 dark:text-rose-200'
+                : 'bg-amber-50 border-amber-300 text-amber-900 dark:bg-amber-950/40 dark:border-amber-800 dark:text-amber-200'
+            }`}>
+              <AlertTriangle className={`w-5 h-5 shrink-0 mt-0.5 ${
+                machine.status === 'Alarm' ? 'text-rose-600 dark:text-rose-400 animate-bounce' : 'text-amber-600 dark:text-amber-400'
+              }`} />
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider">
+                  {machine.status === 'Alarm' ? '🚨 Active Safety Alarm Flagged' : '⚠️ Scheduled Maintenance & Calibration Warning'}
+                </h4>
+                <p className="text-xs font-bold mt-0.5">
+                  Issue / Cause: {machine.alarmMessage || (machine.status === 'Alarm' ? 'Chamber Temperature Excursion Peak >62°C' : 'Annual Calibration Due')}
+                </p>
+                <p className="text-[11px] opacity-90 mt-1">
+                  <strong>Basis for Flag:</strong> {
+                    machine.status === 'Alarm'
+                      ? 'The device sensor telemetry detected temperature crossing safety limits (64.2°C observed vs 60.0°C target). VHP cycle automatically paused for operator intervention.'
+                      : 'CPCB Rule 4 requires annual re-calibration of pressure and temperature transducers every 12 months. This machine reached its calibration deadline on 2026-08-05.'
+                  }
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* TAB 1: OVERVIEW & METADATA */}
           {activeTab === 'overview' && (
             <div className="space-y-4">

@@ -7,6 +7,8 @@ export function generateAuditCertificatePDF(cycleData, hospitalName = "Apollo Su
     return;
   }
 
+  const isFlagged = cycleData.cpcbStatus === 'FLAGGED';
+
   const htmlContent = `
     <!DOCTYPE html>
     <html>
@@ -32,7 +34,7 @@ export function generateAuditCertificatePDF(cycleData, hospitalName = "Apollo Su
           text-align: center;
           font-size: 42px;
           font-weight: 900;
-          color: rgba(225, 29, 72, 0.07);
+          color: ${isFlagged ? 'rgba(225, 29, 72, 0.12)' : 'rgba(2, 132, 199, 0.07)'};
           transform: rotate(-30deg);
           pointer-events: none;
           text-transform: uppercase;
@@ -45,7 +47,7 @@ export function generateAuditCertificatePDF(cycleData, hospitalName = "Apollo Su
           display: flex;
           align-items: center;
           justify-content: space-between;
-          border-bottom: 3px solid #0284c7;
+          border-bottom: 3px solid ${isFlagged ? '#e11d48' : '#0284c7'};
           padding-bottom: 15px;
           margin-bottom: 20px;
         }
@@ -53,7 +55,7 @@ export function generateAuditCertificatePDF(cycleData, hospitalName = "Apollo Su
         .logo-title {
           font-size: 22px;
           font-weight: 900;
-          color: #0369a1;
+          color: ${isFlagged ? '#be123c' : '#0369a1'};
           letter-spacing: -0.5px;
         }
 
@@ -64,14 +66,32 @@ export function generateAuditCertificatePDF(cycleData, hospitalName = "Apollo Su
         }
 
         .badge-verified {
-          background-color: #dcfce7;
-          color: #15803d;
-          border: 1px solid #86efac;
+          background-color: ${isFlagged ? '#ffe4e6' : '#dcfce7'};
+          color: ${isFlagged ? '#9f1239' : '#15803d'};
+          border: 1px solid ${isFlagged ? '#f43f5e' : '#86efac'};
           padding: 6px 12px;
           border-radius: 6px;
           font-size: 11px;
           font-weight: 700;
           display: inline-block;
+        }
+
+        .flag-box {
+          background-color: #fff1f2;
+          border: 2px solid #f43f5e;
+          padding: 14px;
+          border-radius: 8px;
+          margin-bottom: 20px;
+          color: #881337;
+        }
+
+        .flag-title {
+          font-size: 13px;
+          font-weight: 900;
+          color: #be123c;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 6px;
         }
 
         .section-title {
@@ -148,9 +168,7 @@ export function generateAuditCertificatePDF(cycleData, hospitalName = "Apollo Su
     <body>
       <!-- Watermark -->
       <div class="watermark">
-        OFFICIAL MEDICAL BOARD AUDIT RECORD<br/>
-        UNCOMPROMISED DATA INTEGRITY<br/>
-        SHA-256 HASH VERIFIED
+        ${isFlagged ? 'FLAGGED BREACH DETECTED<br/>CPCB AUDIT ALERT<br/>REQUIRES INSPECTION' : 'OFFICIAL MEDICAL BOARD AUDIT RECORD<br/>UNCOMPROMISED DATA INTEGRITY<br/>SHA-256 HASH VERIFIED'}
       </div>
 
       <!-- Header -->
@@ -160,9 +178,25 @@ export function generateAuditCertificatePDF(cycleData, hospitalName = "Apollo Su
           <div class="subtitle">Central Pollution Control Board (CPCB) Biomedical Waste Rule 2016 Compliant</div>
         </div>
         <div class="badge-verified">
-          ✓ CPCB PASSED & SIGNED
+          ${isFlagged ? '🚨 FLAGGED / CPCB RULE BREACH' : '✓ CPCB PASSED & SIGNED'}
         </div>
       </div>
+
+      <!-- FLAGGED REASON BANNER IF FLAGGED -->
+      ${isFlagged ? `
+        <div class="flag-box">
+          <div class="flag-title">🚨 FLAGGED BREACH DETAILS & AUDIT CAUSE</div>
+          <div style="font-size: 12px; font-weight: 700; margin-bottom: 4px;">
+            Issue / Cause: ${cycleData.flagReason || 'AI Camera Overfill Flagged (>85% Capacity)'}
+          </div>
+          <div style="font-size: 11px; margin-bottom: 4px;">
+            <strong>Telemetry Breach:</strong> ${cycleData.telemetryBreach || 'Bag Fill: 94% (Max allowed <85%)'}
+          </div>
+          <div style="font-size: 11px;">
+            <strong>Corrective Action Taken:</strong> ${cycleData.correctiveAction || 'Safety lock engaged. Repacked by operator.'}
+          </div>
+        </div>
+      ` : ''}
 
       <!-- Facility & Machine Identity -->
       <div class="section-title">Facility & Device Identification</div>
@@ -202,7 +236,7 @@ export function generateAuditCertificatePDF(cycleData, hospitalName = "Apollo Su
         </div>
         <div class="info-card">
           <div class="label">AI Bag Integrity Analysis</div>
-          <div class="value">${cycleData.aiResult}</div>
+          <div class="value" style="color: ${isFlagged ? '#e11d48' : '#0f172a'};">${cycleData.aiResult}</div>
         </div>
       </div>
 

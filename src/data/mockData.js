@@ -359,8 +359,11 @@ export const AUDIT_TRAIL_LOGS = [
     startTime: "2026-08-06 10:30",
     endTime: "2026-08-06 11:10",
     duration: "40 min (Aborted)",
-    aiResult: "Overfill Flagged",
+    aiResult: "Overfill Flagged (94% Fill)",
     cpcbStatus: "FLAGGED",
+    flagReason: "AI Camera detected waste bag exceeded maximum 85% volumetric safety threshold (Actual Fill: 94%). Cycle aborted automatically to prevent bag rupture.",
+    telemetryBreach: "Bag Fill Level: 94% (Threshold: <85%) • Temp Excursion: 64.2°C Peak",
+    correctiveAction: "Safety lock engaged. Waste repacked into 2 CPCB-compliant bags by Operator Ananya Sharma.",
     hashChain: "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
     signatureVerified: true,
     downloadable: true

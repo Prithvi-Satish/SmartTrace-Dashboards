@@ -380,13 +380,18 @@ export default function ComplianceDashboard({ isLight }) {
                     </span>
                   </td>
                   <td className="py-3 px-3">
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold block w-max ${
                       log.cpcbStatus === 'PASSED'
                         ? 'bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30'
                         : 'bg-rose-100 text-rose-800 border border-rose-300 dark:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/30 animate-pulse'
                     }`}>
                       {log.cpcbStatus}
                     </span>
+                    {log.cpcbStatus === 'FLAGGED' && (
+                      <span className="text-[9px] text-rose-600 dark:text-rose-400 font-bold block mt-0.5 max-w-[120px] leading-tight">
+                        {log.aiResult}
+                      </span>
+                    )}
                   </td>
                   <td className="py-3 px-3 text-right flex items-center justify-end space-x-1.5">
                     <button
@@ -453,12 +458,35 @@ export default function ComplianceDashboard({ isLight }) {
                   <p className="text-slate-600 text-[11px]">Central Pollution Control Board • Bio-Medical Waste Rules 2016</p>
                 </div>
                 <div className="text-right">
-                  <span className="font-mono text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">
-                    VERIFIED COMPLIANT
+                  <span className={`font-mono text-xs font-bold px-2 py-0.5 rounded border ${
+                    selectedReportLog?.cpcbStatus === 'FLAGGED'
+                      ? 'text-rose-700 bg-rose-100 border-rose-300'
+                      : 'text-emerald-700 bg-emerald-100 border-emerald-300'
+                  }`}>
+                    {selectedReportLog?.cpcbStatus === 'FLAGGED' ? '🚨 FLAGGED BREACH' : '✓ VERIFIED COMPLIANT'}
                   </span>
                   <p className="text-[10px] text-slate-500 mt-1">License: {COMPLIANCE_METRICS.cpcbLicenseNo}</p>
                 </div>
               </div>
+
+              {/* FLAGGED BREACH DETAILS BANNER IF FLAGGED */}
+              {selectedReportLog?.cpcbStatus === 'FLAGGED' && (
+                <div className="p-3.5 rounded-lg border-2 border-rose-400 bg-rose-50 text-rose-900 space-y-1">
+                  <div className="font-extrabold text-xs text-rose-700 uppercase tracking-wider flex items-center gap-1">
+                    <ShieldAlert className="w-4 h-4 text-rose-600" />
+                    <span>CPCB AUDIT FLAGGED BREACH DETAILS</span>
+                  </div>
+                  <p className="text-xs font-bold">
+                    Reason / Cause: {selectedReportLog.flagReason || 'AI Camera Overfill Flagged (>85% Capacity)'}
+                  </p>
+                  <p className="text-[11px] text-rose-800">
+                    <strong>Telemetry Breach:</strong> {selectedReportLog.telemetryBreach || 'Bag Fill Level: 94% (Max allowed threshold: 85%)'}
+                  </p>
+                  <p className="text-[11px] text-rose-800">
+                    <strong>Corrective Action Taken:</strong> {selectedReportLog.correctiveAction || 'Safety lock engaged. Repacked by operator.'}
+                  </p>
+                </div>
+              )}
 
               <div className="grid grid-cols-2 gap-4 bg-slate-50 p-3 rounded border border-slate-200 text-[11px]">
                 <div>
@@ -476,6 +504,14 @@ export default function ComplianceDashboard({ isLight }) {
                 <div>
                   <span className="text-slate-500 block">Waste Category:</span>
                   <strong className="text-slate-900">{selectedReportLog?.bagCategory}</strong>
+                </div>
+                <div>
+                  <span className="text-slate-500 block">Machine Unit:</span>
+                  <strong className="text-slate-900">{selectedReportLog?.machineId}</strong>
+                </div>
+                <div>
+                  <span className="text-slate-500 block">Operator Name:</span>
+                  <strong className="text-slate-900">{selectedReportLog?.operator}</strong>
                 </div>
               </div>
 
