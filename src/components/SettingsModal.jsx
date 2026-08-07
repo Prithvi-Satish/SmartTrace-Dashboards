@@ -221,11 +221,27 @@ export default function SettingsModal({ onClose, isLight }) {
           {activeTab === 'iot' && (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="text-xs font-bold">Active eSIM Cellular IoT Mesh Status</h4>
+                <h4 className="text-xs font-bold flex items-center gap-1.5">
+                  <Radio className="w-4 h-4 text-cyan-500 animate-pulse" />
+                  Active eSIM Cellular IoT Mesh Status & Key Manager
+                </h4>
                 <span className="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
                   5/5 Edge Units Connected
                 </span>
               </div>
+
+              {/* Admin Access Restriction Notice for Non-Admins */}
+              {currentUser?.role !== 'admin' && (
+                <div className="p-3.5 rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-xs flex items-start space-x-2.5">
+                  <Lock className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-bold block">🔒 Restricted Admin Capability</span>
+                    <p className="text-[11px] opacity-90 mt-0.5">
+                      You are logged in as <strong>{currentUser?.name} ({currentUser?.roleLabel})</strong>. Configuring eSIM cellular routing and updating ATECC608A hardware keys requires <strong>Admin</strong> privileges. Keys below are masked.
+                    </p>
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-2">
                 {[
@@ -234,27 +250,52 @@ export default function SettingsModal({ onClose, isLight }) {
                   { unit: 'ABIOT-SAFE-03', type: 'eSIM Cellular (LTE-M)', key: 'ATECC608A-ECDSA-KEY-0892', rssi: '-68 dBm' },
                   { unit: 'ABIOT-SAFE-04', type: 'Fallback WPA3 Wi-Fi', key: 'ATECC608A-ECDSA-KEY-0711', rssi: '-70 dBm' },
                   { unit: 'ABIOT-SAFE-05', type: 'eSIM Cellular (NB-IoT)', key: 'ATECC608A-ECDSA-KEY-0012', rssi: '-79 dBm' }
-                ].map((iot) => (
-                  <div
-                    key={iot.unit}
-                    className={`p-3 rounded-xl border flex items-center justify-between text-xs ${
-                      isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <Radio className="w-4 h-4 text-cyan-500 animate-pulse" />
-                      <div>
-                        <span className="font-bold">{iot.unit}</span>
-                        <span className="text-[10px] text-slate-500 block">{iot.type}</span>
+                ].map((iot) => {
+                  const isAdmin = currentUser?.role === 'admin';
+                  return (
+                    <div
+                      key={iot.unit}
+                      className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${
+                        isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <Radio className="w-4 h-4 text-cyan-500 shrink-0" />
+                        <div>
+                          <div className="flex items-center space-x-2">
+                            <span className="font-bold">{iot.unit}</span>
+                            <span className="text-[10px] text-emerald-500 font-semibold">{iot.rssi}</span>
+                          </div>
+                          <span className="text-[10px] text-slate-500 block">{iot.type}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-2 justify-between sm:justify-end">
+                        <div className="text-right">
+                          <span className={`font-mono text-[10px] font-bold block ${
+                            isAdmin ? 'text-purple-600 dark:text-purple-400' : 'text-slate-400 dark:text-slate-500'
+                          }`}>
+                            {isAdmin ? iot.key : 'ATECC608A-••••-••••-MASKED'}
+                          </span>
+                        </div>
+
+                        {isAdmin ? (
+                          <button
+                            onClick={() => alert(`Reconfiguring hardware ECDSA Key & eSIM tunnel for ${iot.unit}...`)}
+                            className="px-2.5 py-1 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-[10px] font-bold transition-all shadow-sm shrink-0"
+                          >
+                            Reconfigure Key
+                          </button>
+                        ) : (
+                          <span className="px-2 py-0.5 bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded text-[9px] font-bold shrink-0 flex items-center gap-1">
+                            <Lock className="w-3 h-3" />
+                            Admin Only
+                          </span>
+                        )}
                       </div>
                     </div>
-
-                    <div className="text-right">
-                      <span className="font-mono text-[10px] text-purple-400 font-bold block">{iot.key}</span>
-                      <span className="text-[10px] text-emerald-500 font-semibold">{iot.rssi}</span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
