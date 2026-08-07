@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 import {
   X,
   Cpu,
@@ -17,11 +18,14 @@ import {
   Thermometer,
   Layers,
   Key,
-  Radio
+  Radio,
+  Lock
 } from 'lucide-react';
 import { CYCLE_PHASES } from '../data/mockData';
 
 export default function MachineDetailModal({ machine, onClose, isLight }) {
+  const { hasPermission, currentUser } = useAuth();
+  const canVerifyHashes = hasPermission('verify_hashes');
   const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'phases', 'health', 'maintenance'
 
   if (!machine) return null;
@@ -220,16 +224,29 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                   </div>
                   <div>
                     <span className="text-[10px] text-slate-500 block">Hardware Key ID (ECDSA)</span>
-                    <span className="font-mono text-[11px] text-purple-600 dark:text-purple-400 font-bold">{machine.hardwareKeyId}</span>
+                    <span className={`font-mono text-[11px] font-bold ${
+                      canVerifyHashes ? 'text-purple-600 dark:text-purple-400' : 'text-slate-400 dark:text-slate-500'
+                    }`}>
+                      {canVerifyHashes ? machine.hardwareKeyId : 'ATECC608A-••••-RESTRICTED'}
+                    </span>
                   </div>
                 </div>
 
                 <div className="mt-3 pt-2 border-t border-cyan-200 dark:border-cyan-900/60 flex items-center justify-between">
-                  <span className="text-[10px] text-slate-500 font-mono truncate">SHA-256 Hash: {machine.latestHashSignature}</span>
-                  <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1 shrink-0">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>Hardware Signed</span>
+                  <span className="text-[10px] text-slate-500 font-mono truncate">
+                    {canVerifyHashes ? `SHA-256 Hash: ${machine.latestHashSignature}` : 'SHA-256 Hash: 🔒 Auditor Verification Required'}
                   </span>
+                  {canVerifyHashes ? (
+                    <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1 shrink-0">
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      <span>Hardware Signed</span>
+                    </span>
+                  ) : (
+                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 flex items-center gap-1 shrink-0">
+                      <Lock className="w-3 h-3 text-amber-500" />
+                      <span>Staff View</span>
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

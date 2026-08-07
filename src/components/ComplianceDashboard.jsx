@@ -61,6 +61,7 @@ export default function ComplianceDashboard({ isLight }) {
   });
 
   const canDownload = hasPermission('download_reports');
+  const canVerifyHashes = hasPermission('verify_hashes');
 
   const handleExportPDF = (log) => {
     if (!canDownload) {
@@ -390,11 +391,18 @@ export default function ComplianceDashboard({ isLight }) {
                   </td>
                   <td className={`py-3 px-3 ${isLight ? 'text-slate-700' : 'text-slate-300'}`}>{log.department}</td>
                   <td className={`py-3 px-3 ${isLight ? 'text-slate-700' : 'text-slate-300'}`}>{log.operator}</td>
-                  <td className="py-3 px-3 font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
-                    <span className="flex items-center space-x-1">
-                      <ShieldCheck className="w-3.5 h-3.5" />
-                      <span>{log.hashChain ? log.hashChain.substring(0, 12) + '...' : 'VERIFIED'}</span>
-                    </span>
+                  <td className="py-3 px-3 font-mono text-[10px]">
+                    {canVerifyHashes ? (
+                      <span className="flex items-center space-x-1 text-emerald-600 dark:text-emerald-400 font-bold">
+                        <ShieldCheck className="w-3.5 h-3.5" />
+                        <span>{log.hashChain ? log.hashChain.substring(0, 12) + '...' : 'VERIFIED'}</span>
+                      </span>
+                    ) : (
+                      <span className="flex items-center space-x-1 text-slate-400 dark:text-slate-500 font-semibold" title="🔒 Hash Verification Requires Auditor Privileges">
+                        <Lock className="w-3 h-3 text-amber-500" />
+                        <span>SHA256-••••-RESTRICTED</span>
+                      </span>
+                    )}
                   </td>
                   <td className="py-3 px-3">
                     <span className={`px-2 py-0.5 rounded text-[10px] font-bold block w-max ${
@@ -542,10 +550,17 @@ export default function ComplianceDashboard({ isLight }) {
                 </div>
               </div>
 
-              <div className="bg-slate-900 text-cyan-300 p-3 rounded font-mono text-[10px] space-y-1">
-                <div>SHA-256 HASH: {selectedReportLog?.hashChain}</div>
-                <div className="text-emerald-400">ATECC608A HARDWARE SIGNATURE: VERIFIED UNTAMPERED</div>
-              </div>
+              {canVerifyHashes ? (
+                <div className="bg-slate-900 text-cyan-300 p-3 rounded font-mono text-[10px] space-y-1">
+                  <div>SHA-256 HASH: {selectedReportLog?.hashChain}</div>
+                  <div className="text-emerald-400">ATECC608A HARDWARE SIGNATURE: VERIFIED UNTAMPERED</div>
+                </div>
+              ) : (
+                <div className="bg-slate-100 border border-slate-300 text-slate-700 p-3 rounded font-sans text-[11px] flex items-center space-x-2">
+                  <Lock className="w-4 h-4 text-amber-500 shrink-0" />
+                  <span><strong>🔒 Restricted Data:</strong> SHA-256 Cryptographic Hash verification requires Auditor or Admin privileges (Logged in as {currentUser?.name} - {currentUser?.roleLabel}).</span>
+                </div>
+              )}
             </div>
 
             <div className={`px-5 py-3 border-t flex justify-end space-x-3 ${
