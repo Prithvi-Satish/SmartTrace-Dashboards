@@ -60,7 +60,13 @@ export default function ComplianceDashboard({ isLight }) {
     return matchesSearch && matchesCategory && matchesStatus;
   });
 
+  const canDownload = hasPermission('download_reports');
+
   const handleExportPDF = (log) => {
+    if (!canDownload) {
+      alert(`🔒 Access Restricted: ${currentUser?.name} (${currentUser?.roleLabel}) does not have permission to export official CPCB Audit Certificates. Requires Auditor or Admin privileges.`);
+      return;
+    }
     const targetLog = log || filteredLogs[0];
     generateAuditCertificatePDF(targetLog, COMPLIANCE_METRICS.hospitalName);
   };
@@ -100,13 +106,24 @@ export default function ComplianceDashboard({ isLight }) {
           </p>
         </div>
 
-        <button
-          onClick={() => handleExportPDF(null)}
-          className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center space-x-2 transition-all shadow-md shadow-emerald-600/20 self-start sm:self-center shrink-0"
-        >
-          <Download className="w-4 h-4" />
-          <span>Export Watermarked Audit Certificate</span>
-        </button>
+        {canDownload ? (
+          <button
+            onClick={() => handleExportPDF(null)}
+            className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center space-x-2 transition-all shadow-md shadow-emerald-600/20 self-start sm:self-center shrink-0"
+          >
+            <Download className="w-4 h-4" />
+            <span>Export Watermarked Audit Certificate</span>
+          </button>
+        ) : (
+          <button
+            onClick={() => handleExportPDF(null)}
+            className="bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-xs font-bold px-4 py-2.5 rounded-xl flex items-center space-x-2 border border-slate-300 dark:border-slate-700 cursor-not-allowed self-start sm:self-center shrink-0"
+            title="🔒 Access Restricted: Requires Auditor or Admin Privileges"
+          >
+            <Lock className="w-4 h-4 text-amber-500" />
+            <span>🔒 Export Certificate (Auditor Only)</span>
+          </button>
+        )}
       </div>
 
       {/* Compliance Scorecard Grid */}
@@ -406,13 +423,23 @@ export default function ComplianceDashboard({ isLight }) {
                       <Eye className="w-3.5 h-3.5" />
                     </button>
 
-                    <button
-                      onClick={() => handleExportPDF(log)}
-                      className="p-1.5 rounded border bg-emerald-600 text-white hover:bg-emerald-500 border-emerald-600 transition-colors shadow-sm"
-                      title="Download PDF Certificate"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                    </button>
+                    {canDownload ? (
+                      <button
+                        onClick={() => handleExportPDF(log)}
+                        className="p-1.5 rounded border bg-emerald-600 text-white hover:bg-emerald-500 border-emerald-600 transition-colors shadow-sm"
+                        title="Download PDF Certificate"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleExportPDF(log)}
+                        className="p-1.5 rounded border bg-slate-200 text-slate-400 dark:bg-slate-800 dark:text-slate-500 border-slate-300 dark:border-slate-700 cursor-not-allowed"
+                        title="🔒 Access Restricted: Requires Auditor or Admin Privileges"
+                      >
+                        <Lock className="w-3.5 h-3.5 text-amber-500" />
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -530,16 +557,27 @@ export default function ComplianceDashboard({ isLight }) {
               >
                 Close
               </button>
-              <button
-                onClick={() => {
-                  generateAuditCertificatePDF(selectedReportLog, COMPLIANCE_METRICS.hospitalName);
-                  setShowReportModal(false);
-                }}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-1.5 rounded-lg flex items-center space-x-1.5 shadow-sm"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>Generate Watermarked PDF</span>
-              </button>
+              {canDownload ? (
+                <button
+                  onClick={() => {
+                    generateAuditCertificatePDF(selectedReportLog, COMPLIANCE_METRICS.hospitalName);
+                    setShowReportModal(false);
+                  }}
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-1.5 rounded-lg flex items-center space-x-1.5 shadow-sm"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Generate Watermarked PDF</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleExportPDF(selectedReportLog)}
+                  className="bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-xs font-semibold px-4 py-1.5 rounded-lg flex items-center space-x-1.5 border border-slate-300 dark:border-slate-700 cursor-not-allowed"
+                  title="🔒 Access Restricted: Requires Auditor or Admin Privileges"
+                >
+                  <Lock className="w-3.5 h-3.5 text-amber-500" />
+                  <span>🔒 Download PDF (Auditor Only)</span>
+                </button>
+              )}
             </div>
           </div>
         </div>
