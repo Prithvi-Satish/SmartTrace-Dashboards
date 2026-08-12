@@ -27,6 +27,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
   const { hasPermission, currentUser } = useAuth();
   const canVerifyHashes = hasPermission('verify_hashes');
   const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'phases', 'health', 'maintenance'
+  const [utilizationRange, setUtilizationRange] = useState('7d');
 
   if (!machine) return null;
 
@@ -202,6 +203,133 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                   <span className="text-xs font-mono">{machine.gpsCoordinates}</span>
                 </div>
               </div>
+
+              {/* Machine Utilization Card */}
+              {machine.utilizationByRange && (() => {
+                const rangeOptions = [
+                  { value: '24h',  label: 'Last 24 Hours' },
+                  { value: '7d',   label: 'Last 7 Days' },
+                  { value: '1m',   label: 'Last Month' },
+                  { value: '3m',   label: 'Last 3 Months' },
+                  { value: '6m',   label: 'Last 6 Months' },
+                  { value: '1y',   label: 'Last 1 Year' },
+                  { value: 'all',  label: 'Since Installation' },
+                ];
+                const rd = machine.utilizationByRange[utilizationRange];
+                const maxVal = Math.max(...rd.data.map(d => d.hoursActive), 1);
+                const totalCycles = rd.data.reduce((s, d) => s + d.cyclesRun, 0);
+
+                return (
+                  <div className={`p-4 rounded-xl border shadow-sm ${
+                    isLight ? 'bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200' : 'bg-gradient-to-r from-emerald-950/20 to-slate-900 border-emerald-800/40'
+                  }`}>
+
+                    {/* Card Header with Dropdown */}
+                    <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+                      <div className="flex items-center space-x-2">
+                        <Zap className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                        <h4 className="text-xs font-bold">Machine Utilization</h4>
+                      </div>
+                      <select
+                        id="utilization-range-select"
+                        value={utilizationRange}
+                        onChange={(e) => setUtilizationRange(e.target.value)}
+                        className={`text-[11px] font-bold px-2.5 py-1 rounded-lg border cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors ${
+                          isLight
+                            ? 'bg-white border-emerald-300 text-emerald-800 hover:border-emerald-500'
+                            : 'bg-[#090d16] border-emerald-700 text-emerald-300 hover:border-emerald-500'
+                        }`}
+                      >
+                        {rangeOptions.map(opt => (
+                          <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Key Stats Row */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+                      <div className={`p-2.5 rounded-lg border text-center ${
+                        isLight ? 'bg-white border-emerald-200' : 'bg-[#090d16] border-slate-800'
+                      }`}>
+                        <span className="text-[10px] text-slate-500 block">Total Operating Hours</span>
+                        <span className="text-sm font-black text-emerald-600 dark:text-emerald-400">{machine.totalOperatingHours?.toLocaleString()}h</span>
+                        <span className="text-[9px] text-slate-400">Since Installation</span>
+                      </div>
+                      <div className={`p-2.5 rounded-lg border text-center ${
+                        isLight ? 'bg-white border-emerald-200' : 'bg-[#090d16] border-slate-800'
+                      }`}>
+                        <span className="text-[10px] text-slate-500 block">Active Hours</span>
+                        <span className="text-sm font-black text-cyan-600 dark:text-cyan-400">{rd.activeHours.toLocaleString()}h</span>
+                        <span className="text-[9px] text-slate-400">{rd.periodLabel}</span>
+                      </div>
+                      <div className={`p-2.5 rounded-lg border text-center ${
+                        isLight ? 'bg-white border-emerald-200' : 'bg-[#090d16] border-slate-800'
+                      }`}>
+                        <span className="text-[10px] text-slate-500 block">Uptime Rate</span>
+                        <span className="text-sm font-black text-emerald-600 dark:text-emerald-400">{rd.uptimePct}%</span>
+                        <span className="text-[9px] text-slate-400">{rd.label}</span>
+                      </div>
+                      <div className={`p-2.5 rounded-lg border text-center ${
+                        isLight ? 'bg-white border-emerald-200' : 'bg-[#090d16] border-slate-800'
+                      }`}>
+                        <span className="text-[10px] text-slate-500 block">Cycles Completed</span>
+                        <span className="text-sm font-black text-purple-600 dark:text-purple-400">{totalCycles.toLocaleString()}</span>
+                        <span className="text-[9px] text-slate-400">@ {rd.uptimePct}% Uptime</span>
+                      </div>
+                    </div>
+
+                    {/* Bar Chart — 3 separate rows to prevent text/bar overlap */}
+                    <div>
+                      <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider block mb-2">
+                        Active Hours &amp; Cycles — {rd.chartSubLabel}
+                      </span>
+
+                      {/* Row 1: Value labels (aligned to bottom of row) */}
+                      <div className="flex gap-1 mb-1">
+                        {rd.data.map((d) => (
+                          <div key={d.label} className="flex-1 min-w-0 text-center">
+                            <span className="text-[9px] text-slate-500 font-mono truncate block leading-tight">
+                              {d.hoursActive}h
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Row 2: Bars only — fixed height, items-end so bars grow upward */}
+                      <div className="flex items-end gap-1" style={{ height: '56px' }}>
+                        {rd.data.map((d) => (
+                          <div
+                            key={d.label}
+                            className="flex-1 min-w-0 rounded-t-sm bg-emerald-500/70 dark:bg-emerald-500/60 hover:bg-emerald-500 transition-all cursor-pointer"
+                            style={{ height: `${(d.hoursActive / maxVal) * 56}px` }}
+                            title={`${d.label}: ${d.hoursActive}h active, ${d.cyclesRun} cycles`}
+                          />
+                        ))}
+                      </div>
+
+                      {/* Row 3: Day labels + Cycle counts */}
+                      <div className="flex gap-1 mt-1.5">
+                        {rd.data.map((d) => (
+                          <div key={d.label} className="flex-1 min-w-0 text-center">
+                            <span className="text-[9px] text-slate-500 truncate block leading-tight">{d.label}</span>
+                            <span className="text-[9px] font-bold text-purple-600 dark:text-purple-400 block leading-tight">{d.cyclesRun}c</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Legend */}
+                      <div className="flex items-center gap-3 mt-2.5">
+                        <span className="flex items-center gap-1 text-[9px] text-slate-500">
+                          <span className="inline-block w-2.5 h-2.5 rounded-sm bg-emerald-500/70"></span> Active Hours
+                        </span>
+                        <span className="flex items-center gap-1 text-[9px] text-slate-500">
+                          <span className="inline-block w-2.5 h-2.5 rounded-sm bg-purple-500/80"></span> Cycles (c)
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
 
               {/* IoT Connectivity & Security Card */}
               <div className={`p-4 rounded-xl border shadow-sm ${
@@ -425,6 +553,89 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                   </div>
                 ))}
               </div>
+
+              {/* Downtime Section */}
+              {machine.downtimeRecords && machine.downtimeRecords.length > 0 && (
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                    <AlertTriangle className="w-4 h-4 text-amber-500" />
+                    <h4 className="text-xs font-bold">Downtime Log</h4>
+                    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                      isLight ? 'bg-amber-100 text-amber-700' : 'bg-amber-500/20 text-amber-300'
+                    }`}>
+                      {machine.downtimeRecords.length} Events Recorded
+                    </span>
+                  </div>
+
+                  {/* Summary Strip */}
+                  <div className={`p-3 rounded-xl border flex flex-wrap gap-4 text-xs ${
+                    isLight ? 'bg-amber-50 border-amber-200' : 'bg-amber-950/20 border-amber-800/40'
+                  }`}>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block">Planned Downtime</span>
+                      <span className="font-bold text-amber-600 dark:text-amber-400">
+                        {machine.downtimeRecords.filter(d => d.type === 'Planned').length} events
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block">Unplanned Downtime</span>
+                      <span className="font-bold text-rose-600 dark:text-rose-400">
+                        {machine.downtimeRecords.filter(d => d.type === 'Unplanned').length} events
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block">Longest Outage</span>
+                      <span className="font-bold">
+                        {machine.downtimeRecords.reduce((max, d) => {
+                          const hrs = parseFloat(d.duration);
+                          return hrs > parseFloat(max) ? d.duration : max;
+                        }, '0h')}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    {machine.downtimeRecords.map((record) => (
+                      <div
+                        key={record.id}
+                        className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${
+                          isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
+                        }`}
+                      >
+                        <div className="flex items-start space-x-3">
+                          <div className={`p-2 rounded-lg shrink-0 ${
+                            record.type === 'Unplanned'
+                              ? 'bg-rose-500/10 text-rose-500 dark:text-rose-400'
+                              : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
+                          }`}>
+                            <Clock className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <div className="flex items-center space-x-2 flex-wrap gap-y-1">
+                              <span className="font-bold">{record.reason}</span>
+                              <span className="text-[10px] font-mono text-slate-500">({record.id})</span>
+                            </div>
+                            <p className={`text-[11px] mt-0.5 ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                              Started: {record.startTime} &nbsp;•&nbsp; Resolved by: {record.resolvedBy}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center space-x-2 shrink-0">
+                          <span className="text-xs font-black font-mono">{record.duration}</span>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                            record.type === 'Unplanned'
+                              ? 'bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300'
+                              : 'bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300'
+                          }`}>
+                            {record.type}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

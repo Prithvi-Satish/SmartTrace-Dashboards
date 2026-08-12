@@ -72,6 +72,112 @@ export const INITIAL_MACHINES = [
     hardwareKeyId: "ATECC608A-ECDSA-KEY-0941",
     latestHashSignature: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
 
+    // Machine Utilization Data (by time range)
+    totalOperatingHours: 4218,
+    utilizationByRange: {
+      '24h': {
+        label: 'Last 24 Hours', periodLabel: 'Today', chartSubLabel: 'Hourly (2-hr slots)',
+        activeHours: 14.3, uptimePct: 88,
+        data: [
+          { label: '02:00', hoursActive: 0.8, cyclesRun: 1 },
+          { label: '04:00', hoursActive: 0.6, cyclesRun: 1 },
+          { label: '06:00', hoursActive: 1.2, cyclesRun: 2 },
+          { label: '08:00', hoursActive: 1.8, cyclesRun: 3 },
+          { label: '10:00', hoursActive: 1.9, cyclesRun: 3 },
+          { label: '12:00', hoursActive: 1.5, cyclesRun: 2 },
+          { label: '14:00', hoursActive: 1.8, cyclesRun: 3 },
+          { label: '16:00', hoursActive: 1.7, cyclesRun: 3 },
+          { label: '18:00', hoursActive: 1.2, cyclesRun: 2 },
+          { label: '20:00', hoursActive: 0.9, cyclesRun: 1 },
+          { label: '22:00', hoursActive: 0.5, cyclesRun: 1 },
+          { label: '00:00', hoursActive: 0.4, cyclesRun: 0 },
+        ]
+      },
+      '7d': {
+        label: 'Last 7 Days', periodLabel: 'This Week', chartSubLabel: 'Daily',
+        activeHours: 103.5, uptimePct: 86,
+        data: [
+          { label: 'Mon', hoursActive: 16.5, cyclesRun: 22 },
+          { label: 'Tue', hoursActive: 18.0, cyclesRun: 24 },
+          { label: 'Wed', hoursActive: 14.0, cyclesRun: 18 },
+          { label: 'Thu', hoursActive: 17.5, cyclesRun: 23 },
+          { label: 'Fri', hoursActive: 19.0, cyclesRun: 26 },
+          { label: 'Sat', hoursActive: 11.0, cyclesRun: 14 },
+          { label: 'Sun', hoursActive: 7.5,  cyclesRun: 10 },
+        ]
+      },
+      '1m': {
+        label: 'Last Month', periodLabel: 'This Month', chartSubLabel: 'Weekly',
+        activeHours: 433, uptimePct: 85,
+        data: [
+          { label: 'Wk 1', hoursActive: 108, cyclesRun: 142 },
+          { label: 'Wk 2', hoursActive: 115, cyclesRun: 155 },
+          { label: 'Wk 3', hoursActive: 98,  cyclesRun: 128 },
+          { label: 'Wk 4', hoursActive: 112, cyclesRun: 148 },
+        ]
+      },
+      '3m': {
+        label: 'Last 3 Months', periodLabel: '3 Months', chartSubLabel: 'Monthly',
+        activeHours: 1190, uptimePct: 84,
+        data: [
+          { label: 'Jun', hoursActive: 498, cyclesRun: 665 },
+          { label: 'Jul', hoursActive: 512, cyclesRun: 680 },
+          { label: 'Aug', hoursActive: 180, cyclesRun: 137 },
+        ]
+      },
+      '6m': {
+        label: 'Last 6 Months', periodLabel: '6 Months', chartSubLabel: 'Monthly',
+        activeHours: 2650, uptimePct: 85,
+        data: [
+          { label: 'Mar', hoursActive: 470, cyclesRun: 620 },
+          { label: 'Apr', hoursActive: 488, cyclesRun: 645 },
+          { label: 'May', hoursActive: 502, cyclesRun: 668 },
+          { label: 'Jun', hoursActive: 498, cyclesRun: 665 },
+          { label: 'Jul', hoursActive: 512, cyclesRun: 680 },
+          { label: 'Aug', hoursActive: 180, cyclesRun: 137 },
+        ]
+      },
+      '1y': {
+        label: 'Last 1 Year', periodLabel: '1 Year', chartSubLabel: 'Monthly',
+        activeHours: 5380, uptimePct: 83,
+        data: [
+          { label: 'Sep', hoursActive: 440, cyclesRun: 580 },
+          { label: 'Oct', hoursActive: 460, cyclesRun: 608 },
+          { label: 'Nov', hoursActive: 475, cyclesRun: 630 },
+          { label: 'Dec', hoursActive: 420, cyclesRun: 555 },
+          { label: 'Jan', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Feb', hoursActive: 455, cyclesRun: 605 },
+          { label: 'Mar', hoursActive: 470, cyclesRun: 620 },
+          { label: 'Apr', hoursActive: 488, cyclesRun: 645 },
+          { label: 'May', hoursActive: 502, cyclesRun: 668 },
+          { label: 'Jun', hoursActive: 498, cyclesRun: 665 },
+          { label: 'Jul', hoursActive: 512, cyclesRun: 680 },
+          { label: 'Aug', hoursActive: 180, cyclesRun: 137 },
+        ]
+      },
+      'all': {
+        label: 'Since Installation', periodLabel: 'Since Install', chartSubLabel: 'Quarterly',
+        activeHours: 4218, uptimePct: 81,
+        data: [
+          { label: "Q2 '25", hoursActive: 1250, cyclesRun: 1640 },
+          { label: "Q3 '25", hoursActive: 1380, cyclesRun: 1820 },
+          { label: "Q4 '25", hoursActive: 1290, cyclesRun: 1700 },
+          { label: "Q1 '26", hoursActive: 1410, cyclesRun: 1860 },
+          { label: "Q2 '26", hoursActive: 1480, cyclesRun: 1950 },
+          { label: "Q3 '26", hoursActive: 408,  cyclesRun: 537  },
+        ]
+      },
+    },
+
+    // Downtime Records
+    downtimeRecords: [
+      { id: "DT-2026-08", startTime: "2026-08-05 09:15", duration: "3h 40m", reason: "Scheduled Sensor Calibration", resolvedBy: "S. Patel (ENG-08)", type: "Planned" },
+      { id: "DT-2026-07", startTime: "2026-07-22 14:00", duration: "1h 15m", reason: "VHP Cassette Replacement", resolvedBy: "R. Sharma (ENG-02)", type: "Planned" },
+      { id: "DT-2026-06", startTime: "2026-06-10 11:30", duration: "5h 20m", reason: "Temperature Sensor Fault – Auto Shutdown", resolvedBy: "S. Patel (ENG-08)", type: "Unplanned" },
+      { id: "DT-2026-05", startTime: "2026-05-09 08:00", duration: "8h 00m", reason: "Annual IQ/OQ/PQ Validation Maintenance Window", resolvedBy: "S. Patel (ENG-08)", type: "Planned" },
+      { id: "DT-2026-02", startTime: "2026-02-14 07:30", duration: "2h 30m", reason: "Nozzle Cleaning & Filter Replacement Downtime", resolvedBy: "R. Sharma (ENG-02)", type: "Planned" }
+    ],
+
     // Maintenance Records
     maintenanceRecords: [
       { id: "MNT-2026-05", date: "2026-05-10", type: "Annual Calibration & IQ/OQ/PQ", engineer: "S. Patel (ENG-08)", status: "PASSED", docName: "IQ_OQ_PQ_Certificate_Unit01.pdf" },
