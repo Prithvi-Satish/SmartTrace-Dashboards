@@ -1,35 +1,54 @@
 import React, { useState } from 'react';
 import { useAuth, DEMO_USERS } from '../context/AuthContext';
-import { ShieldCheck, Lock, Mail, ArrowRight, Activity, CheckCircle2, UserCheck } from 'lucide-react';
+import {
+  ShieldCheck, Lock, Mail, ArrowRight, Activity,
+  CheckCircle2, UserCheck, AlertCircle, Loader2
+} from 'lucide-react';
 
 export default function AuthScreen({ isLight }) {
-  const { loginAs, loginWithCredentials } = useAuth();
+  const { loginAs, loginWithCredentials, authError, mode } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [selectedDemoRole, setSelectedDemoRole] = useState(DEMO_USERS[0].id);
+  const [localError, setLocalError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedDemoRole, setSelectedDemoRole] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email) return;
-    loginWithCredentials(email, password);
+    if (!email || !password) {
+      setLocalError('Please enter both email and password.');
+      return;
+    }
+    setLocalError('');
+    setIsSubmitting(true);
+    const result = await loginWithCredentials(email, password);
+    if (!result.success) {
+      setLocalError(result.error || 'Login failed. Please try again.');
+    }
+    setIsSubmitting(false);
   };
+
+  const handleDemoLogin = async (userId) => {
+    setSelectedDemoRole(userId);
+    setLocalError('');
+    await loginAs(userId);
+    setSelectedDemoRole(null);
+  };
+
+  const displayError = localError || authError;
 
   return (
     <div className={`min-h-screen flex items-center justify-center p-4 transition-colors ${
-      isLight
-        ? 'bg-slate-100 text-slate-900'
-        : 'bg-[#090d16] text-slate-100'
+      isLight ? 'bg-slate-100 text-slate-900' : 'bg-[#090d16] text-slate-100'
     }`}>
-      {/* Container */}
       <div className="w-full max-w-4xl grid grid-cols-1 lg:grid-cols-12 rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
-        
-        {/* Left Panel - Branding & Security Statement */}
+
+        {/* Left Panel — Branding */}
         <div className={`lg:col-span-5 p-8 flex flex-col justify-between relative overflow-hidden ${
           isLight
             ? 'bg-gradient-to-br from-cyan-600 via-blue-600 to-indigo-700 text-white'
             : 'bg-gradient-to-br from-cyan-950 via-slate-900 to-indigo-950 text-white border-r border-slate-800'
         }`}>
-          {/* Decorative background glow */}
           <div className="absolute -top-24 -left-24 w-64 h-64 bg-cyan-400/20 rounded-full blur-3xl" />
           <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl" />
 
@@ -48,27 +67,33 @@ export default function AuthScreen({ isLight }) {
               Tamper-Proof Medical Waste Audit System
             </h2>
             <p className="text-xs text-cyan-100/90 leading-relaxed mb-6">
-              End-to-End Cryptographic SHA-256 Hash Chain verification ensuring uncompromised data integrity from hospital machine generation to government medical board audit.
+              End-to-End Cryptographic SHA-256 Hash Chain verification ensuring uncompromised
+              data integrity from hospital machine generation to government medical board audit.
             </p>
           </div>
 
           <div className="relative z-10 space-y-2.5 pt-6 border-t border-white/10">
-            <div className="flex items-center space-x-2 text-xs text-cyan-100">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Cellular eSIM IoT Direct Cloud Telemetry</span>
-            </div>
-            <div className="flex items-center space-x-2 text-xs text-cyan-100">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>CPCB BMW 2016 & NABH Compliance Verified</span>
-            </div>
-            <div className="flex items-center space-x-2 text-xs text-cyan-100">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Watermarked PDF Audit Certificates</span>
-            </div>
+            {[
+              'Cellular eSIM IoT Direct Cloud Telemetry',
+              'CPCB BMW 2016 & NABH Compliance Verified',
+              'Watermarked PDF Audit Certificates',
+            ].map((item) => (
+              <div key={item} className="flex items-center space-x-2 text-xs text-cyan-100">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+
+            {mode === 'mock' && (
+              <div className="mt-3 flex items-center space-x-2 text-xs text-amber-200 bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2">
+                <Activity className="w-3.5 h-3.5 shrink-0" />
+                <span>Offline demo mode — Supabase not connected</span>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Right Panel - Login & Quick Demo Account Selection */}
+        {/* Right Panel — Login */}
         <div className={`lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between ${
           isLight ? 'bg-white' : 'bg-[#111723]'
         }`}>
@@ -76,45 +101,49 @@ export default function AuthScreen({ isLight }) {
             <div className="mb-6">
               <h3 className="text-lg font-bold">Sign In to Dashboard</h3>
               <p className={`text-xs ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
-                Select a pre-configured role account below or enter credentials.
+                Use your credentials or select a demo role below.
               </p>
             </div>
 
             {/* Quick Demo Role Cards */}
             <div className="mb-6">
               <label className={`text-xs font-bold block mb-2 ${isLight ? 'text-slate-700' : 'text-slate-300'}`}>
-                Quick Demo Role Login:
+                Quick Demo Login:
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {DEMO_USERS.map((user) => {
-                  const isSelected = selectedDemoRole === user.id;
+                  const isLoggingIn = selectedDemoRole === user.id;
                   return (
                     <button
                       key={user.id}
                       type="button"
-                      onClick={() => {
-                        setSelectedDemoRole(user.id);
-                        setEmail(user.email);
-                      }}
-                      className={`p-3 rounded-xl border text-left flex items-start space-x-3 transition-all ${
-                        isSelected
+                      disabled={isSubmitting || !!selectedDemoRole}
+                      onClick={() => handleDemoLogin(user.id)}
+                      className={`p-3 rounded-xl border text-left flex items-start space-x-3 transition-all disabled:opacity-60 ${
+                        isLoggingIn
                           ? 'border-cyan-500 bg-cyan-50/50 dark:bg-cyan-950/30 ring-2 ring-cyan-500/20'
                           : isLight
-                          ? 'border-slate-200 bg-slate-50 hover:bg-slate-100'
-                          : 'border-slate-800 bg-[#090d16] hover:bg-slate-900'
+                          ? 'border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-slate-300'
+                          : 'border-slate-800 bg-[#090d16] hover:bg-slate-900 hover:border-slate-700'
                       }`}
                     >
-                      <img
-                        src={user.avatar}
-                        alt={user.name}
-                        className="w-9 h-9 rounded-full object-cover shrink-0 border border-slate-300 dark:border-slate-700"
-                      />
+                      {isLoggingIn ? (
+                        <div className="w-9 h-9 rounded-full bg-cyan-500/20 flex items-center justify-center shrink-0">
+                          <Loader2 className="w-4 h-4 text-cyan-500 animate-spin" />
+                        </div>
+                      ) : (
+                        <img
+                          src={user.avatar}
+                          alt={user.name}
+                          className="w-9 h-9 rounded-full object-cover shrink-0 border border-slate-300 dark:border-slate-700"
+                        />
+                      )}
                       <div className="overflow-hidden">
                         <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider block w-max mb-0.5 ${
-                          user.role === 'admin' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300' :
+                          user.role === 'admin'     ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300' :
                           user.role === 'inspector' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300' :
-                          user.role === 'auditor' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' :
-                          'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300'
+                          user.role === 'auditor'   ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' :
+                                                      'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300'
                         }`}>
                           {user.roleLabel}
                         </span>
@@ -129,23 +158,33 @@ export default function AuthScreen({ isLight }) {
               </div>
             </div>
 
-            {/* Login Form */}
+            {/* Divider */}
+            <div className="flex items-center gap-3 mb-5">
+              <div className={`flex-1 h-px ${isLight ? 'bg-slate-200' : 'bg-slate-800'}`} />
+              <span className={`text-[11px] font-medium ${isLight ? 'text-slate-400' : 'text-slate-600'}`}>
+                or sign in with credentials
+              </span>
+              <div className={`flex-1 h-px ${isLight ? 'bg-slate-200' : 'bg-slate-800'}`} />
+            </div>
+
+            {/* Credentials Form */}
             <form onSubmit={handleSubmit} className="space-y-3.5">
               <div>
                 <label className={`text-xs font-semibold block mb-1 ${isLight ? 'text-slate-700' : 'text-slate-300'}`}>
                   Email Address
                 </label>
                 <div className="relative">
-                  <Mail className={`w-4 h-4 absolute left-3 top-3 ${isLight ? 'text-slate-400' : 'text-slate-500'}`} />
+                  <Mail className={`w-4 h-4 absolute left-3 top-2.5 ${isLight ? 'text-slate-400' : 'text-slate-500'}`} />
                   <input
+                    id="login-email"
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => { setEmail(e.target.value); setLocalError(''); }}
                     placeholder="name@smarttrace.med"
-                    className={`w-full pl-9 pr-3 py-2 text-xs rounded-xl border focus:outline-none focus:border-cyan-500 ${
+                    autoComplete="email"
+                    className={`w-full pl-9 pr-3 py-2 text-xs rounded-xl border focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 transition-all ${
                       isLight ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-[#090d16] border-slate-800 text-slate-100'
                     }`}
-                    required
                   />
                 </div>
               </div>
@@ -155,38 +194,47 @@ export default function AuthScreen({ isLight }) {
                   Password
                 </label>
                 <div className="relative">
-                  <Lock className={`w-4 h-4 absolute left-3 top-3 ${isLight ? 'text-slate-400' : 'text-slate-500'}`} />
+                  <Lock className={`w-4 h-4 absolute left-3 top-2.5 ${isLight ? 'text-slate-400' : 'text-slate-500'}`} />
                   <input
+                    id="login-password"
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => { setPassword(e.target.value); setLocalError(''); }}
                     placeholder="••••••••••••"
-                    className={`w-full pl-9 pr-3 py-2 text-xs rounded-xl border focus:outline-none focus:border-cyan-500 ${
+                    autoComplete="current-password"
+                    className={`w-full pl-9 pr-3 py-2 text-xs rounded-xl border focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500 transition-all ${
                       isLight ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-[#090d16] border-slate-800 text-slate-100'
                     }`}
                   />
                 </div>
               </div>
 
-              <div className="flex gap-2 pt-2">
-                <button
-                  type="button"
-                  onClick={() => loginAs(selectedDemoRole)}
-                  className="flex-1 py-2.5 px-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-cyan-600/20 flex items-center justify-center space-x-2 transition-all"
-                >
-                  <UserCheck className="w-4 h-4" />
-                  <span>Login with Selected Role</span>
-                </button>
+              {/* Error message */}
+              {displayError && (
+                <div className="flex items-center space-x-2 text-xs text-red-500 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 rounded-xl px-3 py-2">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{displayError}</span>
+                </div>
+              )}
 
-                <button
-                  type="submit"
-                  className={`py-2.5 px-4 font-bold text-xs rounded-xl border flex items-center justify-center transition-all ${
-                    isLight ? 'border-slate-300 hover:bg-slate-100 text-slate-800' : 'border-slate-700 hover:bg-slate-800 text-slate-200'
-                  }`}
-                >
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
+              <button
+                id="login-submit"
+                type="submit"
+                disabled={isSubmitting || !!selectedDemoRole}
+                className="w-full py-2.5 px-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 disabled:opacity-60 text-white font-bold text-xs rounded-xl shadow-lg shadow-cyan-600/20 flex items-center justify-center space-x-2 transition-all"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Signing in…</span>
+                  </>
+                ) : (
+                  <>
+                    <UserCheck className="w-4 h-4" />
+                    <span>Sign In</span>
+                  </>
+                )}
+              </button>
             </form>
           </div>
 
@@ -196,7 +244,6 @@ export default function AuthScreen({ isLight }) {
             </p>
           </div>
         </div>
-
       </div>
     </div>
   );
