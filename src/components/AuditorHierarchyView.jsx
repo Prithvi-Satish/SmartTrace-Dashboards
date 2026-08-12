@@ -1,0 +1,546 @@
+import React, { useState, useEffect } from 'react';
+import { UMBRELLA_GROUPS, REGIONAL_HOSPITALS, ARCHIVE_5YEAR_LOGS, AUDIT_TRAIL_LOGS } from '../data/mockData';
+import { Globe, Building2, Layers, Calendar, FileText, Download, ShieldCheck, ChevronRight, ArrowLeft, Eye, Award, CheckCircle2, Lock, Home } from 'lucide-react';
+import { generateAuditCertificatePDF } from '../utils/pdfGenerator';
+
+export default function AuditorHierarchyView({ isLight }) {
+  // Navigation Levels: 'global' -> 'umbrella' -> 'hospital'
+  const [level, setLevel] = useState('global');
+  const [selectedGroup, setSelectedGroup] = useState(null);
+  const [selectedHospital, setSelectedHospital] = useState(null);
+  const [timePeriod, setTimePeriod] = useState('monthly'); // 'daily', 'weekly', 'monthly', 'yearly'
+
+  // Sync browser back/forward history buttons (popstate)
+  useEffect(() => {
+    const handlePopState = (event) => {
+      if (event.state && event.state.level) {
+        setLevel(event.state.level);
+        setSelectedGroup(event.state.group || null);
+        setSelectedHospital(event.state.hospital || null);
+      } else {
+        setLevel('global');
+        setSelectedGroup(null);
+        setSelectedHospital(null);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const handleSelectGroup = (group) => {
+    setSelectedGroup(group);
+    setLevel('umbrella');
+    window.history.pushState({ level: 'umbrella', group }, '', `#umbrella-${group.id}`);
+  };
+
+  const handleSelectHospital = (hosp) => {
+    setSelectedHospital(hosp);
+    setLevel('hospital');
+    window.history.pushState({ level: 'hospital', group: selectedGroup, hospital: hosp }, '', `#hospital-${hosp.id}`);
+  };
+
+  const goToGlobal = () => {
+    setLevel('global');
+    setSelectedGroup(null);
+    setSelectedHospital(null);
+    window.history.pushState({ level: 'global' }, '', '#global-audit');
+  };
+
+  const goToUmbrella = () => {
+    setLevel('umbrella');
+    setSelectedHospital(null);
+    window.history.pushState({ level: 'umbrella', group: selectedGroup }, '', `#umbrella-${selectedGroup?.id || ''}`);
+  };
+
+  const handleExport5YearArchive = () => {
+    alert(`📦 5-Year Data Archival Export Triggered!\n\nExtracting complete multi-year telemetry database records (2022-2026) for ${selectedHospital ? selectedHospital.name : 'All Facilities'}.\n\nFormat: Encrypted Structured JSON & Cryptographic SHA-256 Hash Chain Proof.`);
+  };
+
+  return (
+    <div className="space-y-5">
+      {/* CPCB Government Auditor Top Banner & Breadcrumb Hierarchy Tracker */}
+      <div className={`p-5 rounded-2xl border shadow-xs ${
+        isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
+      }`}>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center space-x-2 mb-2">
+              <span className="text-[10px] font-extrabold px-3 py-0.5 rounded-full bg-emerald-600 text-white uppercase tracking-wider flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                CPCB Official Medical Board Auditor Portal
+              </span>
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 font-mono">
+                Browser Back/Forward Enabled
+              </span>
+            </div>
+
+            {/* Interactive Breadcrumb Path */}
+            <div className="flex items-center space-x-1.5 text-xs font-semibold text-slate-500">
+              <button
+                onClick={goToGlobal}
+                className={`hover:underline flex items-center gap-1 ${level === 'global' ? 'text-teal-600 font-bold' : ''}`}
+              >
+                <Globe className="w-3.5 h-3.5" />
+                <span>National Overview</span>
+              </button>
+
+              {selectedGroup && (
+                <>
+                  <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                  <button
+                    onClick={goToUmbrella}
+                    className={`hover:underline ${level === 'umbrella' ? 'text-teal-600 font-bold' : ''}`}
+                  >
+                    {selectedGroup.name}
+                  </button>
+                </>
+              )}
+
+              {selectedHospital && (
+                <>
+                  <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                  <span className="text-teal-600 font-bold">{selectedHospital.name}</span>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Quick Jump & Level Back Buttons */}
+          {level !== 'global' && (
+            <div className="flex items-center space-x-2 self-start md:self-center">
+              <button
+                onClick={goToGlobal}
+                className="px-3 py-1.5 rounded-xl border border-teal-300 dark:border-teal-800/80 bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 hover:bg-teal-100 text-xs font-bold flex items-center space-x-1.5 transition-all"
+                title="Jump all the way back to Global National Level"
+              >
+                <Home className="w-3.5 h-3.5" />
+                <span>Jump to Global Level</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  if (level === 'hospital') goToUmbrella();
+                  else if (level === 'umbrella') goToGlobal();
+                }}
+                className={`px-3 py-1.5 rounded-xl border text-xs font-bold flex items-center space-x-1.5 transition-all ${
+                  isLight ? 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-700' : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200'
+                }`}
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Back One Level</span>
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* LEVEL 1: GLOBAL / NATIONAL OVERVIEW */}
+      {level === 'global' && (
+        <div className="space-y-5">
+          {/* National Aggregate Metrics */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className={`p-4 rounded-2xl border shadow-xs ${
+              isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
+            }`}>
+              <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
+                <span>National Umbrella Chains</span>
+                <Building2 className="w-4 h-4 text-teal-600" />
+              </div>
+              <div className="mt-2">
+                <span className="text-3xl font-black">{UMBRELLA_GROUPS.length} Groups</span>
+                <p className="text-xs text-slate-500 mt-1">129 Healthcare Facilities</p>
+              </div>
+            </div>
+
+            <div className={`p-4 rounded-2xl border shadow-xs ${
+              isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
+            }`}>
+              <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
+                <span>Active ABIOT Devices</span>
+                <Layers className="w-4 h-4 text-cyan-600" />
+              </div>
+              <div className="mt-2">
+                <span className="text-3xl font-black text-cyan-700 dark:text-cyan-400">532 Units</span>
+                <p className="text-xs text-slate-500 mt-1">Cellular eSIM Mesh Online</p>
+              </div>
+            </div>
+
+            <div className={`p-4 rounded-2xl border shadow-xs ${
+              isLight ? 'bg-emerald-50/70 border-emerald-200/90 text-slate-900' : 'bg-emerald-950/20 border-emerald-800/60 text-slate-100'
+            }`}>
+              <div className="flex items-center justify-between text-xs text-slate-600 font-semibold">
+                <span>National Compliance Score</span>
+                <Award className="w-4 h-4 text-emerald-600" />
+              </div>
+              <div className="mt-2">
+                <span className="text-3xl font-black text-emerald-700 dark:text-emerald-400">98.6%</span>
+                <p className="text-xs text-emerald-800 dark:text-emerald-300 font-bold mt-1">CPCB Verified Grade A</p>
+              </div>
+            </div>
+
+            <div className={`p-4 rounded-2xl border shadow-xs ${
+              isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
+            }`}>
+              <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
+                <span>Monthly Waste Treated</span>
+                <FileText className="w-4 h-4 text-amber-600" />
+              </div>
+              <div className="mt-2">
+                <span className="text-3xl font-black">1,450 Tons</span>
+                <p className="text-xs text-slate-500 mt-1">100% SHA-256 Hash Signed</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Level 1 Group List */}
+          <div className="space-y-3">
+            <h3 className={`text-xs font-bold uppercase tracking-wider ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+              Select Umbrella Vendor / Hospital Network to Inspect Regional Data
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {UMBRELLA_GROUPS.map((grp) => (
+                <div
+                  key={grp.id}
+                  onClick={() => handleSelectGroup(grp)}
+                  className={`p-5 rounded-2xl border cursor-pointer transition-all hover:scale-[1.01] hover:shadow-md ${
+                    isLight ? 'bg-white border-slate-200/80 hover:border-teal-400' : 'bg-[#111622] border-slate-800 hover:border-teal-700'
+                  }`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <span className="text-[10px] font-mono font-bold text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-950 px-2 py-0.5 rounded border border-teal-200 dark:border-teal-800">
+                        {grp.id}
+                      </span>
+                      <h4 className="text-base font-bold text-slate-900 dark:text-slate-100 mt-1.5">{grp.name}</h4>
+                      <p className="text-xs text-slate-500 mt-0.5">Network Chain • CPCB Registered</p>
+                    </div>
+
+                    <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400">{grp.overallCompliance}%</span>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2 my-4 p-3 rounded-xl bg-slate-50 dark:bg-[#090d16] border border-slate-200/60 dark:border-slate-800 text-center text-xs">
+                    <div>
+                      <span className="text-slate-500 text-[10px] block">Hospitals</span>
+                      <strong className="text-slate-800 dark:text-slate-200 font-bold">{grp.totalHospitals} Units</strong>
+                    </div>
+                    <div>
+                      <span className="text-slate-500 text-[10px] block">ABIOT Devices</span>
+                      <strong className="text-slate-800 dark:text-slate-200 font-bold">{grp.totalDevices} Devices</strong>
+                    </div>
+                    <div>
+                      <span className="text-slate-500 text-[10px] block">Monthly Waste</span>
+                      <strong className="text-slate-800 dark:text-slate-200 font-bold">{grp.monthlyTreatedTons} Tons</strong>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1 text-[11px]">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      {grp.cpcbAuditorSigned ? 'CPCB Audit Signoff Complete' : 'Pending Quarterly Verification'}
+                    </span>
+                    <button className="text-xs font-bold text-teal-600 dark:text-teal-400 flex items-center gap-1">
+                      <span>Drill into Network</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* LEVEL 2: UMBRELLA VENDOR / REGIONAL GROUP VIEW */}
+      {level === 'umbrella' && selectedGroup && (
+        <div className="space-y-4">
+          <div className={`p-4 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+            <h3 className="text-sm font-bold flex items-center gap-2">
+              <Building2 className="w-4 h-4 text-teal-600" />
+              <span>Hospitals Operating Under {selectedGroup.name}</span>
+            </h3>
+            <p className="text-xs text-slate-500 mt-0.5">Select an individual healthcare facility to audit device log aggregations.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {REGIONAL_HOSPITALS.map((hosp) => (
+              <div
+                key={hosp.id}
+                onClick={() => handleSelectHospital(hosp)}
+                className={`p-4 rounded-2xl border cursor-pointer transition-all hover:border-teal-500 ${
+                  isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
+                }`}
+              >
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">{hosp.name}</h4>
+                    <p className="text-xs text-slate-500">{hosp.locality}</p>
+                  </div>
+                  <span className="text-lg font-black text-emerald-600">{hosp.complianceScore}%</span>
+                </div>
+
+                <div className="mt-3 flex items-center justify-between text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <span className="text-slate-500">{hosp.deviceCount} Sterilization Devices</span>
+                  <span className="text-teal-600 font-bold flex items-center gap-1">
+                    <span>Inspect Hospital Logs</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* LEVEL 3: HOSPITAL VIEW & 5-YEAR TIME HORIZONS (DAILY, WEEKLY, MONTHLY, YEARLY) */}
+      {level === 'hospital' && selectedHospital && (
+        <div className="space-y-5">
+          {/* Hospital Header & 5-Year Backup Export Button */}
+          <div className={`p-5 rounded-2xl border shadow-xs ${
+            isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
+          }`}>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <div>
+                <span className="text-[10px] font-mono font-bold text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-950 px-2 py-0.5 rounded border border-teal-200">
+                  {selectedHospital.id}
+                </span>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mt-1">{selectedHospital.name}</h3>
+                <p className="text-xs text-slate-500">CPCB License: {selectedHospital.cpcbLicenseNo} • {selectedHospital.locality}</p>
+              </div>
+
+              {/* 5-Year Data Archival Export Button */}
+              <button
+                onClick={handleExport5YearArchive}
+                className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center space-x-2 shadow-xs transition-all self-start md:self-center shrink-0"
+              >
+                <Download className="w-4 h-4" />
+                <span>Export 5-Year Archival Backup Data</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Timeframe Filter Selector Tabs */}
+          <div className={`p-1.5 rounded-2xl border flex items-center gap-1.5 text-xs font-bold ${
+            isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
+          }`}>
+            <button
+              onClick={() => setTimePeriod('daily')}
+              className={`flex-1 py-2 rounded-xl transition-all ${
+                timePeriod === 'daily' ? 'bg-teal-600 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
+              }`}
+            >
+              📅 Daily Logs
+            </button>
+
+            <button
+              onClick={() => setTimePeriod('weekly')}
+              className={`flex-1 py-2 rounded-xl transition-all ${
+                timePeriod === 'weekly' ? 'bg-teal-600 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
+              }`}
+            >
+              📅 Weekly Logs
+            </button>
+
+            <button
+              onClick={() => setTimePeriod('monthly')}
+              className={`flex-1 py-2 rounded-xl transition-all ${
+                timePeriod === 'monthly' ? 'bg-teal-600 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
+              }`}
+            >
+              📅 Monthly Logs
+            </button>
+
+            <button
+              onClick={() => setTimePeriod('yearly')}
+              className={`flex-1 py-2 rounded-xl transition-all ${
+                timePeriod === 'yearly' ? 'bg-teal-600 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
+              }`}
+            >
+              📅 5-Year Archival Backups (2022-2026)
+            </button>
+          </div>
+
+          {/* Time Horizon Data Display */}
+          <div className={`p-5 rounded-2xl border shadow-xs ${
+            isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
+          }`}>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+              {timePeriod.toUpperCase()} CPCB AUDIT LOG AGGREGATION & HASH INTEGRITY
+            </h4>
+
+            {timePeriod === 'daily' && (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b bg-slate-50 dark:bg-[#090d16] text-slate-600 dark:text-slate-400 font-bold">
+                      <th className="py-2.5 px-3">Date</th>
+                      <th className="py-2.5 px-3">Sterilization Cycles</th>
+                      <th className="py-2.5 px-3">Total Waste Treated</th>
+                      <th className="py-2.5 px-3">CPCB Pass Rate</th>
+                      <th className="py-2.5 px-3">Flagged Breaches</th>
+                      <th className="py-2.5 px-3 text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                    {ARCHIVE_5YEAR_LOGS.daily.map((row) => (
+                      <tr key={row.date}>
+                        <td className="py-3 px-3 font-mono font-bold text-slate-800 dark:text-slate-200">{row.date}</td>
+                        <td className="py-3 px-3">{row.totalCycles} Cycles</td>
+                        <td className="py-3 px-3 font-bold">{row.totalKg} kg</td>
+                        <td className="py-3 px-3 text-emerald-600 font-bold">{row.passedPct}%</td>
+                        <td className="py-3 px-3">{row.flaggedCount > 0 ? <span className="text-rose-600 font-bold">{row.flaggedCount} Flagged</span> : <span className="text-slate-400">0</span>}</td>
+                        <td className="py-3 px-3 text-right">
+                          <button
+                            onClick={() => generateAuditCertificatePDF(AUDIT_TRAIL_LOGS[0], selectedHospital.name)}
+                            className="p-1.5 bg-teal-50 border border-teal-200 text-teal-700 rounded-lg hover:bg-teal-100 text-xs font-bold inline-flex items-center gap-1"
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                            <span>PDF</span>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {timePeriod === 'weekly' && (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b bg-slate-50 dark:bg-[#090d16] text-slate-600 dark:text-slate-400 font-bold">
+                      <th className="py-2.5 px-3">Week Period</th>
+                      <th className="py-2.5 px-3">Total Cycles</th>
+                      <th className="py-2.5 px-3">Weekly Waste Total</th>
+                      <th className="py-2.5 px-3">Pass Rate</th>
+                      <th className="py-2.5 px-3">SHA-256 Hash Verification</th>
+                      <th className="py-2.5 px-3 text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                    {ARCHIVE_5YEAR_LOGS.weekly.map((row) => (
+                      <tr key={row.period}>
+                        <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">{row.period}</td>
+                        <td className="py-3 px-3">{row.totalCycles} Cycles</td>
+                        <td className="py-3 px-3 font-bold">{row.totalKg.toLocaleString()} kg</td>
+                        <td className="py-3 px-3 text-emerald-600 font-bold">{row.passedPct}%</td>
+                        <td className="py-3 px-3 text-emerald-600 font-bold flex items-center gap-1">
+                          <ShieldCheck className="w-3.5 h-3.5" />
+                          <span>100% UNTAMPERED</span>
+                        </td>
+                        <td className="py-3 px-3 text-right">
+                          <button
+                            onClick={() => generateAuditCertificatePDF(AUDIT_TRAIL_LOGS[0], selectedHospital.name)}
+                            className="p-1.5 bg-teal-50 border border-teal-200 text-teal-700 rounded-lg hover:bg-teal-100 text-xs font-bold inline-flex items-center gap-1"
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                            <span>PDF</span>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {timePeriod === 'monthly' && (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b bg-slate-50 dark:bg-[#090d16] text-slate-600 dark:text-slate-400 font-bold">
+                      <th className="py-2.5 px-3">Month</th>
+                      <th className="py-2.5 px-3">Total Cycles</th>
+                      <th className="py-2.5 px-3">Monthly Waste Volume</th>
+                      <th className="py-2.5 px-3">Compliance Score</th>
+                      <th className="py-2.5 px-3">CPCB Officer Signoff</th>
+                      <th className="py-2.5 px-3 text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                    {ARCHIVE_5YEAR_LOGS.monthly.map((row) => (
+                      <tr key={row.period}>
+                        <td className="py-3 px-3 font-bold text-slate-800 dark:text-slate-200">{row.period}</td>
+                        <td className="py-3 px-3">{row.totalCycles} Cycles</td>
+                        <td className="py-3 px-3 font-bold">{row.totalKg.toLocaleString()} kg</td>
+                        <td className="py-3 px-3 text-emerald-600 font-bold">{row.passedPct}%</td>
+                        <td className="py-3 px-3">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300">
+                            {row.cpcbStatus}
+                          </span>
+                        </td>
+                        <td className="py-3 px-3 text-right">
+                          <button
+                            onClick={() => generateAuditCertificatePDF(AUDIT_TRAIL_LOGS[0], selectedHospital.name)}
+                            className="p-1.5 bg-teal-50 border border-teal-200 text-teal-700 rounded-lg hover:bg-teal-100 text-xs font-bold inline-flex items-center gap-1"
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                            <span>PDF Report</span>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {timePeriod === 'yearly' && (
+              <div className="space-y-4">
+                <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
+                    <span><strong>5-Year Immutable Backup Vault (2022 - 2026):</strong> All cryptographic hash chain logs are securely preserved and verified.</span>
+                  </div>
+                  <button
+                    onClick={handleExport5YearArchive}
+                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg shrink-0"
+                  >
+                    Download Full 5-Year Package
+                  </button>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr className="border-b bg-slate-50 dark:bg-[#090d16] text-slate-600 dark:text-slate-400 font-bold">
+                        <th className="py-2.5 px-3">Year</th>
+                        <th className="py-2.5 px-3">Annual Cycles</th>
+                        <th className="py-2.5 px-3">Annual Waste Volume</th>
+                        <th className="py-2.5 px-3">CPCB Pass Rate</th>
+                        <th className="py-2.5 px-3">SHA-256 Hash Chain Integrity</th>
+                        <th className="py-2.5 px-3 text-right">Archival Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                      {ARCHIVE_5YEAR_LOGS.yearly.map((row) => (
+                        <tr key={row.year}>
+                          <td className="py-3 px-3 font-black text-sm text-slate-900 dark:text-slate-100">{row.year}</td>
+                          <td className="py-3 px-3">{row.totalCycles.toLocaleString()} Cycles</td>
+                          <td className="py-3 px-3 font-bold">{row.totalKg.toLocaleString()} kg</td>
+                          <td className="py-3 px-3 text-emerald-600 font-bold">{row.passRate}%</td>
+                          <td className="py-3 px-3 text-emerald-600 font-bold">{row.SHA256Status}</td>
+                          <td className="py-3 px-3 text-right">
+                            <button
+                              onClick={() => generateAuditCertificatePDF(AUDIT_TRAIL_LOGS[0], selectedHospital.name)}
+                              className="p-1.5 bg-slate-100 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-200 text-xs font-bold inline-flex items-center gap-1"
+                            >
+                              <Download className="w-3.5 h-3.5" />
+                              <span>Export Year {row.year}</span>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
