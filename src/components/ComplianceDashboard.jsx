@@ -37,7 +37,7 @@ export default function ComplianceDashboard({ isLight }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
-  
+
   // Modal States
   const [selectedMachine, setSelectedMachine] = useState(null);
   const [showReportModal, setShowReportModal] = useState(false);
@@ -80,21 +80,15 @@ export default function ComplianceDashboard({ isLight }) {
   return (
     <div className="space-y-5">
       {/* Sub-header with Cryptographic Data Integrity Badge */}
-      <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4  border shadow-sm ${
-        isLight ? 'bg-white border-slate-200 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
-      }`}>
+      <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4  border shadow-sm ${isLight ? 'bg-white border-slate-200 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
+        }`}>
         <div>
           <div className="flex items-center space-x-2 mb-1">
-            <span className="text-[10px] font-bold px-2 py-0.5  bg-emerald-600 text-white uppercase tracking-wider flex items-center gap-1">
-              <ShieldCheck className="w-3 h-3" />
-              100% Uncompromised Data Integrity
-            </span>
-            <span className={`text-[10px] font-bold px-2 py-0.5  ${
-              currentUser?.role === 'admin' ? 'bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300' :
+            <span className={`text-[10px] font-bold px-2 py-0.5  ${currentUser?.role === 'admin' ? 'bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300' :
               currentUser?.role === 'inspector' ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300' :
-              currentUser?.role === 'auditor' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' :
-              'bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300'
-            }`}>
+                currentUser?.role === 'auditor' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' :
+                  'bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300'
+              }`}>
               {currentUser?.roleLabel} Mode
             </span>
           </div>
@@ -103,7 +97,7 @@ export default function ComplianceDashboard({ isLight }) {
             Government Medical Board & CPCB Audit Portal
           </h2>
           <p className={`text-xs ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
-            Bio-Medical Waste Management Rules 2016 • End-to-End Cryptographic SHA-256 Audit Verification
+            End-to-End Cryptographic SHA-256 Audit Verification
           </p>
         </div>
 
@@ -130,9 +124,8 @@ export default function ComplianceDashboard({ isLight }) {
       {/* Compliance Scorecard Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {/* Hospital Compliance Score */}
-        <div className={`p-4  border flex flex-col justify-between shadow-sm ${
-          isLight ? 'bg-emerald-50/60 border-emerald-200 text-slate-900' : 'glass-card border-emerald-500/30 bg-emerald-950/10 text-slate-100'
-        }`}>
+        <div className={`p-4  border flex flex-col justify-between shadow-sm ${isLight ? 'bg-emerald-50/60 border-emerald-200 text-slate-900' : 'glass-card border-emerald-500/30 bg-emerald-950/10 text-slate-100'
+          }`}>
           <div className={`flex items-center justify-between text-xs ${isLight ? 'text-slate-600 font-medium' : 'text-slate-400'}`}>
             <span>Compliance Index</span>
             <Award className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -144,9 +137,8 @@ export default function ComplianceDashboard({ isLight }) {
         </div>
 
         {/* CPCB Cycle Pass Rate */}
-        <div className={`p-4  border flex flex-col justify-between shadow-sm ${
-          isLight ? 'bg-white border-slate-200 text-slate-900' : 'glass-card border-slate-800 text-slate-100'
-        }`}>
+        <div className={`p-4  border flex flex-col justify-between shadow-sm ${isLight ? 'bg-white border-slate-200 text-slate-900' : 'glass-card border-slate-800 text-slate-100'
+          }`}>
           <div className={`flex items-center justify-between text-xs ${isLight ? 'text-slate-600 font-medium' : 'text-slate-400'}`}>
             <span>Cycle Pass Rate</span>
             <CheckCircle2 className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
@@ -158,9 +150,8 @@ export default function ComplianceDashboard({ isLight }) {
         </div>
 
         {/* AI Bag Integrity Inspection Rate */}
-        <div className={`p-4  border flex flex-col justify-between shadow-sm ${
-          isLight ? 'bg-white border-slate-200 text-slate-900' : 'glass-card border-slate-800 text-slate-100'
-        }`}>
+        <div className={`p-4  border flex flex-col justify-between shadow-sm ${isLight ? 'bg-white border-slate-200 text-slate-900' : 'glass-card border-slate-800 text-slate-100'
+          }`}>
           <div className={`flex items-center justify-between text-xs ${isLight ? 'text-slate-600 font-medium' : 'text-slate-400'}`}>
             <span>AI Bag Integrity</span>
             <Sparkles className="w-4 h-4 text-purple-600 dark:text-purple-400" />
@@ -172,9 +163,8 @@ export default function ComplianceDashboard({ isLight }) {
         </div>
 
         {/* Monthly Waste Total */}
-        <div className={`p-4  border flex flex-col justify-between shadow-sm ${
-          isLight ? 'bg-white border-slate-200 text-slate-900' : 'glass-card border-slate-800 text-slate-100'
-        }`}>
+        <div className={`p-4  border flex flex-col justify-between shadow-sm ${isLight ? 'bg-white border-slate-200 text-slate-900' : 'glass-card border-slate-800 text-slate-100'
+          }`}>
           <div className={`flex items-center justify-between text-xs ${isLight ? 'text-slate-600 font-medium' : 'text-slate-400'}`}>
             <span>Monthly Treated</span>
             <Building2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
@@ -187,9 +177,8 @@ export default function ComplianceDashboard({ isLight }) {
       </div>
 
       {/* Accessible Deployed Machine Fleet Grid (Digital Twin Inspector) */}
-      <div className={`p-4  border shadow-sm ${
-        isLight ? 'bg-white border-slate-200' : 'glass-panel border-slate-800'
-      }`}>
+      <div className={`p-4  border shadow-sm ${isLight ? 'bg-white border-slate-200' : 'glass-panel border-slate-800'
+        }`}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
           <div>
             <h3 className={`text-xs font-bold flex items-center gap-1.5 ${isLight ? 'text-slate-800' : 'text-slate-200'}`}>
@@ -210,11 +199,10 @@ export default function ComplianceDashboard({ isLight }) {
             <div
               key={machine.id}
               onClick={() => setSelectedMachine(machine)}
-              className={`p-3.5  border cursor-pointer transition-all hover:scale-[1.01] hover:shadow-lg ${
-                machine.status === 'Alarm'
-                  ? isLight ? 'bg-rose-50/60 border-rose-300 hover:border-rose-400' : 'bg-rose-950/20 border-rose-800/60 hover:border-rose-500'
-                  : isLight ? 'bg-slate-50 hover:bg-slate-100 border-slate-200' : 'bg-[#090d16] hover:bg-slate-900 border-slate-800'
-              }`}
+              className={`p-3.5  border cursor-pointer transition-all hover:scale-[1.01] hover:shadow-lg ${machine.status === 'Alarm'
+                ? isLight ? 'bg-rose-50/60 border-rose-300 hover:border-rose-400' : 'bg-rose-950/20 border-rose-800/60 hover:border-rose-500'
+                : isLight ? 'bg-slate-50 hover:bg-slate-100 border-slate-200' : 'bg-[#090d16] hover:bg-slate-900 border-slate-800'
+                }`}
             >
               <div className="flex items-start justify-between">
                 <div>
@@ -222,11 +210,10 @@ export default function ComplianceDashboard({ isLight }) {
                   <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">{machine.name}</h4>
                   <p className="text-[10px] text-slate-500 truncate">{machine.department}</p>
                 </div>
-                <span className={`text-[10px] font-bold px-2 py-0.5  shrink-0 ${
-                  machine.status === 'Running' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300' :
+                <span className={`text-[10px] font-bold px-2 py-0.5  shrink-0 ${machine.status === 'Running' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300' :
                   machine.status === 'Alarm' ? 'bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300' :
-                  'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
-                }`}>
+                    'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                  }`}>
                   {machine.status}
                 </span>
               </div>
@@ -254,9 +241,8 @@ export default function ComplianceDashboard({ isLight }) {
       </div>
 
       {/* Bag Traceability Pipeline */}
-      <div className={`p-4  border shadow-sm ${
-        isLight ? 'bg-white border-slate-200' : 'glass-panel border-slate-800'
-      }`}>
+      <div className={`p-4  border shadow-sm ${isLight ? 'bg-white border-slate-200' : 'glass-panel border-slate-800'
+        }`}>
         <h3 className={`text-xs font-bold mb-3 flex items-center gap-1.5 ${isLight ? 'text-slate-800' : 'text-slate-200'}`}>
           <QrCode className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
           Barcoded Waste Bag Traceability Pipeline (CPCB Rule 5)
@@ -290,9 +276,8 @@ export default function ComplianceDashboard({ isLight }) {
       </div>
 
       {/* Filterable Audit Logs Table */}
-      <div className={`p-4  border shadow-sm ${
-        isLight ? 'bg-white border-slate-200' : 'glass-panel border-slate-800'
-      }`}>
+      <div className={`p-4  border shadow-sm ${isLight ? 'bg-white border-slate-200' : 'glass-panel border-slate-800'
+        }`}>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
           <div>
             <h3 className={`text-sm font-bold flex items-center gap-2 ${isLight ? 'text-slate-900' : 'text-slate-100'}`}>
@@ -311,18 +296,16 @@ export default function ComplianceDashboard({ isLight }) {
                 placeholder="Search barcode, bag..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`text-xs pl-8 pr-3 py-1.5  border focus:outline-none focus:border-cyan-500 w-44 sm:w-56 ${
-                  isLight ? 'bg-slate-50 text-slate-900 border-slate-300' : 'bg-[#090d16] text-slate-200 border-slate-700'
-                }`}
+                className={`text-xs pl-8 pr-3 py-1.5  border focus:outline-none focus:border-cyan-500 w-44 sm:w-56 ${isLight ? 'bg-slate-50 text-slate-900 border-slate-300' : 'bg-[#090d16] text-slate-200 border-slate-700'
+                  }`}
               />
             </div>
 
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className={`text-xs border  px-2 py-1.5 focus:outline-none focus:border-cyan-500 ${
-                isLight ? 'bg-slate-50 text-slate-900 border-slate-300' : 'bg-[#090d16] text-slate-200 border-slate-700'
-              }`}
+              className={`text-xs border  px-2 py-1.5 focus:outline-none focus:border-cyan-500 ${isLight ? 'bg-slate-50 text-slate-900 border-slate-300' : 'bg-[#090d16] text-slate-200 border-slate-700'
+                }`}
             >
               <option value="All">All Bags</option>
               <option value="Yellow Bag">Yellow Bag</option>
@@ -332,9 +315,8 @@ export default function ComplianceDashboard({ isLight }) {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className={`text-xs border  px-2 py-1.5 focus:outline-none focus:border-cyan-500 ${
-                isLight ? 'bg-slate-50 text-slate-900 border-slate-300' : 'bg-[#090d16] text-slate-200 border-slate-700'
-              }`}
+              className={`text-xs border  px-2 py-1.5 focus:outline-none focus:border-cyan-500 ${isLight ? 'bg-slate-50 text-slate-900 border-slate-300' : 'bg-[#090d16] text-slate-200 border-slate-700'
+                }`}
             >
               <option value="All">All Statuses</option>
               <option value="PASSED">PASSED</option>
@@ -347,9 +329,8 @@ export default function ComplianceDashboard({ isLight }) {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className={`border-b font-semibold ${
-                isLight ? 'bg-slate-50 text-slate-600 border-slate-200' : 'bg-[#090d16] text-slate-400 border-slate-800'
-              }`}>
+              <tr className={`border-b font-semibold ${isLight ? 'bg-slate-50 text-slate-600 border-slate-200' : 'bg-[#090d16] text-slate-400 border-slate-800'
+                }`}>
                 <th className="py-2.5 px-3">Cycle ID</th>
                 <th className="py-2.5 px-3">Barcode / Bag</th>
                 <th className="py-2.5 px-3">Category</th>
@@ -369,11 +350,10 @@ export default function ComplianceDashboard({ isLight }) {
                     <span className={`text-[10px] ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>{log.bagId}</span>
                   </td>
                   <td className="py-3 px-3">
-                    <span className={`px-2 py-0.5  text-[10px] font-bold ${
-                      log.bagCategory.includes('Yellow')
-                        ? 'bg-amber-100 text-amber-800 border border-amber-300 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30'
-                        : 'bg-rose-100 text-rose-800 border border-rose-300 dark:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/30'
-                    }`}>
+                    <span className={`px-2 py-0.5  text-[10px] font-bold ${log.bagCategory.includes('Yellow')
+                      ? 'bg-amber-100 text-amber-800 border border-amber-300 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30'
+                      : 'bg-rose-100 text-rose-800 border border-rose-300 dark:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/30'
+                      }`}>
                       {log.bagCategory}
                     </span>
                   </td>
@@ -393,11 +373,10 @@ export default function ComplianceDashboard({ isLight }) {
                     )}
                   </td>
                   <td className="py-3 px-3">
-                    <span className={`px-2 py-0.5  text-[10px] font-bold block w-max ${
-                      log.cpcbStatus === 'PASSED'
-                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30'
-                        : 'bg-rose-100 text-rose-800 border border-rose-300 dark:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/30 animate-pulse'
-                    }`}>
+                    <span className={`px-2 py-0.5  text-[10px] font-bold block w-max ${log.cpcbStatus === 'PASSED'
+                      ? 'bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30'
+                      : 'bg-rose-100 text-rose-800 border border-rose-300 dark:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/30 animate-pulse'
+                      }`}>
                       {log.cpcbStatus}
                     </span>
                     {log.cpcbStatus === 'FLAGGED' && (
@@ -409,11 +388,10 @@ export default function ComplianceDashboard({ isLight }) {
                   <td className="py-3 px-3 text-right flex items-center justify-end space-x-1.5">
                     <button
                       onClick={() => handleOpenReportModal(log)}
-                      className={`p-1.5  border transition-colors ${
-                        isLight
-                          ? 'text-cyan-700 hover:text-cyan-900 bg-cyan-50 border-cyan-200 hover:bg-cyan-100'
-                          : 'text-cyan-400 hover:text-cyan-300 bg-cyan-950/50 border-cyan-800/50 hover:bg-cyan-900/60'
-                      }`}
+                      className={`p-1.5  border transition-colors ${isLight
+                        ? 'text-cyan-700 hover:text-cyan-900 bg-cyan-50 border-cyan-200 hover:bg-cyan-100'
+                        : 'text-cyan-400 hover:text-cyan-300 bg-cyan-950/50 border-cyan-800/50 hover:bg-cyan-900/60'
+                        }`}
                       title="Preview Audit Certificate"
                     >
                       <Eye className="w-3.5 h-3.5" />
@@ -456,12 +434,10 @@ export default function ComplianceDashboard({ isLight }) {
       {/* Audit Report Preview Modal */}
       {showReportModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className={`border  w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh] ${
-            isLight ? 'bg-white border-slate-300' : 'bg-[#121824] border-slate-700'
-          }`}>
-            <div className={`px-5 py-3 border-b flex items-center justify-between ${
-              isLight ? 'bg-slate-100 border-slate-200 text-slate-900' : 'bg-[#090d16] border-slate-800 text-slate-100'
+          <div className={`border  w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh] ${isLight ? 'bg-white border-slate-300' : 'bg-[#121824] border-slate-700'
             }`}>
+            <div className={`px-5 py-3 border-b flex items-center justify-between ${isLight ? 'bg-slate-100 border-slate-200 text-slate-900' : 'bg-[#090d16] border-slate-800 text-slate-100'
+              }`}>
               <div className="flex items-center space-x-2">
                 <FileText className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 <h3 className="text-sm font-bold">CPCB Form IV - Watermarked Audit Certificate</h3>
@@ -481,11 +457,10 @@ export default function ComplianceDashboard({ isLight }) {
                   <p className="text-slate-600 text-[11px]">Central Pollution Control Board • Bio-Medical Waste Rules 2016</p>
                 </div>
                 <div className="text-right">
-                  <span className={`font-mono text-xs font-bold px-2 py-0.5  border ${
-                    selectedReportLog?.cpcbStatus === 'FLAGGED'
-                      ? 'text-rose-700 bg-rose-100 border-rose-300'
-                      : 'text-emerald-700 bg-emerald-100 border-emerald-300'
-                  }`}>
+                  <span className={`font-mono text-xs font-bold px-2 py-0.5  border ${selectedReportLog?.cpcbStatus === 'FLAGGED'
+                    ? 'text-rose-700 bg-rose-100 border-rose-300'
+                    : 'text-emerald-700 bg-emerald-100 border-emerald-300'
+                    }`}>
                     {selectedReportLog?.cpcbStatus === 'FLAGGED' ? '🚨 FLAGGED BREACH' : '✓ VERIFIED COMPLIANT'}
                   </span>
                   <p className="text-[10px] text-slate-500 mt-1">License: {COMPLIANCE_METRICS.cpcbLicenseNo}</p>
@@ -551,9 +526,8 @@ export default function ComplianceDashboard({ isLight }) {
               )}
             </div>
 
-            <div className={`px-5 py-3 border-t flex justify-end space-x-3 ${
-              isLight ? 'bg-slate-100 border-slate-200' : 'bg-[#090d16] border-slate-800'
-            }`}>
+            <div className={`px-5 py-3 border-t flex justify-end space-x-3 ${isLight ? 'bg-slate-100 border-slate-200' : 'bg-[#090d16] border-slate-800'
+              }`}>
               <button
                 onClick={() => setShowReportModal(false)}
                 className={`text-xs px-3 py-1.5 ${isLight ? 'text-slate-600 hover:text-slate-900' : 'text-slate-400 hover:text-slate-200'}`}

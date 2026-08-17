@@ -14,18 +14,14 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
   return (
     <div className="space-y-5">
       {/* Header Banner */}
-      <div className={`p-5 border ${
-        isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
-      }`}>
+      <div className={`p-5 border ${isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
+        }`}>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             <div className="flex items-center space-x-2 mb-1.5">
               <span className="text-[10px] font-extrabold px-2.5 py-0.5  bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300 border border-cyan-300 uppercase tracking-wider flex items-center gap-1">
                 <MapPin className="w-3 h-3 text-cyan-600" />
                 {currentRegion.name}
-              </span>
-              <span className="text-[10px] font-bold px-2.5 py-0.5  bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300">
-                Company Admin Full Access
               </span>
             </div>
             <h2 className="text-lg sm:text-xl font-bold">Regional Client Hospitals & IoT Fleet Overview</h2>
@@ -41,9 +37,8 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
               placeholder="Search hospital or locality..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={`text-xs pl-8 pr-3 py-2 border focus:outline-none focus:border-cyan-500 w-full sm:w-64 ${
-                isLight ? 'bg-slate-50 border-slate-200 text-slate-900' : 'bg-[#090d16] border-slate-700 text-slate-100'
-              }`}
+              className={`text-xs pl-8 pr-3 py-2 border focus:outline-none focus:border-cyan-500 w-full sm:w-64 ${isLight ? 'bg-slate-50 border-slate-200 text-slate-900' : 'bg-[#090d16] border-slate-700 text-slate-100'
+                }`}
             />
           </div>
         </div>
@@ -51,22 +46,19 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
 
       {/* Regional Aggregate Summary Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className={`p-4 border ${
-          isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
-        }`}>
+        <div className={`p-4 border ${isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
+          }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
             <span>Client Hospitals</span>
             <Building2 className="w-4 h-4 text-cyan-600" />
           </div>
           <div className="mt-2">
             <span className="text-3xl font-black text-slate-900 dark:text-slate-100">{REGIONAL_HOSPITALS.length}</span>
-            <p className="text-xs text-slate-500 mt-1">In 50 km assigned zone</p>
           </div>
         </div>
 
-        <div className={`p-4 border ${
-          isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
-        }`}>
+        <div className={`p-4 border ${isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
+          }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
             <span>ABIOT-Esafe Deployed</span>
             <Cpu className="w-4 h-4 text-emerald-600" />
@@ -77,9 +69,8 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
           </div>
         </div>
 
-        <div className={`p-4 border ${
-          isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
-        }`}>
+        <div className={`p-4 border ${isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
+          }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
             <span>Active Alarms</span>
             <ShieldAlert className="w-4 h-4 text-rose-600" />
@@ -90,9 +81,8 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
           </div>
         </div>
 
-        <div className={`p-4 border ${
-          isLight ? 'bg-emerald-50/70 border-emerald-200/90 text-slate-900' : 'bg-emerald-950/20 border-emerald-800/60 text-slate-100'
-        }`}>
+        <div className={`p-4 border ${isLight ? 'bg-emerald-50/70 border-emerald-200/90 text-slate-900' : 'bg-emerald-950/20 border-emerald-800/60 text-slate-100'
+          }`}>
           <div className="flex items-center justify-between text-xs text-slate-600 font-semibold">
             <span>Regional Pass Rate</span>
             <Award className="w-4 h-4 text-emerald-600" />
@@ -115,11 +105,10 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
             <div
               key={hosp.id}
               onClick={() => onSelectHospital(hosp)}
-              className={`p-5 border cursor-pointer transition-all hover:${
-                hosp.alarmCount > 0
-                  ? isLight ? 'bg-rose-50/50 border-rose-200 hover:border-rose-300' : 'bg-rose-950/20 border-rose-800/60 hover:border-rose-700'
-                  : isLight ? 'bg-white border-slate-200/80 hover:border-cyan-300' : 'bg-[#111622] border-slate-800 hover:border-cyan-800'
-              }`}
+              className={`p-5 border cursor-pointer transition-all hover:${hosp.alarmCount > 0
+                ? isLight ? 'bg-rose-50/50 border-rose-200 hover:border-rose-300' : 'bg-rose-950/20 border-rose-800/60 hover:border-rose-700'
+                : isLight ? 'bg-white border-slate-200/80 hover:border-cyan-300' : 'bg-[#111622] border-slate-800 hover:border-cyan-800'
+                }`}
             >
               <div className="flex items-start justify-between">
                 <div>
