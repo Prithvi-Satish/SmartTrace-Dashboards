@@ -292,18 +292,9 @@ export default function SidebarNav({
 
   return (
     <>
-      {/* Desktop & Tablet Collapsible Fixed Sidebar */}
-      <aside className={`hidden md:block sticky top-0 h-screen transition-all duration-300 shrink-0 border-r z-30 ${
-        isCollapsed ? 'w-20' : 'w-64'
-      } ${
-        isLight ? 'bg-white border-slate-200/80' : 'bg-[#0e1420] border-slate-800'
-      }`}>
-        {sidebarContent}
-      </aside>
-
-      {/* Mobile Drawer Navigation Overlay */}
+      {/* Drawer Navigation Overlay (All screen sizes) */}
       {isMobileOpen && (
-        <div className="md:hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex">
+        <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex">
           <div className={`w-72 h-[100dvh] max-h-screen shadow-2xl transition-all ${
             isLight ? 'bg-white' : 'bg-[#0e1420]'
           }`}>
