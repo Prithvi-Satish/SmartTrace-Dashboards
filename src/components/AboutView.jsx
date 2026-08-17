@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShieldCheck, Cpu, Lock, Globe, FileCheck, CheckCircle2, Award, Zap, Server, Activity, ArrowUpRight } from 'lucide-react';
+import { APP_VERSION } from '../config/version';
 
 export default function AboutView({ isLight }) {
   return (
@@ -16,7 +17,7 @@ export default function AboutView({ isLight }) {
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <h1 className="text-xl sm:text-2xl font-black tracking-tight">SmartTrace™ Telemetry System</h1>
               <span className="bg-cyan-400/20 text-cyan-200 text-xs px-2.5 py-0.5 rounded-full font-mono font-bold border border-cyan-300/30">
-                v2.4.0 Production Architecture
+                {APP_VERSION} Production Architecture
               </span>
             </div>
             <p className="text-xs text-cyan-100/90 leading-relaxed max-w-3xl">

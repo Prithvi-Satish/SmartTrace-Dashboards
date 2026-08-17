@@ -17,6 +17,7 @@ import {
   X
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { APP_BUILD_NAME } from '../config/version';
 
 export default function SidebarNav({
   activeNav,
@@ -143,7 +144,7 @@ export default function SidebarNav({
             <div className="overflow-hidden">
               <h1 className="font-bold text-sm text-slate-900 dark:text-slate-100 truncate">SmartTrace™</h1>
               <span className="text-[10px] text-cyan-600 dark:text-cyan-400 font-mono font-bold block">
-                v2.4.0 Production Build
+                {APP_BUILD_NAME}
               </span>
             </div>
           )}
