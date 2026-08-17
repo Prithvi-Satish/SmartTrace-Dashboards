@@ -93,12 +93,23 @@ export default function AuthScreen({ isLight, activeView, setActiveView, theme, 
           {/* Prominent Clean Submit Button */}
           <button
             type="submit"
-            className="w-full py-3.5 px-4 bg-[#00875a] hover:bg-[#00704a] text-white font-bold text-xs sm:text-sm -600/20 flex items-center justify-center space-x-2 transition-all cursor-pointer mt-2"
+            className="w-full py-3.5 px-4 bg-[#00875a] hover:bg-[#00704a] text-white font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 transition-all cursor-pointer mt-2"
           >
             <span>Sign In to Portal</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
+
+        {/* Demo Helper Text */}
+        <div className="mt-5 p-3 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 text-[10px] text-slate-500 dark:text-slate-400">
+          <p className="font-bold mb-1">Demo Role Logins:</p>
+          <ul className="space-y-1">
+            <li><strong className="text-slate-700 dark:text-slate-300">admin@smarttrace.med</strong> (Company Admin)</li>
+            <li><strong className="text-slate-700 dark:text-slate-300">auditor@cpcb.gov.in</strong> (CPCB Auditor)</li>
+            <li><strong className="text-slate-700 dark:text-slate-300">compliance@apollo.med</strong> (Statutory Officer)</li>
+            <li><strong className="text-slate-700 dark:text-slate-300">webadmin@smarttrace.med</strong> (Software Admin)</li>
+          </ul>
+        </div>
 
         <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 text-center">
           <p className="text-[11px] text-slate-400">

@@ -42,7 +42,8 @@ export default function SidebarNav({
           subtitle: 'Machine Digital Twin & Cycles',
           icon: Activity,
           color: 'text-cyan-600 dark:text-cyan-400',
-          activeBg: 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-500'
+          activeBg: 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-500',
+          roles: ['company_admin']
         },
         {
           id: 'regional_overview',
@@ -50,7 +51,8 @@ export default function SidebarNav({
           subtitle: '50km Regional Client Network',
           icon: Building2,
           color: 'text-[#0097a7] dark:text-cyan-400',
-          activeBg: 'bg-[#0097a7]/10 text-[#0097a7] dark:text-cyan-300 border-[#0097a7]'
+          activeBg: 'bg-[#0097a7]/10 text-[#0097a7] dark:text-cyan-300 border-[#0097a7]',
+          roles: ['company_admin']
         },
         {
           id: 'auditor_hierarchy',
@@ -58,7 +60,8 @@ export default function SidebarNav({
           subtitle: 'National Multi-Tier Hierarchy',
           icon: Globe,
           color: 'text-emerald-600 dark:text-emerald-400',
-          activeBg: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500'
+          activeBg: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500',
+          roles: ['cpcb_auditor']
         },
         {
           id: 'maintenance_desk',
@@ -66,7 +69,8 @@ export default function SidebarNav({
           subtitle: 'Device Diagnostics & Tickets',
           icon: Wrench,
           color: 'text-purple-600 dark:text-purple-400',
-          activeBg: 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500'
+          activeBg: 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500',
+          roles: ['software_admin']
         },
         {
           id: 'statutory_forms',
@@ -74,7 +78,8 @@ export default function SidebarNav({
           subtitle: 'BMWM 2016 Forms I–VI Vault',
           icon: FileCheck,
           color: 'text-[#00875a] dark:text-emerald-400',
-          activeBg: 'bg-[#00875a]/10 text-[#00875a] dark:text-emerald-300 border-[#00875a]'
+          activeBg: 'bg-[#00875a]/10 text-[#00875a] dark:text-emerald-300 border-[#00875a]',
+          roles: ['statutory_officer']
         }
       ]
     },
@@ -166,47 +171,54 @@ export default function SidebarNav({
       <div className={`flex-1 overflow-y-auto p-3 space-y-5 ${
         isLight ? 'bg-white' : 'bg-[#0e1420]'
       }`}>
-        {navItems.map((group) => (
-          <div key={group.section} className="space-y-1">
-            {!isCollapsed && (
-              <span className="text-[10px] font-bold tracking-wider uppercase text-slate-400 px-3 block mb-1.5">
-                {group.section}
-              </span>
-            )}
+        {navItems.map((group) => {
+          // Filter items based on user role
+          const filteredItems = group.items.filter(item => !item.roles || item.roles.includes(currentUser?.role));
+          
+          if (filteredItems.length === 0) return null;
 
-            {group.items.map((item) => {
-              const IconComponent = item.icon;
-              const isActive = activeNav === item.id;
+          return (
+            <div key={group.section} className="space-y-1">
+              {!isCollapsed && (
+                <span className="text-[10px] font-bold tracking-wider uppercase text-slate-400 px-3 block mb-1.5">
+                  {group.section}
+                </span>
+              )}
 
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => handleSelectNav(item)}
-                  className={`w-full p-2.5 border flex items-center transition-all ${
-                    isCollapsed ? 'justify-center' : 'justify-start space-x-3'
-                  } ${
-                    isActive
-                      ? `${item.activeBg} font-bold border-l-4`
-                      : isLight
-                      ? 'border-transparent text-slate-600 hover:bg-slate-100/80 hover:text-slate-900'
-                      : 'border-transparent text-slate-400 hover:bg-slate-800/60 hover:text-slate-100'
-                  }`}
-                  title={isCollapsed ? item.label : undefined}
-                >
-                  <IconComponent className={`w-5 h-5 shrink-0 ${item.color}`} />
-                  {!isCollapsed && (
-                    <div className="text-left overflow-hidden">
-                      <span className="text-xs block font-bold truncate leading-snug">{item.label}</span>
-                      <span className={`text-[10px] block truncate ${isLight ? 'text-slate-400' : 'text-slate-400'}`}>
-                        {item.subtitle}
-                      </span>
-                    </div>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        ))}
+              {filteredItems.map((item) => {
+                const IconComponent = item.icon;
+                const isActive = activeNav === item.id;
+
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleSelectNav(item)}
+                    className={`w-full p-2.5 border flex items-center transition-all ${
+                      isCollapsed ? 'justify-center' : 'justify-start space-x-3'
+                    } ${
+                      isActive
+                        ? `${item.activeBg} font-bold border-l-4`
+                        : isLight
+                        ? 'border-transparent text-slate-600 hover:bg-slate-100/80 hover:text-slate-900'
+                        : 'border-transparent text-slate-400 hover:bg-slate-800/60 hover:text-slate-100'
+                    }`}
+                    title={isCollapsed ? item.label : undefined}
+                  >
+                    <IconComponent className={`w-5 h-5 shrink-0 ${item.color}`} />
+                    {!isCollapsed && (
+                      <div className="text-left overflow-hidden">
+                        <span className="text-xs block font-bold truncate leading-snug">{item.label}</span>
+                        <span className={`text-[10px] block truncate ${isLight ? 'text-slate-400' : 'text-slate-400'}`}>
+                          {item.subtitle}
+                        </span>
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
 
       {/* Opaque Footer Control Box (Theme, Settings & User Profile) */}
@@ -299,3 +311,4 @@ export default function SidebarNav({
     </>
   );
 }
+// force vite reload
