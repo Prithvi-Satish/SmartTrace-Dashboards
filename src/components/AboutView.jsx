@@ -5,11 +5,11 @@ export default function AboutView({ isLight }) {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className={`p-6 rounded-2xl border shadow-xs ${
+      <div className={`p-6 border ${
         isLight ? 'bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-700 text-white' : 'bg-gradient-to-r from-cyan-950 via-slate-900 to-indigo-950 text-white border-slate-800'
       }`}>
         <div className="flex items-start space-x-4">
-          <div className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shrink-0">
+          <div className="p-3 bg-white/10 backdrop-blur-md border border-white/20 shrink-0">
             <ShieldCheck className="w-8 h-8 text-cyan-300" />
           </div>
           <div>
@@ -47,10 +47,10 @@ export default function AboutView({ isLight }) {
 
       {/* Core Architectural Pillars */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className={`p-5 rounded-2xl border ${
+        <div className={`p-5 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
-          <div className="w-9 h-9 rounded-xl bg-cyan-100 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-400 flex items-center justify-center mb-3">
+          <div className="w-9 h-9 bg-cyan-100 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-400 flex items-center justify-center mb-3">
             <Cpu className="w-5 h-5" />
           </div>
           <h3 className="text-sm font-bold mb-1">1. IoT Machine Digital Twin</h3>
@@ -59,10 +59,10 @@ export default function AboutView({ isLight }) {
           </p>
         </div>
 
-        <div className={`p-5 rounded-2xl border ${
+        <div className={`p-5 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
-          <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400 flex items-center justify-center mb-3">
+          <div className="w-9 h-9 bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400 flex items-center justify-center mb-3">
             <FileCheck className="w-5 h-5" />
           </div>
           <h3 className="text-sm font-bold mb-1">2. Statutory KSPCB Forms Center</h3>
@@ -71,10 +71,10 @@ export default function AboutView({ isLight }) {
           </p>
         </div>
 
-        <div className={`p-5 rounded-2xl border ${
+        <div className={`p-5 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
-          <div className="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-400 flex items-center justify-center mb-3">
+          <div className="w-9 h-9 bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-400 flex items-center justify-center mb-3">
             <Lock className="w-5 h-5" />
           </div>
           <h3 className="text-sm font-bold mb-1">3. Cryptographic Chain of Custody</h3>
@@ -85,7 +85,7 @@ export default function AboutView({ isLight }) {
       </div>
 
       {/* System Specifications Sheet */}
-      <div className={`p-5 rounded-2xl border ${
+      <div className={`p-5 border ${
         isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
       }`}>
         <h3 className="text-sm font-bold mb-3 flex items-center gap-2">
@@ -94,15 +94,15 @@ export default function AboutView({ isLight }) {
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#090d16] border border-slate-200 dark:border-slate-800">
+          <div className="p-3 bg-slate-50 dark:bg-[#090d16] border border-slate-200 dark:border-slate-800">
             <span className="text-slate-400 block font-semibold mb-1">REGULATORY COMPLIANCE</span>
             <span className="font-bold text-slate-800 dark:text-slate-200">BMWM Rules 2016 • KSPCB Guidelines</span>
           </div>
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#090d16] border border-slate-200 dark:border-slate-800">
+          <div className="p-3 bg-slate-50 dark:bg-[#090d16] border border-slate-200 dark:border-slate-800">
             <span className="text-slate-400 block font-semibold mb-1">WEIGHT MATCHING ENGINE</span>
             <span className="font-bold text-slate-800 dark:text-slate-200">±5% Threshold Variance Warning</span>
           </div>
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#090d16] border border-slate-200 dark:border-slate-800">
+          <div className="p-3 bg-slate-50 dark:bg-[#090d16] border border-slate-200 dark:border-slate-800">
             <span className="text-slate-400 block font-semibold mb-1">HARDWARE INTEGRATION</span>
             <span className="font-bold text-slate-800 dark:text-slate-200">Bluetooth Scale & GS1 2D Barcodes</span>
           </div>

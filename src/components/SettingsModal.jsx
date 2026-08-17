@@ -27,7 +27,7 @@ export default function SettingsModal({ onClose, isLight }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/70 backdrop-blur-md overflow-y-auto">
-      <div className={`w-full max-w-3xl rounded-2xl border shadow-2xl overflow-hidden flex flex-col my-auto transition-colors ${
+      <div className={`w-full max-w-3xl border overflow-hidden flex flex-col my-auto transition-colors ${
         isLight ? 'bg-white border-slate-200 text-slate-900' : 'bg-[#111723] border-slate-800 text-slate-100'
       }`}>
         
@@ -36,7 +36,7 @@ export default function SettingsModal({ onClose, isLight }) {
           isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
         }`}>
           <div className="flex items-center space-x-3">
-            <div className="p-2.5 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-xl text-white shadow-md">
+            <div className="p-2.5 bg-gradient-to-br from-cyan-600 to-blue-600 text-white ">
               <Shield className="w-5 h-5" />
             </div>
             <div>
@@ -49,7 +49,7 @@ export default function SettingsModal({ onClose, isLight }) {
 
           <button
             onClick={onClose}
-            className={`p-2 rounded-xl border transition-colors ${
+            className={`p-2 border transition-colors ${
               isLight ? 'hover:bg-slate-200 text-slate-500 border-slate-200' : 'hover:bg-slate-800 text-slate-400 border-slate-700'
             }`}
           >
@@ -104,7 +104,7 @@ export default function SettingsModal({ onClose, isLight }) {
           {/* PROFILE TAB */}
           {activeTab === 'profile' && (
             <form onSubmit={handleSaveProfile} className="space-y-4">
-              <div className="flex items-center space-x-4 p-3.5 rounded-xl border bg-slate-50 dark:bg-[#090d16] border-slate-200 dark:border-slate-800">
+              <div className="flex items-center space-x-4 p-3.5 border bg-slate-50 dark:bg-[#090d16] border-slate-200 dark:border-slate-800">
                 <img
                   src={currentUser?.avatar}
                   alt={currentUser?.name}
@@ -127,7 +127,7 @@ export default function SettingsModal({ onClose, isLight }) {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className={`w-full px-3 py-2 text-xs rounded-xl border focus:outline-none focus:border-cyan-500 ${
+                  className={`w-full px-3 py-2 text-xs border focus:outline-none focus:border-cyan-500 ${
                     isLight ? 'bg-slate-50 border-slate-300' : 'bg-[#090d16] border-slate-800'
                   }`}
                 />
@@ -139,7 +139,7 @@ export default function SettingsModal({ onClose, isLight }) {
                   type="text"
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
-                  className={`w-full px-3 py-2 text-xs rounded-xl border focus:outline-none focus:border-cyan-500 ${
+                  className={`w-full px-3 py-2 text-xs border focus:outline-none focus:border-cyan-500 ${
                     isLight ? 'bg-slate-50 border-slate-300' : 'bg-[#090d16] border-slate-800'
                   }`}
                 />
@@ -148,7 +148,7 @@ export default function SettingsModal({ onClose, isLight }) {
               <div className="pt-2 flex justify-end">
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-xl shadow-md flex items-center space-x-1.5"
+                  className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold flex items-center space-x-1.5"
                 >
                   <Save className="w-4 h-4" />
                   <span>Save Changes</span>
@@ -162,7 +162,7 @@ export default function SettingsModal({ onClose, isLight }) {
             <div className="space-y-4">
               <h4 className="text-xs font-bold">Role-Based Access Control (RBAC) Governance Matrix</h4>
               
-              <div className="overflow-x-auto border rounded-xl border-slate-200 dark:border-slate-800">
+              <div className="overflow-x-auto border border-slate-200 dark:border-slate-800">
                 <table className="w-full text-xs text-left">
                   <thead className={`text-[10px] uppercase font-bold border-b ${
                     isLight ? 'bg-slate-100 border-slate-200' : 'bg-[#090d16] border-slate-800'
@@ -232,7 +232,7 @@ export default function SettingsModal({ onClose, isLight }) {
 
               {/* Admin Access Restriction Notice for Non-Admins */}
               {currentUser?.role !== 'admin' && (
-                <div className="p-3.5 rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-xs flex items-start space-x-2.5">
+                <div className="p-3.5 border border-amber-300 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-xs flex items-start space-x-2.5">
                   <Lock className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold block">🔒 Restricted Admin Capability</span>
@@ -255,7 +255,7 @@ export default function SettingsModal({ onClose, isLight }) {
                   return (
                     <div
                       key={iot.unit}
-                      className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${
+                      className={`p-3 border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${
                         isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
                       }`}
                     >
@@ -282,7 +282,7 @@ export default function SettingsModal({ onClose, isLight }) {
                         {isAdmin ? (
                           <button
                             onClick={() => alert(`Reconfiguring hardware ECDSA Key & eSIM tunnel for ${iot.unit}...`)}
-                            className="px-2.5 py-1 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-[10px] font-bold transition-all shadow-sm shrink-0"
+                            className="px-2.5 py-1 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-[10px] font-bold transition-all shrink-0"
                           >
                             Reconfigure Key
                           </button>

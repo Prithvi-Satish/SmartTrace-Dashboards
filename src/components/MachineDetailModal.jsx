@@ -36,7 +36,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/70 backdrop-blur-md overflow-y-auto">
-      <div className={`w-full max-w-4xl rounded-2xl border shadow-2xl overflow-hidden flex flex-col my-auto transition-colors ${
+      <div className={`w-full max-w-4xl border overflow-hidden flex flex-col my-auto transition-colors ${
         isLight ? 'bg-white border-slate-200 text-slate-900' : 'bg-[#111723] border-slate-800 text-slate-100'
       }`}>
         
@@ -45,7 +45,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
           isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
         }`}>
           <div className="flex items-center space-x-3">
-            <div className="p-3 bg-gradient-to-br from-cyan-600 to-blue-600 rounded-xl text-white shadow-lg shadow-cyan-600/20">
+            <div className="p-3 bg-gradient-to-br from-cyan-600 to-blue-600 text-white -600/20">
               <Cpu className="w-6 h-6" />
             </div>
             <div>
@@ -71,7 +71,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
 
           <button
             onClick={onClose}
-            className={`p-2 rounded-xl border transition-colors ${
+            className={`p-2 border transition-colors ${
               isLight ? 'hover:bg-slate-200 text-slate-500 border-slate-200' : 'hover:bg-slate-800 text-slate-400 border-slate-700'
             }`}
           >
@@ -137,7 +137,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
           
           {/* Active Alarm or Maintenance Warning Banner */}
           {(machine.status === 'Alarm' || machine.status === 'Maintenance' || machine.alarmMessage) && (
-            <div className={`p-4 rounded-xl border flex items-start space-x-3 shadow-sm ${
+            <div className={`p-4 border flex items-start space-x-3 ${
               machine.status === 'Alarm'
                 ? 'bg-rose-50 border-rose-300 text-rose-900 dark:bg-rose-950/40 dark:border-rose-800 dark:text-rose-200'
                 : 'bg-amber-50 border-amber-300 text-amber-900 dark:bg-amber-950/40 dark:border-amber-800 dark:text-amber-200'
@@ -168,27 +168,27 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
             <div className="space-y-4">
               {/* Identity Cards Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                <div className={`p-3.5 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                <div className={`p-3.5 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
                   <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider block">Serial Number</span>
                   <span className="text-xs font-mono font-bold">{machine.serialNumber}</span>
                 </div>
 
-                <div className={`p-3.5 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                <div className={`p-3.5 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
                   <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider block">Procurement Date</span>
                   <span className="text-xs font-bold">{machine.procurementDate}</span>
                 </div>
 
-                <div className={`p-3.5 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                <div className={`p-3.5 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
                   <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider block">Installation Date</span>
                   <span className="text-xs font-bold text-cyan-600 dark:text-cyan-400">{machine.installationDate}</span>
                 </div>
 
-                <div className={`p-3.5 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                <div className={`p-3.5 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
                   <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider block">Firmware Version</span>
                   <span className="text-xs font-mono font-bold">{machine.firmwareVersion}</span>
                 </div>
 
-                <div className={`p-3.5 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                <div className={`p-3.5 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
                   <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider block">Calibration Status</span>
                   <span className={`text-xs font-bold ${
                     machine.calibrationStatus.includes('VALID') ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
@@ -197,14 +197,14 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                   </span>
                 </div>
 
-                <div className={`p-3.5 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                <div className={`p-3.5 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
                   <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider block">GPS Coordinates</span>
                   <span className="text-xs font-mono">{machine.gpsCoordinates}</span>
                 </div>
               </div>
 
               {/* IoT Connectivity & Security Card */}
-              <div className={`p-4 rounded-xl border shadow-sm ${
+              <div className={`p-4 border ${
                 isLight ? 'bg-gradient-to-r from-cyan-50 to-blue-50 border-cyan-200' : 'bg-gradient-to-r from-cyan-950/20 to-slate-900 border-cyan-800/40'
               }`}>
                 <div className="flex items-center justify-between mb-3">
@@ -212,7 +212,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                     <Radio className="w-5 h-5 text-cyan-600 dark:text-cyan-400 animate-pulse" />
                     <h4 className="text-xs font-bold">IoT Connectivity & End-to-End Cryptography</h4>
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-cyan-600 text-white shadow-sm">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-cyan-600 text-white ">
                     {machine.connectivityMode}
                   </span>
                 </div>
@@ -279,7 +279,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                       key={phaseName}
                       className={`p-2.5 rounded-lg border text-xs flex items-center space-x-2 transition-all ${
                         isCurrent
-                          ? 'bg-cyan-600 text-white border-cyan-500 font-bold shadow-md shadow-cyan-600/30 ring-2 ring-cyan-400/40'
+                          ? 'bg-cyan-600 text-white border-cyan-500 font-bold -600/30 ring-2 ring-cyan-400/40'
                           : isCompleted
                           ? isLight ? 'bg-emerald-50 text-emerald-800 border-emerald-300' : 'bg-emerald-950/30 text-emerald-300 border-emerald-800/50'
                           : isLight ? 'bg-slate-50 text-slate-400 border-slate-200' : 'bg-[#090d16] text-slate-600 border-slate-800/60'
@@ -305,7 +305,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {/* Vacuum Pump */}
-                <div className={`p-4 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                <div className={`p-4 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
                   <div className="flex justify-between items-center text-xs mb-2">
                     <span className="font-bold">Vacuum Pump Health</span>
                     <span className="font-bold text-cyan-600 dark:text-cyan-400">{machine.pumpHealth}%</span>
@@ -316,7 +316,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                 </div>
 
                 {/* Blower Fan */}
-                <div className={`p-4 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                <div className={`p-4 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
                   <div className="flex justify-between items-center text-xs mb-2">
                     <span className="font-bold">Blower Fan Health</span>
                     <span className="font-bold text-emerald-600 dark:text-emerald-400">{machine.fanHealth}%</span>
@@ -327,7 +327,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                 </div>
 
                 {/* Evaporator Motor */}
-                <div className={`p-4 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                <div className={`p-4 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
                   <div className="flex justify-between items-center text-xs mb-2">
                     <span className="font-bold">Evaporator Motor Health</span>
                     <span className="font-bold text-purple-600 dark:text-purple-400">{machine.motorHealth}%</span>
@@ -338,7 +338,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                 </div>
 
                 {/* Filter Life */}
-                <div className={`p-4 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                <div className={`p-4 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
                   <div className="flex justify-between items-center text-xs mb-2">
                     <span className="font-bold">HEPA Filter Remaining</span>
                     <span className="font-bold text-amber-600 dark:text-amber-400">{machine.filterLife}%</span>
@@ -349,7 +349,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                 </div>
 
                 {/* Catalyst Life */}
-                <div className={`p-4 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                <div className={`p-4 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
                   <div className="flex justify-between items-center text-xs mb-2">
                     <span className="font-bold">Catalyst Remaining</span>
                     <span className="font-bold text-indigo-600 dark:text-indigo-400">{machine.catalystLife}%</span>
@@ -360,7 +360,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                 </div>
 
                 {/* Door Cycles */}
-                <div className={`p-4 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                <div className={`p-4 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
                   <div className="flex justify-between items-center text-xs mb-1">
                     <span className="font-bold">Total Door Actuations</span>
                     <span className="font-mono font-bold text-xs">{machine.doorCycles} cycles</span>
@@ -378,7 +378,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                 <h4 className="text-xs font-bold">Downloadable IQ/OQ/PQ & Maintenance Certificates</h4>
                 <button
                   onClick={() => handleDownloadDoc(`Complete_Maintenance_History_${machine.id}.pdf`)}
-                  className="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-xs font-bold flex items-center space-x-1.5 shadow-sm"
+                  className="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-xs font-bold flex items-center space-x-1.5 "
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download All Records (PDF)</span>
@@ -389,7 +389,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                 {machine.maintenanceRecords.map((record) => (
                   <div
                     key={record.id}
-                    className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${
+                    className={`p-3 border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${
                       isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
                     }`}
                   >
@@ -441,7 +441,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
 
           <button
             onClick={onClose}
-            className={`px-4 py-2 rounded-xl text-xs font-bold border ${
+            className={`px-4 py-2 text-xs font-bold border ${
               isLight ? 'bg-white hover:bg-slate-100 border-slate-300 text-slate-800' : 'bg-slate-900 hover:bg-slate-800 border-slate-700 text-slate-200'
             }`}
           >

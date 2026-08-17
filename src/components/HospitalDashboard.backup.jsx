@@ -44,7 +44,7 @@ export default function HospitalDashboardBackup({ isLight }) {
 
   return (
     <div className="space-y-5">
-      <div className={`p-3.5 rounded-xl border ${isLight ? 'bg-white' : 'bg-[#111622]'}`}>
+      <div className={`p-3.5 border ${isLight ? 'bg-white' : 'bg-[#111622]'}`}>
         <h2 className="text-base font-bold">Dashboard 2: Hospital Fleet Operations (Backup File)</h2>
       </div>
     </div>

@@ -60,7 +60,7 @@ export default function AuditorHierarchyView({ isLight }) {
   return (
     <div className="space-y-5">
       {/* CPCB Government Auditor Top Banner & Breadcrumb Hierarchy Tracker */}
-      <div className={`p-5 rounded-2xl border shadow-xs ${
+      <div className={`p-5 border ${
         isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
       }`}>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -111,7 +111,7 @@ export default function AuditorHierarchyView({ isLight }) {
             <div className="flex items-center space-x-2 self-start md:self-center">
               <button
                 onClick={goToGlobal}
-                className="px-3 py-1.5 rounded-xl border border-teal-300 dark:border-teal-800/80 bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 hover:bg-teal-100 text-xs font-bold flex items-center space-x-1.5 transition-all"
+                className="px-3 py-1.5 border border-teal-300 dark:border-teal-800/80 bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 hover:bg-teal-100 text-xs font-bold flex items-center space-x-1.5 transition-all"
                 title="Jump all the way back to Global National Level"
               >
                 <Home className="w-3.5 h-3.5" />
@@ -123,7 +123,7 @@ export default function AuditorHierarchyView({ isLight }) {
                   if (level === 'hospital') goToUmbrella();
                   else if (level === 'umbrella') goToGlobal();
                 }}
-                className={`px-3 py-1.5 rounded-xl border text-xs font-bold flex items-center space-x-1.5 transition-all ${
+                className={`px-3 py-1.5 border text-xs font-bold flex items-center space-x-1.5 transition-all ${
                   isLight ? 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-700' : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200'
                 }`}
               >
@@ -140,7 +140,7 @@ export default function AuditorHierarchyView({ isLight }) {
         <div className="space-y-5">
           {/* National Aggregate Metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className={`p-4 rounded-2xl border shadow-xs ${
+            <div className={`p-4 border ${
               isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
             }`}>
               <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
@@ -153,7 +153,7 @@ export default function AuditorHierarchyView({ isLight }) {
               </div>
             </div>
 
-            <div className={`p-4 rounded-2xl border shadow-xs ${
+            <div className={`p-4 border ${
               isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
             }`}>
               <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
@@ -166,7 +166,7 @@ export default function AuditorHierarchyView({ isLight }) {
               </div>
             </div>
 
-            <div className={`p-4 rounded-2xl border shadow-xs ${
+            <div className={`p-4 border ${
               isLight ? 'bg-emerald-50/70 border-emerald-200/90 text-slate-900' : 'bg-emerald-950/20 border-emerald-800/60 text-slate-100'
             }`}>
               <div className="flex items-center justify-between text-xs text-slate-600 font-semibold">
@@ -179,7 +179,7 @@ export default function AuditorHierarchyView({ isLight }) {
               </div>
             </div>
 
-            <div className={`p-4 rounded-2xl border shadow-xs ${
+            <div className={`p-4 border ${
               isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
             }`}>
               <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
@@ -204,7 +204,7 @@ export default function AuditorHierarchyView({ isLight }) {
                 <div
                   key={grp.id}
                   onClick={() => handleSelectGroup(grp)}
-                  className={`p-5 rounded-2xl border cursor-pointer transition-all hover:scale-[1.01] hover:shadow-md ${
+                  className={`p-5 border cursor-pointer transition-all hover:${
                     isLight ? 'bg-white border-slate-200/80 hover:border-teal-400' : 'bg-[#111622] border-slate-800 hover:border-teal-700'
                   }`}
                 >
@@ -220,7 +220,7 @@ export default function AuditorHierarchyView({ isLight }) {
                     <span className="text-2xl font-black text-emerald-600 dark:text-emerald-400">{grp.overallCompliance}%</span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 my-4 p-3 rounded-xl bg-slate-50 dark:bg-[#090d16] border border-slate-200/60 dark:border-slate-800 text-center text-xs">
+                  <div className="grid grid-cols-3 gap-2 my-4 p-3 bg-slate-50 dark:bg-[#090d16] border border-slate-200/60 dark:border-slate-800 text-center text-xs">
                     <div>
                       <span className="text-slate-500 text-[10px] block">Hospitals</span>
                       <strong className="text-slate-800 dark:text-slate-200 font-bold">{grp.totalHospitals} Units</strong>
@@ -255,7 +255,7 @@ export default function AuditorHierarchyView({ isLight }) {
       {/* LEVEL 2: UMBRELLA VENDOR / REGIONAL GROUP VIEW */}
       {level === 'umbrella' && selectedGroup && (
         <div className="space-y-4">
-          <div className={`p-4 rounded-xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+          <div className={`p-4 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
             <h3 className="text-sm font-bold flex items-center gap-2">
               <Building2 className="w-4 h-4 text-teal-600" />
               <span>Hospitals Operating Under {selectedGroup.name}</span>
@@ -268,7 +268,7 @@ export default function AuditorHierarchyView({ isLight }) {
               <div
                 key={hosp.id}
                 onClick={() => handleSelectHospital(hosp)}
-                className={`p-4 rounded-2xl border cursor-pointer transition-all hover:border-teal-500 ${
+                className={`p-4 border cursor-pointer transition-all hover:border-teal-500 ${
                   isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
                 }`}
               >
@@ -297,7 +297,7 @@ export default function AuditorHierarchyView({ isLight }) {
       {level === 'hospital' && selectedHospital && (
         <div className="space-y-5">
           {/* Hospital Header & 5-Year Backup Export Button */}
-          <div className={`p-5 rounded-2xl border shadow-xs ${
+          <div className={`p-5 border ${
             isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
           }`}>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -312,7 +312,7 @@ export default function AuditorHierarchyView({ isLight }) {
               {/* 5-Year Data Archival Export Button */}
               <button
                 onClick={handleExport5YearArchive}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center space-x-2 shadow-xs transition-all self-start md:self-center shrink-0"
+                className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2.5 flex items-center space-x-2 transition-all self-start md:self-center shrink-0"
               >
                 <Download className="w-4 h-4" />
                 <span>Export 5-Year Archival Backup Data</span>
@@ -321,13 +321,13 @@ export default function AuditorHierarchyView({ isLight }) {
           </div>
 
           {/* Timeframe Filter Selector Tabs */}
-          <div className={`p-1.5 rounded-2xl border flex items-center gap-1.5 text-xs font-bold ${
+          <div className={`p-1.5 border flex items-center gap-1.5 text-xs font-bold ${
             isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
           }`}>
             <button
               onClick={() => setTimePeriod('daily')}
-              className={`flex-1 py-2 rounded-xl transition-all ${
-                timePeriod === 'daily' ? 'bg-teal-600 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
+              className={`flex-1 py-2 transition-all ${
+                timePeriod === 'daily' ? 'bg-teal-600 text-white ' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
               }`}
             >
               📅 Daily Logs
@@ -335,8 +335,8 @@ export default function AuditorHierarchyView({ isLight }) {
 
             <button
               onClick={() => setTimePeriod('weekly')}
-              className={`flex-1 py-2 rounded-xl transition-all ${
-                timePeriod === 'weekly' ? 'bg-teal-600 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
+              className={`flex-1 py-2 transition-all ${
+                timePeriod === 'weekly' ? 'bg-teal-600 text-white ' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
               }`}
             >
               📅 Weekly Logs
@@ -344,8 +344,8 @@ export default function AuditorHierarchyView({ isLight }) {
 
             <button
               onClick={() => setTimePeriod('monthly')}
-              className={`flex-1 py-2 rounded-xl transition-all ${
-                timePeriod === 'monthly' ? 'bg-teal-600 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
+              className={`flex-1 py-2 transition-all ${
+                timePeriod === 'monthly' ? 'bg-teal-600 text-white ' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
               }`}
             >
               📅 Monthly Logs
@@ -353,8 +353,8 @@ export default function AuditorHierarchyView({ isLight }) {
 
             <button
               onClick={() => setTimePeriod('yearly')}
-              className={`flex-1 py-2 rounded-xl transition-all ${
-                timePeriod === 'yearly' ? 'bg-teal-600 text-white shadow-xs' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
+              className={`flex-1 py-2 transition-all ${
+                timePeriod === 'yearly' ? 'bg-teal-600 text-white ' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
               }`}
             >
               📅 5-Year Archival Backups (2022-2026)
@@ -362,7 +362,7 @@ export default function AuditorHierarchyView({ isLight }) {
           </div>
 
           {/* Time Horizon Data Display */}
-          <div className={`p-5 rounded-2xl border shadow-xs ${
+          <div className={`p-5 border ${
             isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
           }`}>
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
@@ -489,7 +489,7 @@ export default function AuditorHierarchyView({ isLight }) {
 
             {timePeriod === 'yearly' && (
               <div className="space-y-4">
-                <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs flex items-center justify-between">
+                <div className="p-3.5 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
                     <span><strong>5-Year Immutable Backup Vault (2022 - 2026):</strong> All cryptographic hash chain logs are securely preserved and verified.</span>

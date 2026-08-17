@@ -8,14 +8,14 @@ export default function ProfileView({ isLight }) {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       {/* Profile Card */}
-      <div className={`p-6 rounded-2xl border shadow-xs ${
+      <div className={`p-6 border ${
         isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
       }`}>
         <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-5 text-center sm:text-left">
           <img
             src={currentUser?.avatar}
             alt={currentUser?.name}
-            className="w-20 h-20 rounded-2xl object-cover border-2 border-cyan-500 shadow-md shrink-0"
+            className="w-20 h-20 object-cover border-2 border-cyan-500 shrink-0"
           />
           <div className="flex-1">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -43,7 +43,7 @@ export default function ProfileView({ isLight }) {
       </div>
 
       {/* Permissions & Security Credentials */}
-      <div className={`p-6 rounded-2xl border ${
+      <div className={`p-6 border ${
         isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
       }`}>
         <h3 className="text-sm font-bold mb-4 flex items-center gap-2">
@@ -53,14 +53,14 @@ export default function ProfileView({ isLight }) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
           {currentUser?.permissions?.map((perm) => (
-            <div key={perm} className="p-3 rounded-xl bg-slate-50 dark:bg-[#090d16] border border-slate-200 dark:border-slate-800 flex items-center space-x-2 text-xs">
+            <div key={perm} className="p-3 bg-slate-50 dark:bg-[#090d16] border border-slate-200 dark:border-slate-800 flex items-center space-x-2 text-xs">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               <span className="font-mono text-slate-700 dark:text-slate-300">{perm}</span>
             </div>
           ))}
         </div>
 
-        <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#090d16] border border-slate-200 dark:border-slate-800 text-xs space-y-2">
+        <div className="p-4 bg-slate-50 dark:bg-[#090d16] border border-slate-200 dark:border-slate-800 text-xs space-y-2">
           <div className="flex items-center justify-between font-mono">
             <span className="text-slate-400">mTLS Certificate Fingerprint:</span>
             <span className="font-bold text-cyan-600">ECDSA-P256-482190A</span>

@@ -141,12 +141,12 @@ export default function StatutoryFormsDashboard({ isLight }) {
   return (
     <div className="space-y-6">
       {/* Top Banner Header */}
-      <div className={`p-5 rounded-2xl border shadow-xs ${
+      <div className={`p-5 border ${
         isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
       }`}>
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex items-start space-x-3.5">
-            <div className="w-11 h-11 rounded-2xl bg-[#00875a]/10 dark:bg-[#00875a]/20 border border-[#00875a]/30 flex items-center justify-center shrink-0 mt-0.5">
+            <div className="w-11 h-11 bg-[#00875a]/10 dark:bg-[#00875a]/20 border border-[#00875a]/30 flex items-center justify-center shrink-0 mt-0.5">
               <FileCheck className="w-6 h-6 text-[#00875a] dark:text-emerald-400" />
             </div>
             <div>
@@ -167,14 +167,14 @@ export default function StatutoryFormsDashboard({ isLight }) {
           <div className="flex items-center gap-2 flex-wrap shrink-0">
             <button
               onClick={() => generateKSPCBForm4PDF(data)}
-              className="bg-[#00875a] hover:bg-[#00704a] text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center space-x-2 transition-all shadow-xs"
+              className="bg-[#00875a] hover:bg-[#00704a] text-white text-xs font-bold px-3.5 py-2 flex items-center space-x-2 transition-all "
             >
               <Printer className="w-4 h-4" />
               <span>Export KSPCB Form IV PDF</span>
             </button>
             <button
               onClick={() => setShowForm1Modal(true)}
-              className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center space-x-2 transition-all shadow-xs"
+              className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 flex items-center space-x-2 transition-all "
             >
               <PlusCircle className="w-4 h-4" />
               <span>Log Accident (Form I)</span>
@@ -186,9 +186,9 @@ export default function StatutoryFormsDashboard({ isLight }) {
         <div className="flex items-center space-x-2 mt-5 pt-4 border-t border-slate-200 dark:border-slate-800 overflow-x-auto pb-1">
           <button
             onClick={() => setActiveTab('vault')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all whitespace-nowrap ${
+            className={`px-4 py-2 text-xs font-bold flex items-center space-x-2 transition-all whitespace-nowrap ${
               activeTab === 'vault'
-                ? 'bg-[#00875a] text-white shadow-xs'
+                ? 'bg-[#00875a] text-white '
                 : isLight ? 'bg-slate-100 hover:bg-slate-200 text-slate-700' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'
             }`}
           >
@@ -198,9 +198,9 @@ export default function StatutoryFormsDashboard({ isLight }) {
 
           <button
             onClick={() => setActiveTab('sop')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all whitespace-nowrap ${
+            className={`px-4 py-2 text-xs font-bold flex items-center space-x-2 transition-all whitespace-nowrap ${
               activeTab === 'sop'
-                ? 'bg-[#00875a] text-white shadow-xs'
+                ? 'bg-[#00875a] text-white '
                 : isLight ? 'bg-slate-100 hover:bg-slate-200 text-slate-700' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'
             }`}
           >
@@ -210,9 +210,9 @@ export default function StatutoryFormsDashboard({ isLight }) {
 
           <button
             onClick={() => setActiveTab('ocr')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all whitespace-nowrap ${
+            className={`px-4 py-2 text-xs font-bold flex items-center space-x-2 transition-all whitespace-nowrap ${
               activeTab === 'ocr'
-                ? 'bg-[#00875a] text-white shadow-xs'
+                ? 'bg-[#00875a] text-white '
                 : isLight ? 'bg-slate-100 hover:bg-slate-200 text-slate-700' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'
             }`}
           >
@@ -222,9 +222,9 @@ export default function StatutoryFormsDashboard({ isLight }) {
 
           <button
             onClick={() => setActiveTab('segregation')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all whitespace-nowrap ${
+            className={`px-4 py-2 text-xs font-bold flex items-center space-x-2 transition-all whitespace-nowrap ${
               activeTab === 'segregation'
-                ? 'bg-[#00875a] text-white shadow-xs'
+                ? 'bg-[#00875a] text-white '
                 : isLight ? 'bg-slate-100 hover:bg-slate-200 text-slate-700' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'
             }`}
           >
@@ -245,9 +245,9 @@ export default function StatutoryFormsDashboard({ isLight }) {
               const queue = await getDecryptedOfflineQueue();
               setOfflineQueue(queue);
             }}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all whitespace-nowrap ${
+            className={`px-4 py-2 text-xs font-bold flex items-center space-x-2 transition-all whitespace-nowrap ${
               activeTab === 'crypto_desk'
-                ? 'bg-purple-600 text-white shadow-xs'
+                ? 'bg-purple-600 text-white '
                 : isLight ? 'bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200' : 'bg-purple-950/40 hover:bg-purple-900/50 text-purple-300 border border-purple-800/60'
             }`}
           >
@@ -259,7 +259,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
 
       {/* Top 4 KPI Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className={`p-4 rounded-2xl border ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
@@ -272,7 +272,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
           </div>
         </div>
 
-        <div className={`p-4 rounded-2xl border ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
@@ -285,7 +285,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
           </div>
         </div>
 
-        <div className={`p-4 rounded-2xl border ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
@@ -298,7 +298,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
           </div>
         </div>
 
-        <div className={`p-4 rounded-2xl border ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
@@ -315,7 +315,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
       {/* TAB 1: STATUTORY FORMS VAULT */}
       {activeTab === 'vault' && (
         <div className="space-y-5">
-          <div className={`p-5 rounded-2xl border ${
+          <div className={`p-5 border ${
             isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
           }`}>
             <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center justify-between">
@@ -327,7 +327,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
               {data.formsSummary.map((form) => (
                 <div
                   key={form.id}
-                  className={`p-4 rounded-xl border transition-all ${
+                  className={`p-4 border transition-all ${
                     isLight ? 'bg-slate-50 hover:bg-slate-100/80 border-slate-200' : 'bg-[#090d16] hover:bg-[#0f1523] border-slate-800'
                   }`}
                 >
@@ -364,7 +364,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
           </div>
 
           {/* Form VI Handover Pickup Manifest & Variance Table */}
-          <div className={`p-5 rounded-2xl border ${
+          <div className={`p-5 border ${
             isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
           }`}>
             <div className="flex items-center justify-between mb-4">
@@ -430,7 +430,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
       {activeTab === 'sop' && (
         <div className="space-y-5">
           {/* Autoclave Spore Strip Biological Indicator Logs */}
-          <div className={`p-5 rounded-2xl border ${
+          <div className={`p-5 border ${
             isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
           }`}>
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-2 flex items-center gap-2">
@@ -441,7 +441,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
 
             <div className="space-y-3">
               {data.preTreatmentLogs.map((log) => (
-                <div key={log.id} className={`p-4 rounded-xl border ${
+                <div key={log.id} className={`p-4 border ${
                   isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
                 }`}>
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
@@ -462,7 +462,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
           </div>
 
           {/* Staff Immunization & Training Roster */}
-          <div className={`p-5 rounded-2xl border ${
+          <div className={`p-5 border ${
             isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
           }`}>
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-2 flex items-center gap-2">
@@ -510,7 +510,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
       {/* TAB 3: KSPCB X-GN RECEIPT OCR VERIFIER */}
       {activeTab === 'ocr' && (
         <div className="space-y-5">
-          <div className={`p-6 rounded-2xl border ${
+          <div className={`p-6 border ${
             isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
           }`}>
             <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-1 flex items-center gap-2">
@@ -522,7 +522,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
             </p>
 
             {/* Upload Area */}
-            <div className={`border-2 border-dashed rounded-2xl p-8 text-center transition-all ${
+            <div className={`border-2 border-dashed p-8 text-center transition-all ${
               isLight ? 'border-slate-300 hover:border-[#00875a] bg-slate-50' : 'border-slate-700 hover:border-emerald-500 bg-[#090d16]'
             }`}>
               <Upload className="w-10 h-10 text-[#00875a] mx-auto mb-3 animate-bounce" />
@@ -531,7 +531,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
               </h4>
               <p className="text-xs text-slate-500 mb-4">Supports PDF, PNG, JPG receipts issued by KSPCB X-GN portal</p>
 
-              <label className="bg-[#00875a] hover:bg-[#00704a] text-white text-xs font-bold px-5 py-2.5 rounded-xl inline-flex items-center space-x-2 cursor-pointer shadow-xs">
+              <label className="bg-[#00875a] hover:bg-[#00704a] text-white text-xs font-bold px-5 py-2.5 inline-flex items-center space-x-2 cursor-pointer ">
                 <span>Select Receipt File</span>
                 <input type="file" className="hidden" accept=".pdf,.png,.jpg,.jpeg" onChange={handleSimulateOcrUpload} />
               </label>
@@ -546,7 +546,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
 
             {/* Verified OCR Result Card */}
             {(uploadedReceipt || data.kspcbUploadReceipts[0]) && (
-              <div className="mt-6 p-4 rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50/70 dark:bg-emerald-950/30">
+              <div className="mt-6 p-4 border border-emerald-300 dark:border-emerald-800 bg-emerald-50/70 dark:bg-emerald-950/30">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600" />
@@ -571,7 +571,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
       {/* TAB 4: WARD SEGREGATION RISK PRE-CHECK */}
       {activeTab === 'segregation' && (
         <div className="space-y-5">
-          <div className={`p-6 rounded-2xl border ${
+          <div className={`p-6 border ${
             isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
           }`}>
             <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-1 flex items-center gap-2">
@@ -589,7 +589,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                   <select
                     value={testItem}
                     onChange={(e) => setTestItem(e.target.value)}
-                    className={`w-full p-2.5 rounded-xl border text-xs font-semibold ${
+                    className={`w-full p-2.5 border text-xs font-semibold ${
                       isLight ? 'bg-white border-slate-300 text-slate-800' : 'bg-[#090d16] border-slate-700 text-slate-200'
                     }`}
                   >
@@ -606,7 +606,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                   <select
                     value={testBagSelected}
                     onChange={(e) => setTestBagSelected(e.target.value)}
-                    className={`w-full p-2.5 rounded-xl border text-xs font-semibold ${
+                    className={`w-full p-2.5 border text-xs font-semibold ${
                       isLight ? 'bg-white border-slate-300 text-slate-800' : 'bg-[#090d16] border-slate-700 text-slate-200'
                     }`}
                   >
@@ -619,7 +619,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
               </div>
 
               {/* Pre-Check Output Result Box */}
-              <div className={`p-5 rounded-2xl border flex flex-col justify-between ${
+              <div className={`p-5 border flex flex-col justify-between ${
                 segregationCheck.isCorrect
                   ? 'bg-emerald-50/80 border-emerald-300 dark:bg-emerald-950/20 dark:border-emerald-800'
                   : 'bg-rose-50/80 border-rose-300 dark:bg-rose-950/20 dark:border-rose-800'
@@ -651,7 +651,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
       {activeTab === 'crypto_desk' && (
         <div className="space-y-6">
           {/* Card 1: Web Crypto SHA-256 Block Ledger Engine */}
-          <div className={`p-5 rounded-2xl border shadow-xs ${
+          <div className={`p-5 border ${
             isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
           }`}>
             <div className="flex items-center justify-between mb-4 border-b pb-3">
@@ -674,14 +674,14 @@ export default function StatutoryFormsDashboard({ isLight }) {
                   }, '0000000000000000000000000000000000000000000000000000000000000000');
                   setCryptoOutput(block);
                 }}
-                className="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs transition-all shadow-xs flex items-center gap-1.5"
+                className="px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs transition-all flex items-center gap-1.5"
               >
                 <span>Compute SHA-256 Block</span>
               </button>
             </div>
 
             {cryptoOutput && (
-              <div className="p-4 rounded-xl bg-purple-50/60 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/60 space-y-2 text-xs font-mono">
+              <div className="p-4 bg-purple-50/60 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/60 space-y-2 text-xs font-mono">
                 <div className="flex justify-between items-center text-purple-900 dark:text-purple-200">
                   <span className="font-bold">Generated Block Hash:</span>
                   <span className="bg-purple-200 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-0.5 rounded text-[11px] font-bold">
@@ -696,7 +696,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
           </div>
 
           {/* Card 2: BMWM 2016 Form VI Weight Discrepancy & 24hr SLA Rules Engine */}
-          <div className={`p-5 rounded-2xl border shadow-xs ${
+          <div className={`p-5 border ${
             isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
           }`}>
             <div className="mb-4 border-b pb-3">
@@ -711,7 +711,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
 
             {discrepancyReport && (
               <div className="space-y-3">
-                <div className={`p-3.5 rounded-xl border text-xs flex items-center justify-between ${
+                <div className={`p-3.5 border text-xs flex items-center justify-between ${
                   discrepancyReport.hasViolation
                     ? 'bg-rose-50 border-rose-200 text-rose-800 dark:bg-rose-950/30 dark:border-rose-800'
                     : 'bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-950/30 dark:border-emerald-800'
@@ -730,7 +730,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                 {/* Categories Table */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
                   {Object.entries(discrepancyReport.categories).map(([cat, res]) => (
-                    <div key={cat} className="p-2.5 rounded-xl border bg-slate-50 dark:bg-[#090d16] border-slate-200 dark:border-slate-800">
+                    <div key={cat} className="p-2.5 border bg-slate-50 dark:bg-[#090d16] border-slate-200 dark:border-slate-800">
                       <span className="font-bold uppercase block text-[10px] text-slate-500">{cat} Waste</span>
                       <div className="text-xs mt-1">Ward: {res.wardKg}kg</div>
                       <div className="text-xs">Truck: {res.cbwtfKg}kg</div>
@@ -745,7 +745,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
           </div>
 
           {/* Card 3: Encrypted Offline Storage Vault (IndexedDB + AES-256-GCM) */}
-          <div className={`p-5 rounded-2xl border shadow-xs ${
+          <div className={`p-5 border ${
             isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
           }`}>
             <div className="flex items-center justify-between mb-4 border-b pb-3">
@@ -769,7 +769,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                     const queue = await getDecryptedOfflineQueue();
                     setOfflineQueue(queue);
                   }}
-                  className="px-3 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs transition-all shadow-xs"
+                  className="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs transition-all "
                 >
                   Encrypt & Store Record
                 </button>
@@ -780,7 +780,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                       await removeSyncedRecords(ids);
                       setOfflineQueue([]);
                     }}
-                    className="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs transition-all shadow-xs"
+                    className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs transition-all "
                   >
                     Clear Synced Queue
                   </button>
@@ -795,13 +795,13 @@ export default function StatutoryFormsDashboard({ isLight }) {
               </div>
 
               {offlineQueue.length === 0 ? (
-                <div className="p-4 rounded-xl border border-dashed text-center text-slate-400 text-xs">
+                <div className="p-4 border border-dashed text-center text-slate-400 text-xs">
                   Offline Vault empty. Click "Encrypt & Store Record" to test Web Crypto AES-GCM buffer.
                 </div>
               ) : (
                 <div className="space-y-2 max-h-48 overflow-y-auto">
                   {offlineQueue.map((item) => (
-                    <div key={item.id} className="p-3 rounded-xl border bg-slate-50 dark:bg-[#090d16] border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
+                    <div key={item.id} className="p-3 border bg-slate-50 dark:bg-[#090d16] border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
                       <div>
                         <span className="font-bold text-cyan-600 dark:text-cyan-400 font-mono text-[11px] block">{item.id}</span>
                         <span className="text-slate-500 text-[10px]">Encrypted at rest (AES-256-GCM) • {item.storageMetadata?.storedTimestamp}</span>
@@ -821,7 +821,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
       {/* FORM I ACCIDENT LOGGING MODAL */}
       {showForm1Modal && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className={`w-full max-w-xl p-6 rounded-2xl border shadow-2xl ${
+          <div className={`w-full max-w-xl p-6 border ${
             isLight ? 'bg-white border-slate-200' : 'bg-[#111622] border-slate-800 text-slate-100'
           }`}>
             <div className="flex items-center justify-between mb-4 border-b pb-3">
@@ -884,13 +884,13 @@ export default function StatutoryFormsDashboard({ isLight }) {
                 <button
                   type="button"
                   onClick={() => setShowForm1Modal(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold border text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                  className="px-4 py-2 text-xs font-bold border text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-xs"
+                  className="px-4 py-2 text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white "
                 >
                   Submit Statutory Form I Report
                 </button>

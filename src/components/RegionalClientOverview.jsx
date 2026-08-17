@@ -14,7 +14,7 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
   return (
     <div className="space-y-5">
       {/* Header Banner */}
-      <div className={`p-5 rounded-2xl border shadow-xs ${
+      <div className={`p-5 border ${
         isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
       }`}>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -41,7 +41,7 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
               placeholder="Search hospital or locality..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={`text-xs pl-8 pr-3 py-2 rounded-xl border focus:outline-none focus:border-cyan-500 w-full sm:w-64 ${
+              className={`text-xs pl-8 pr-3 py-2 border focus:outline-none focus:border-cyan-500 w-full sm:w-64 ${
                 isLight ? 'bg-slate-50 border-slate-200 text-slate-900' : 'bg-[#090d16] border-slate-700 text-slate-100'
               }`}
             />
@@ -51,7 +51,7 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
 
       {/* Regional Aggregate Summary Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className={`p-4 rounded-2xl border shadow-xs ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
@@ -64,7 +64,7 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
           </div>
         </div>
 
-        <div className={`p-4 rounded-2xl border shadow-xs ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
@@ -77,7 +77,7 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
           </div>
         </div>
 
-        <div className={`p-4 rounded-2xl border shadow-xs ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
@@ -90,7 +90,7 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
           </div>
         </div>
 
-        <div className={`p-4 rounded-2xl border shadow-xs ${
+        <div className={`p-4 border ${
           isLight ? 'bg-emerald-50/70 border-emerald-200/90 text-slate-900' : 'bg-emerald-950/20 border-emerald-800/60 text-slate-100'
         }`}>
           <div className="flex items-center justify-between text-xs text-slate-600 font-semibold">
@@ -115,7 +115,7 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
             <div
               key={hosp.id}
               onClick={() => onSelectHospital(hosp)}
-              className={`p-5 rounded-2xl border cursor-pointer transition-all hover:scale-[1.01] hover:shadow-md ${
+              className={`p-5 border cursor-pointer transition-all hover:${
                 hosp.alarmCount > 0
                   ? isLight ? 'bg-rose-50/50 border-rose-200 hover:border-rose-300' : 'bg-rose-950/20 border-rose-800/60 hover:border-rose-700'
                   : isLight ? 'bg-white border-slate-200/80 hover:border-cyan-300' : 'bg-[#111622] border-slate-800 hover:border-cyan-800'
@@ -143,7 +143,7 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
               </div>
 
               {/* Specs & Hardware Fleet Breakdown */}
-              <div className="grid grid-cols-3 gap-2 my-3.5 p-3 rounded-xl bg-slate-50 dark:bg-[#090d16] border border-slate-200/60 dark:border-slate-800 text-center text-xs">
+              <div className="grid grid-cols-3 gap-2 my-3.5 p-3 bg-slate-50 dark:bg-[#090d16] border border-slate-200/60 dark:border-slate-800 text-center text-xs">
                 <div>
                   <span className="text-slate-500 text-[10px] block">ABIOT Devices</span>
                   <strong className="text-slate-800 dark:text-slate-200 font-bold">{hosp.deviceCount} Installed</strong>

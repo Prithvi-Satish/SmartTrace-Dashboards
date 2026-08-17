@@ -14,7 +14,7 @@ export default function SoftwareAdminDashboard({ isLight }) {
   return (
     <div className="space-y-5">
       {/* Header Banner */}
-      <div className={`p-5 rounded-2xl border shadow-xs ${
+      <div className={`p-5 border ${
         isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
       }`}>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -35,7 +35,7 @@ export default function SoftwareAdminDashboard({ isLight }) {
           </div>
 
           <div className="flex items-center space-x-2">
-            <button className="px-3.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center space-x-1.5 shadow-xs transition-all">
+            <button className="px-3.5 py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center space-x-1.5 transition-all">
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Refresh Diagnostics</span>
             </button>
@@ -45,7 +45,7 @@ export default function SoftwareAdminDashboard({ isLight }) {
 
       {/* Platform Diagnostics Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className={`p-4 rounded-2xl border shadow-xs ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
@@ -58,7 +58,7 @@ export default function SoftwareAdminDashboard({ isLight }) {
           </div>
         </div>
 
-        <div className={`p-4 rounded-2xl border shadow-xs ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
@@ -71,7 +71,7 @@ export default function SoftwareAdminDashboard({ isLight }) {
           </div>
         </div>
 
-        <div className={`p-4 rounded-2xl border shadow-xs ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
@@ -84,7 +84,7 @@ export default function SoftwareAdminDashboard({ isLight }) {
           </div>
         </div>
 
-        <div className={`p-4 rounded-2xl border shadow-xs ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
@@ -99,7 +99,7 @@ export default function SoftwareAdminDashboard({ isLight }) {
       </div>
 
       {/* Software Customization & Client Support Tickets */}
-      <div className={`p-5 rounded-2xl border shadow-xs ${
+      <div className={`p-5 border ${
         isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
       }`}>
         <div className="flex items-center justify-between mb-4">
@@ -120,7 +120,7 @@ export default function SoftwareAdminDashboard({ isLight }) {
           {tickets.map((t) => (
             <div
               key={t.id}
-              className={`p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs transition-all ${
+              className={`p-4 border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs transition-all ${
                 isLight ? 'bg-slate-50/80 border-slate-200/80' : 'bg-[#090d16] border-slate-800'
               }`}
             >
@@ -148,7 +148,7 @@ export default function SoftwareAdminDashboard({ isLight }) {
                 {t.status !== 'RESOLVED' && (
                   <button
                     onClick={() => handleResolveTicket(t.id)}
-                    className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-lg flex items-center space-x-1 shadow-xs"
+                    className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-lg flex items-center space-x-1 "
                   >
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     <span>Mark Resolved</span>

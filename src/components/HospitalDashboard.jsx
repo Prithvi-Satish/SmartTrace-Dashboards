@@ -54,7 +54,7 @@ export default function HospitalDashboard({ isLight }) {
   return (
     <div className="space-y-5">
       {/* Sub-header & Quick Filters */}
-      <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl border shadow-sm ${
+      <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 border ${
         isLight ? 'bg-white border-slate-200 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
       }`}>
         <div>
@@ -86,7 +86,7 @@ export default function HospitalDashboard({ isLight }) {
       {/* KPI Cards Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {/* Today's Cycles */}
-        <div className={`p-4 rounded-xl border flex flex-col justify-between shadow-sm transition-all ${
+        <div className={`p-4 border flex flex-col justify-between transition-all ${
           isLight ? 'bg-white border-slate-200 text-slate-900' : 'glass-card border-slate-800 text-slate-100'
         }`}>
           <div className={`flex items-center justify-between text-xs ${isLight ? 'text-slate-500 font-medium' : 'text-slate-400'}`}>
@@ -105,7 +105,7 @@ export default function HospitalDashboard({ isLight }) {
         </div>
 
         {/* Total Waste Processed */}
-        <div className={`p-4 rounded-xl border flex flex-col justify-between shadow-sm transition-all ${
+        <div className={`p-4 border flex flex-col justify-between transition-all ${
           isLight ? 'bg-white border-slate-200 text-slate-900' : 'glass-card border-slate-800 text-slate-100'
         }`}>
           <div className={`flex items-center justify-between text-xs ${isLight ? 'text-slate-500 font-medium' : 'text-slate-400'}`}>
@@ -124,7 +124,7 @@ export default function HospitalDashboard({ isLight }) {
         </div>
 
         {/* Fleet Status */}
-        <div className={`p-4 rounded-xl border flex flex-col justify-between shadow-sm transition-all ${
+        <div className={`p-4 border flex flex-col justify-between transition-all ${
           isLight ? 'bg-white border-slate-200 text-slate-900' : 'glass-card border-slate-800 text-slate-100'
         }`}>
           <div className={`flex items-center justify-between text-xs ${isLight ? 'text-slate-500 font-medium' : 'text-slate-400'}`}>
@@ -146,7 +146,7 @@ export default function HospitalDashboard({ isLight }) {
         </div>
 
         {/* Consumable Levels */}
-        <div className={`p-4 rounded-xl border flex flex-col justify-between shadow-sm transition-all ${
+        <div className={`p-4 border flex flex-col justify-between transition-all ${
           isLight ? 'bg-white border-slate-200 text-slate-900' : 'glass-card border-slate-800 text-slate-100'
         }`}>
           <div className={`flex items-center justify-between text-xs ${isLight ? 'text-slate-500 font-medium' : 'text-slate-400'}`}>
@@ -166,7 +166,7 @@ export default function HospitalDashboard({ isLight }) {
       {/* Main Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Hourly Treatment Volume */}
-        <div className={`p-4 rounded-xl border shadow-sm ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200' : 'glass-panel border-slate-800'
         }`}>
           <div className="flex items-center justify-between mb-3">
@@ -196,7 +196,7 @@ export default function HospitalDashboard({ isLight }) {
         </div>
 
         {/* Machine Utilization & Downtime */}
-        <div className={`p-4 rounded-xl border shadow-sm ${
+        <div className={`p-4 border ${
           isLight ? 'bg-white border-slate-200' : 'glass-panel border-slate-800'
         }`}>
           <div className="flex items-center justify-between mb-3">
@@ -237,7 +237,7 @@ export default function HospitalDashboard({ isLight }) {
           {filteredMachines.map((machine) => (
             <div
               key={machine.id}
-              className={`p-4 rounded-xl border shadow-sm relative transition-all ${
+              className={`p-4 border relative transition-all ${
                 machine.status === 'Alarm'
                   ? isLight ? 'border-rose-300 bg-rose-50/50' : 'border-rose-500/50 bg-rose-950/10'
                   : machine.status === 'Running'
@@ -322,7 +322,7 @@ export default function HospitalDashboard({ isLight }) {
       </div>
 
       {/* Live Alarm Feed */}
-      <div className={`p-4 rounded-xl border shadow-sm ${
+      <div className={`p-4 border ${
         isLight ? 'bg-white border-rose-200' : 'glass-panel border-rose-900/40'
       }`}>
         <div className="flex items-center justify-between mb-3">
@@ -367,7 +367,7 @@ export default function HospitalDashboard({ isLight }) {
                 {alarm.status === 'Unacknowledged' ? (
                   <button
                     onClick={() => handleAcknowledgeAlarm(alarm.id)}
-                    className="bg-rose-600 hover:bg-rose-500 text-white text-[11px] font-semibold px-2.5 py-1 rounded transition-colors shadow-sm"
+                    className="bg-rose-600 hover:bg-rose-500 text-white text-[11px] font-semibold px-2.5 py-1 rounded transition-colors "
                   >
                     Acknowledge
                   </button>

@@ -136,7 +136,7 @@ export default function SidebarNav({
         isLight ? 'border-slate-200/80 bg-white' : 'border-slate-800 bg-[#0e1420]'
       }`}>
         <div className="flex items-center space-x-3 overflow-hidden">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#00875a] to-cyan-500 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-md">
+          <div className="w-9 h-9 bg-gradient-to-tr from-[#00875a] to-cyan-500 text-white font-black text-xs flex items-center justify-center shrink-0 ">
             ST
           </div>
           {!isCollapsed && (
@@ -189,11 +189,11 @@ export default function SidebarNav({
                 <button
                   key={item.id}
                   onClick={() => handleSelectNav(item)}
-                  className={`w-full p-2.5 rounded-xl border flex items-center transition-all ${
+                  className={`w-full p-2.5 border flex items-center transition-all ${
                     isCollapsed ? 'justify-center' : 'justify-start space-x-3'
                   } ${
                     isActive
-                      ? `${item.activeBg} font-bold shadow-xs border-l-4`
+                      ? `${item.activeBg} font-bold border-l-4`
                       : isLight
                       ? 'border-transparent text-slate-600 hover:bg-slate-100/80 hover:text-slate-900'
                       : 'border-transparent text-slate-400 hover:bg-slate-800/60 hover:text-slate-100'
@@ -226,7 +226,7 @@ export default function SidebarNav({
             {setTheme && (
               <button
                 onClick={() => setTheme(isLight ? 'dark' : 'light')}
-                className={`flex-1 py-1.5 px-2.5 rounded-xl border flex items-center justify-center space-x-1.5 font-semibold transition-all ${
+                className={`flex-1 py-1.5 px-2.5 border flex items-center justify-center space-x-1.5 font-semibold transition-all ${
                   isLight ? 'bg-white hover:bg-slate-100 border-slate-300 text-slate-700' : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200'
                 }`}
                 title="Toggle Theme"
@@ -247,7 +247,7 @@ export default function SidebarNav({
 
             <button
               onClick={onOpenSettings}
-              className={`py-1.5 px-2.5 rounded-xl border flex items-center justify-center space-x-1.5 font-semibold transition-all ${
+              className={`py-1.5 px-2.5 border flex items-center justify-center space-x-1.5 font-semibold transition-all ${
                 isLight ? 'bg-white hover:bg-slate-100 border-slate-300 text-slate-700' : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200'
               }`}
               title="Open System Settings"
@@ -295,7 +295,7 @@ export default function SidebarNav({
       {/* Drawer Navigation Overlay (All screen sizes) */}
       {isMobileOpen && (
         <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex">
-          <div className={`w-72 h-[100dvh] max-h-screen shadow-2xl transition-all ${
+          <div className={`w-72 h-[100dvh] max-h-screen transition-all ${
             isLight ? 'bg-white' : 'bg-[#0e1420]'
           }`}>
             {sidebarContent}

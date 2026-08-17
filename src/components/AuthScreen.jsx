@@ -23,12 +23,12 @@ export default function AuthScreen({ isLight, activeView, setActiveView, theme, 
     }`}>
 
       {/* Ultra-Minimal Clean Login Container */}
-      <div className={`w-full max-w-md p-8 rounded-3xl shadow-2xl border ${
+      <div className={`w-full max-w-md p-8 rounded-3xl border ${
         isLight ? 'bg-white border-slate-200/90' : 'bg-[#111723] border-slate-800 text-slate-100'
       }`}>
         {/* Brand Header */}
         <div className="flex items-center space-x-3 mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#00875a] to-cyan-500 text-white font-black text-lg flex items-center justify-center shadow-md shrink-0">
+          <div className="w-12 h-12 bg-gradient-to-tr from-[#00875a] to-cyan-500 text-white font-black text-lg flex items-center justify-center shrink-0">
             ST
           </div>
           <div>
@@ -45,7 +45,7 @@ export default function AuthScreen({ isLight, activeView, setActiveView, theme, 
         </div>
 
         {errorMessage && (
-          <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
+          <div className="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
             {errorMessage}
           </div>
         )}
@@ -63,7 +63,7 @@ export default function AuthScreen({ isLight, activeView, setActiveView, theme, 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@smarttrace.med"
-                className={`w-full pl-10 pr-4 py-3 text-xs rounded-xl border font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#00875a] ${
+                className={`w-full pl-10 pr-4 py-3 text-xs border font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#00875a] ${
                   isLight ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-[#090d16] border-slate-800 text-slate-100'
                 }`}
                 required
@@ -82,7 +82,7 @@ export default function AuthScreen({ isLight, activeView, setActiveView, theme, 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className={`w-full pl-10 pr-4 py-3 text-xs rounded-xl border font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#00875a] ${
+                className={`w-full pl-10 pr-4 py-3 text-xs border font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-[#00875a] ${
                   isLight ? 'bg-slate-50 border-slate-300 text-slate-900' : 'bg-[#090d16] border-slate-800 text-slate-100'
                 }`}
                 required
@@ -93,7 +93,7 @@ export default function AuthScreen({ isLight, activeView, setActiveView, theme, 
           {/* Prominent Clean Submit Button */}
           <button
             type="submit"
-            className="w-full py-3.5 px-4 bg-[#00875a] hover:bg-[#00704a] text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-emerald-600/20 flex items-center justify-center space-x-2 transition-all cursor-pointer mt-2"
+            className="w-full py-3.5 px-4 bg-[#00875a] hover:bg-[#00704a] text-white font-bold text-xs sm:text-sm -600/20 flex items-center justify-center space-x-2 transition-all cursor-pointer mt-2"
           >
             <span>Sign In to Portal</span>
             <ArrowRight className="w-4 h-4" />

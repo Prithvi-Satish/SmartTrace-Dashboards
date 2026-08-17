@@ -7,11 +7,11 @@ export default function DocsView({ isLight }) {
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       {/* Header Banner */}
-      <div className={`p-5 rounded-2xl border ${
+      <div className={`p-5 border ${
         isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
       }`}>
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-400 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-400 flex items-center justify-center shrink-0">
             <BookOpen className="w-5 h-5" />
           </div>
           <div>
@@ -23,7 +23,7 @@ export default function DocsView({ isLight }) {
 
       {/* Docs Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className={`p-5 rounded-2xl border ${
+        <div className={`p-5 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <h3 className="text-sm font-bold mb-2 flex items-center gap-2">
@@ -42,7 +42,7 @@ export default function DocsView({ isLight }) {
           </button>
         </div>
 
-        <div className={`p-5 rounded-2xl border ${
+        <div className={`p-5 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <h3 className="text-sm font-bold mb-2 flex items-center gap-2">
@@ -55,7 +55,7 @@ export default function DocsView({ isLight }) {
           <span className="text-xs text-slate-400 font-mono">SOP Ref: SOP-MICRO-2026-V3</span>
         </div>
 
-        <div className={`p-5 rounded-2xl border ${
+        <div className={`p-5 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <h3 className="text-sm font-bold mb-2 flex items-center gap-2">
@@ -68,7 +68,7 @@ export default function DocsView({ isLight }) {
           <span className="text-xs text-slate-400 font-mono">SOP Ref: SOP-MANIFEST-KSPCB-V1</span>
         </div>
 
-        <div className={`p-5 rounded-2xl border ${
+        <div className={`p-5 border ${
           isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
         }`}>
           <h3 className="text-sm font-bold mb-2 flex items-center gap-2">
