@@ -108,12 +108,12 @@ export default function SettingsModal({ onClose, isLight }) {
                 <img
                   src={currentUser?.avatar}
                   alt={currentUser?.name}
-                  className="w-14 h-14 rounded-full object-cover border-2 border-cyan-500"
+                  className="w-14 h-14  object-cover border-2 border-cyan-500"
                 />
                 <div>
                   <div className="flex items-center space-x-2">
                     <h4 className="text-sm font-bold">{currentUser?.name}</h4>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-cyan-600 text-white uppercase">
+                    <span className="text-[10px] font-bold px-2 py-0.5  bg-cyan-600 text-white uppercase">
                       {currentUser?.roleLabel}
                     </span>
                   </div>
@@ -225,7 +225,7 @@ export default function SettingsModal({ onClose, isLight }) {
                   <Radio className="w-4 h-4 text-cyan-500 animate-pulse" />
                   Active eSIM Cellular IoT Mesh Status & Key Manager
                 </h4>
-                <span className="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
+                <span className="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5  border border-emerald-500/30">
                   5/5 Edge Units Connected
                 </span>
               </div>
@@ -282,12 +282,12 @@ export default function SettingsModal({ onClose, isLight }) {
                         {isAdmin ? (
                           <button
                             onClick={() => alert(`Reconfiguring hardware ECDSA Key & eSIM tunnel for ${iot.unit}...`)}
-                            className="px-2.5 py-1 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-[10px] font-bold transition-all shrink-0"
+                            className="px-2.5 py-1 bg-cyan-600 hover:bg-cyan-500 text-white  text-[10px] font-bold transition-all shrink-0"
                           >
                             Reconfigure Key
                           </button>
                         ) : (
-                          <span className="px-2 py-0.5 bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded text-[9px] font-bold shrink-0 flex items-center gap-1">
+                          <span className="px-2 py-0.5 bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400  text-[9px] font-bold shrink-0 flex items-center gap-1">
                             <Lock className="w-3 h-3" />
                             Admin Only
                           </span>

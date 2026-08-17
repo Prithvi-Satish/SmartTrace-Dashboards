@@ -23,7 +23,7 @@ export default function ProfileView({ isLight }) {
                 <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">{currentUser?.name}</h1>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{currentUser?.department}</p>
               </div>
-              <span className="px-3 py-1 rounded-full text-xs font-bold bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800 self-center sm:self-start">
+              <span className="px-3 py-1  text-xs font-bold bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800 self-center sm:self-start">
                 {currentUser?.roleLabel}
               </span>
             </div>

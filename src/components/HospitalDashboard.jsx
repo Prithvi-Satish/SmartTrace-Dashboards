@@ -72,7 +72,7 @@ export default function HospitalDashboard({ isLight }) {
           <select
             value={filterDepartment}
             onChange={(e) => setFilterDepartment(e.target.value)}
-            className={`text-xs rounded-lg px-2.5 py-1.5 border focus:outline-none focus:border-cyan-500 ${
+            className={`text-xs  px-2.5 py-1.5 border focus:outline-none focus:border-cyan-500 ${
               isLight ? 'bg-slate-50 text-slate-900 border-slate-300' : 'bg-[#090d16] text-slate-200 border-slate-700'
             }`}
           >
@@ -95,11 +95,11 @@ export default function HospitalDashboard({ isLight }) {
           </div>
           <div className="mt-2 flex items-baseline justify-between gap-1 flex-wrap">
             <span className="text-2xl font-black">82</span>
-            <span className="text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-300 dark:border-emerald-500/20">
+            <span className="text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-500/10 px-1.5 py-0.5  border border-emerald-300 dark:border-emerald-500/20">
               +14% vs yesterday
             </span>
           </div>
-          <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full mt-3 overflow-hidden">
+          <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5  mt-3 overflow-hidden">
             <div className="bg-cyan-600 dark:bg-cyan-500 h-full w-[82%]" />
           </div>
         </div>
@@ -114,11 +114,11 @@ export default function HospitalDashboard({ isLight }) {
           </div>
           <div className="mt-2 flex items-baseline justify-between gap-1 flex-wrap">
             <span className="text-2xl font-black">1,105 <span className={`text-xs font-normal ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>kg</span></span>
-            <span className="text-[10px] font-semibold text-cyan-700 dark:text-cyan-400 bg-cyan-100 dark:bg-cyan-500/10 px-1.5 py-0.5 rounded border border-cyan-300 dark:border-cyan-500/20">
+            <span className="text-[10px] font-semibold text-cyan-700 dark:text-cyan-400 bg-cyan-100 dark:bg-cyan-500/10 px-1.5 py-0.5  border border-cyan-300 dark:border-cyan-500/20">
               Target: 1.2T
             </span>
           </div>
-          <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full mt-3 overflow-hidden">
+          <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5  mt-3 overflow-hidden">
             <div className="bg-amber-500 h-full w-[92%]" />
           </div>
         </div>
@@ -138,7 +138,7 @@ export default function HospitalDashboard({ isLight }) {
               <span className="text-rose-600 dark:text-rose-400 font-bold">{alarmCount} Alarm</span>
             </div>
           </div>
-          <div className="flex h-1.5 rounded-full overflow-hidden mt-3 bg-slate-200 dark:bg-slate-800">
+          <div className="flex h-1.5  overflow-hidden mt-3 bg-slate-200 dark:bg-slate-800">
             <div className="bg-emerald-500" style={{ width: `${(runningCount/machines.length)*100}%` }} />
             <div className="bg-rose-500" style={{ width: `${(alarmCount/machines.length)*100}%` }} />
             <div className="bg-slate-400 dark:bg-slate-600" style={{ width: `${(idleCount/machines.length)*100}%` }} />
@@ -157,7 +157,7 @@ export default function HospitalDashboard({ isLight }) {
             <span className="text-2xl font-black">74%</span>
             <span className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>Avg Cassette Life</span>
           </div>
-          <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full mt-3 overflow-hidden">
+          <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5  mt-3 overflow-hidden">
             <div className="bg-purple-600 dark:bg-purple-500 h-full w-[74%]" />
           </div>
         </div>
@@ -174,7 +174,7 @@ export default function HospitalDashboard({ isLight }) {
               <Activity className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
               Hourly Waste Processing (kg)
             </h3>
-            <span className={`text-[10px] px-2 py-0.5 rounded font-medium ${isLight ? 'bg-slate-100 text-slate-600' : 'bg-slate-800 text-slate-400'}`}>Today</span>
+            <span className={`text-[10px] px-2 py-0.5  font-medium ${isLight ? 'bg-slate-100 text-slate-600' : 'bg-slate-800 text-slate-400'}`}>Today</span>
           </div>
           <div className="h-48 w-full text-xs">
             <ResponsiveContainer width="100%" height="100%">
@@ -204,7 +204,7 @@ export default function HospitalDashboard({ isLight }) {
               <Clock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
               Machine Utilization vs Downtime (%)
             </h3>
-            <span className={`text-[10px] px-2 py-0.5 rounded font-medium ${isLight ? 'bg-slate-100 text-slate-600' : 'bg-slate-800 text-slate-400'}`}>Shift 1</span>
+            <span className={`text-[10px] px-2 py-0.5  font-medium ${isLight ? 'bg-slate-100 text-slate-600' : 'bg-slate-800 text-slate-400'}`}>Shift 1</span>
           </div>
           <div className="h-48 w-full text-xs">
             <ResponsiveContainer width="100%" height="100%">
@@ -255,12 +255,12 @@ export default function HospitalDashboard({ isLight }) {
 
                 {/* Status Badge */}
                 <div className="flex items-center space-x-1.5">
-                  <span className={`w-2 h-2 rounded-full ${
+                  <span className={`w-2 h-2  ${
                     machine.status === 'Running' ? 'bg-emerald-500 animate-pulse-glow' :
                     machine.status === 'Alarm' ? 'bg-rose-500 animate-pulse' :
                     machine.status === 'Idle' ? 'bg-slate-400' : 'bg-amber-500'
                   }`} />
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                  <span className={`text-[10px] font-bold px-2 py-0.5  ${
                     machine.status === 'Running' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30' :
                     machine.status === 'Alarm' ? 'bg-rose-100 text-rose-800 border border-rose-300 dark:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/30' :
                     machine.status === 'Idle' ? 'bg-slate-100 text-slate-700 border border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700' :
@@ -273,14 +273,14 @@ export default function HospitalDashboard({ isLight }) {
 
               {/* Progress Bar for Running Cycle */}
               {machine.status === 'Running' && (
-                <div className={`mt-3 p-2 rounded-lg border ${
+                <div className={`mt-3 p-2  border ${
                   isLight ? 'bg-slate-100 border-slate-200' : 'bg-slate-900/80 border-slate-800'
                 }`}>
                   <div className="flex justify-between text-[10px] font-medium mb-1">
                     <span className="font-bold text-cyan-700 dark:text-cyan-400">{machine.phase}</span>
                     <span className={isLight ? 'text-slate-600' : 'text-slate-300'}>Rem: {machine.cycleTimeRemaining} ({machine.progressPct}%)</span>
                   </div>
-                  <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                  <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5  overflow-hidden">
                     <div className="bg-cyan-600 dark:bg-cyan-400 h-full transition-all duration-500" style={{ width: `${machine.progressPct}%` }} />
                   </div>
                 </div>
@@ -288,28 +288,28 @@ export default function HospitalDashboard({ isLight }) {
 
               {/* Telemetry Sensor Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/80 text-center">
-                <div className={`p-1.5 rounded border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#0a0e17] border-slate-800/60'}`}>
+                <div className={`p-1.5  border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#0a0e17] border-slate-800/60'}`}>
                   <span className="text-[9px] text-slate-500 dark:text-slate-400 block font-semibold">TEMP</span>
                   <span className={`text-xs font-bold ${machine.temperature > 62 ? 'text-rose-600 dark:text-rose-400' : isLight ? 'text-slate-800' : 'text-slate-200'}`}>
                     {machine.temperature > 0 ? `${machine.temperature}°C` : 'N/A'}
                   </span>
                 </div>
 
-                <div className={`p-1.5 rounded border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#0a0e17] border-slate-800/60'}`}>
+                <div className={`p-1.5  border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#0a0e17] border-slate-800/60'}`}>
                   <span className="text-[9px] text-slate-500 dark:text-slate-400 block font-semibold">PRESS</span>
                   <span className={`text-xs font-bold ${isLight ? 'text-slate-800' : 'text-slate-200'}`}>
                     {machine.pressure !== 0 ? `${machine.pressure}kPa` : '0'}
                   </span>
                 </div>
 
-                <div className={`p-1.5 rounded border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#0a0e17] border-slate-800/60'}`}>
+                <div className={`p-1.5  border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#0a0e17] border-slate-800/60'}`}>
                   <span className="text-[9px] text-slate-500 dark:text-slate-400 block font-semibold">H₂O₂</span>
                   <span className="text-xs font-bold text-purple-700 dark:text-purple-300">
                     {machine.h2o2 > 0 ? `${machine.h2o2}ppm` : '0'}
                   </span>
                 </div>
 
-                <div className={`p-1.5 rounded border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#0a0e17] border-slate-800/60'}`}>
+                <div className={`p-1.5  border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#0a0e17] border-slate-800/60'}`}>
                   <span className="text-[9px] text-slate-500 dark:text-slate-400 block font-semibold">BAG ID</span>
                   <span className="text-[10px] font-mono text-cyan-700 dark:text-cyan-300 font-bold truncate block">
                     {machine.currentBagId !== 'N/A' ? machine.currentBagId.split('-')[2] : 'None'}
@@ -332,7 +332,7 @@ export default function HospitalDashboard({ isLight }) {
               Live Machine Alarms & Safety Feed
             </h3>
           </div>
-          <span className="text-[10px] bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300 px-2 py-0.5 rounded font-bold border border-rose-300 dark:border-rose-500/30">
+          <span className="text-[10px] bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300 px-2 py-0.5  font-bold border border-rose-300 dark:border-rose-500/30">
             {alarms.filter(a => a.status !== 'Resolved').length} Active Alerts
           </span>
         </div>
@@ -341,7 +341,7 @@ export default function HospitalDashboard({ isLight }) {
           {alarms.map((alarm) => (
             <div
               key={alarm.id}
-              className={`p-3 rounded-lg border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${
+              className={`p-3  border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${
                 alarm.severity === 'Critical'
                   ? isLight ? 'bg-rose-50 border-rose-300 text-rose-900' : 'bg-rose-950/30 border-rose-700/50 text-rose-200'
                   : alarm.severity === 'Warning'
@@ -367,12 +367,12 @@ export default function HospitalDashboard({ isLight }) {
                 {alarm.status === 'Unacknowledged' ? (
                   <button
                     onClick={() => handleAcknowledgeAlarm(alarm.id)}
-                    className="bg-rose-600 hover:bg-rose-500 text-white text-[11px] font-semibold px-2.5 py-1 rounded transition-colors "
+                    className="bg-rose-600 hover:bg-rose-500 text-white text-[11px] font-semibold px-2.5 py-1  transition-colors "
                   >
                     Acknowledge
                   </button>
                 ) : (
-                  <span className={`text-[10px] px-2 py-1 rounded border font-medium ${
+                  <span className={`text-[10px] px-2 py-1  border font-medium ${
                     isLight ? 'bg-slate-200 text-slate-700 border-slate-300' : 'bg-slate-800 text-slate-400 border-slate-700'
                   }`}>
                     {alarm.status}

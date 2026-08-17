@@ -28,13 +28,13 @@ export default function DeviceFrame({ activeView, setActiveView, theme, setTheme
             </svg>
           </button>
 
-          <div className="w-9 h-9 rounded-full bg-[#00a896] text-white font-bold text-xs sm:text-sm flex items-center justify-center ">
+          <div className="w-9 h-9  bg-[#00a896] text-white font-bold text-xs sm:text-sm flex items-center justify-center ">
             ST
           </div>
           <div>
             <h1 className="font-bold text-sm sm:text-base flex items-center gap-2 text-slate-800 dark:text-slate-100">
               <span>SmartTrace™ Telemetry System</span>
-              <span className="bg-[#cff4fc] text-[#00838f] dark:bg-cyan-950 dark:text-cyan-300 text-[10px] px-2 py-0.5 rounded font-mono font-bold border border-cyan-200 dark:border-cyan-800">
+              <span className="bg-[#cff4fc] text-[#00838f] dark:bg-cyan-950 dark:text-cyan-300 text-[10px] px-2 py-0.5  font-mono font-bold border border-cyan-200 dark:border-cyan-800">
                 {APP_VERSION}
               </span>
             </h1>

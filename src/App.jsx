@@ -105,13 +105,13 @@ function DashboardContent({ activeView, setActiveView, theme, setTheme }) {
           <main className="flex-1 p-3 sm:p-6 overflow-x-hidden">
             {/* Drilldown Breadcrumb */}
             {selectedHospitalForAdmin && activeNav === 'hospital_telemetry' && (
-              <div className="mb-4 p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-between">
+              <div className="mb-4 p-3  bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-between">
                 <span className="text-xs font-bold text-cyan-800 dark:text-cyan-300">
                   Drilled into: <strong>{selectedHospitalForAdmin.name}</strong> ({selectedHospitalForAdmin.cpcbLicenseNo})
                 </span>
                 <button
                   onClick={handleBackToRegionalList}
-                  className="px-3 py-1 rounded-xl text-xs font-bold bg-cyan-600 text-white flex items-center space-x-1"
+                  className="px-3 py-1  text-xs font-bold bg-cyan-600 text-white flex items-center space-x-1"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Back to Regional</span>

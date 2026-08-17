@@ -154,7 +154,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                 <h1 className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
                   Dashboard 5: KSPCB Statutory Forms & SOP Center
                 </h1>
-                <span className="bg-[#00875a] text-white text-[11px] px-2.5 py-0.5 rounded-full font-bold">
+                <span className="bg-[#00875a] text-white text-[11px] px-2.5 py-0.5  font-bold">
                   BMWM Rules 2016 • KSPCB Karnataka Edition
                 </span>
               </div>
@@ -332,10 +332,10 @@ export default function StatutoryFormsDashboard({ isLight }) {
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-[#00875a]/10 text-[#00875a] dark:text-emerald-400 border border-[#00875a]/20">
+                    <span className="px-2.5 py-1  text-xs font-mono font-bold bg-[#00875a]/10 text-[#00875a] dark:text-emerald-400 border border-[#00875a]/20">
                       {form.code}
                     </span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                    <span className="px-2 py-0.5  text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
                       {form.status}
                     </span>
                   </div>
@@ -403,7 +403,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                         {mnf.variancePct}
                       </td>
                       <td className="p-3">
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                        <span className={`px-2 py-0.5  text-[10px] font-bold ${
                           mnf.varianceStatus === 'MATCHED_PASSED' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'
                         }`}>
                           {mnf.varianceStatus}
@@ -446,7 +446,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                 }`}>
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                     <span className="font-bold text-xs text-slate-900 dark:text-slate-100">{log.department} • {log.wasteType}</span>
-                    <span className="px-2.5 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300">
+                    <span className="px-2.5 py-0.5  text-[10px] font-bold bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300">
                       {log.status}
                     </span>
                   </div>
@@ -493,7 +493,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                     <td className="p-3 font-bold text-emerald-600">{stf.hepBDose3}</td>
                     <td className="p-3">{stf.tetanusBooster}</td>
                     <td className="p-3">
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                      <span className={`px-2 py-0.5  text-[10px] font-bold ${
                         stf.status === 'FULLY_IMMUNIZED' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
                       }`}>
                         {stf.status}
@@ -552,7 +552,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                     <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                     <span>OCR VERIFIED: KSPCB Official Submission Confirmed</span>
                   </span>
-                  <span className="px-2.5 py-0.5 rounded text-[10px] font-bold bg-emerald-600 text-white">
+                  <span className="px-2.5 py-0.5  text-[10px] font-bold bg-emerald-600 text-white">
                     STATUS: LEGALLY VERIFIED
                   </span>
                 </div>
@@ -684,11 +684,11 @@ export default function StatutoryFormsDashboard({ isLight }) {
               <div className="p-4 bg-purple-50/60 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/60 space-y-2 text-xs font-mono">
                 <div className="flex justify-between items-center text-purple-900 dark:text-purple-200">
                   <span className="font-bold">Generated Block Hash:</span>
-                  <span className="bg-purple-200 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-0.5 rounded text-[11px] font-bold">
+                  <span className="bg-purple-200 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-0.5  text-[11px] font-bold">
                     {cryptoOutput.hash.substring(0, 16)}...
                   </span>
                 </div>
-                <div className="bg-white dark:bg-[#090d16] p-3 rounded-lg border text-[11px] overflow-x-auto text-slate-700 dark:text-slate-300">
+                <div className="bg-white dark:bg-[#090d16] p-3  border text-[11px] overflow-x-auto text-slate-700 dark:text-slate-300">
                   <pre>{JSON.stringify(cryptoOutput, null, 2)}</pre>
                 </div>
               </div>
@@ -720,7 +720,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                     <span className="font-bold block text-sm">{discrepancyReport.auditRecommendation}</span>
                     <span className="text-[11px] opacity-80">Max Discrepancy: {discrepancyReport.maxDiscrepancyPercent}% (Permissible: ±5.0%)</span>
                   </div>
-                  <span className={`px-2.5 py-1 rounded-lg text-xs font-bold uppercase ${
+                  <span className={`px-2.5 py-1  text-xs font-bold uppercase ${
                     discrepancyReport.hasViolation ? 'bg-rose-600 text-white' : 'bg-emerald-600 text-white'
                   }`}>
                     {discrepancyReport.hasViolation ? 'VIOLATION DETECTED' : 'COMPLIANT'}
@@ -806,7 +806,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                         <span className="font-bold text-cyan-600 dark:text-cyan-400 font-mono text-[11px] block">{item.id}</span>
                         <span className="text-slate-500 text-[10px]">Encrypted at rest (AES-256-GCM) • {item.storageMetadata?.storedTimestamp}</span>
                       </div>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                      <span className="px-2 py-0.5  text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
                         DECRYPTED & VERIFIED
                       </span>
                     </div>
@@ -842,7 +842,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                     type="date"
                     value={newIncident.date}
                     onChange={(e) => setNewIncident({ ...newIncident, date: e.target.value })}
-                    className={`w-full p-2 rounded-lg border mt-1 ${isLight ? 'bg-slate-50 border-slate-300' : 'bg-[#090d16] border-slate-700'}`}
+                    className={`w-full p-2  border mt-1 ${isLight ? 'bg-slate-50 border-slate-300' : 'bg-[#090d16] border-slate-700'}`}
                     required
                   />
                 </div>
@@ -852,7 +852,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                     type="time"
                     value={newIncident.time}
                     onChange={(e) => setNewIncident({ ...newIncident, time: e.target.value })}
-                    className={`w-full p-2 rounded-lg border mt-1 ${isLight ? 'bg-slate-50 border-slate-300' : 'bg-[#090d16] border-slate-700'}`}
+                    className={`w-full p-2  border mt-1 ${isLight ? 'bg-slate-50 border-slate-300' : 'bg-[#090d16] border-slate-700'}`}
                     required
                   />
                 </div>
@@ -864,7 +864,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                   type="text"
                   value={newIncident.location}
                   onChange={(e) => setNewIncident({ ...newIncident, location: e.target.value })}
-                  className={`w-full p-2 rounded-lg border mt-1 ${isLight ? 'bg-slate-50 border-slate-300' : 'bg-[#090d16] border-slate-700'}`}
+                  className={`w-full p-2  border mt-1 ${isLight ? 'bg-slate-50 border-slate-300' : 'bg-[#090d16] border-slate-700'}`}
                   required
                 />
               </div>
@@ -875,7 +875,7 @@ export default function StatutoryFormsDashboard({ isLight }) {
                   value={newIncident.cause}
                   onChange={(e) => setNewIncident({ ...newIncident, cause: e.target.value })}
                   rows={2}
-                  className={`w-full p-2 rounded-lg border mt-1 ${isLight ? 'bg-slate-50 border-slate-300' : 'bg-[#090d16] border-slate-700'}`}
+                  className={`w-full p-2  border mt-1 ${isLight ? 'bg-slate-50 border-slate-300' : 'bg-[#090d16] border-slate-700'}`}
                   required
                 />
               </div>

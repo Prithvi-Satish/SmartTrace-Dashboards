@@ -66,11 +66,11 @@ export default function AuditorHierarchyView({ isLight }) {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             <div className="flex items-center space-x-2 mb-2">
-              <span className="text-[10px] font-extrabold px-3 py-0.5 rounded-full bg-emerald-600 text-white uppercase tracking-wider flex items-center gap-1">
+              <span className="text-[10px] font-extrabold px-3 py-0.5  bg-emerald-600 text-white uppercase tracking-wider flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 CPCB Official Medical Board Auditor Portal
               </span>
-              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 font-mono">
+              <span className="text-[10px] font-bold px-2.5 py-0.5  bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 font-mono">
                 Browser Back/Forward Enabled
               </span>
             </div>
@@ -210,7 +210,7 @@ export default function AuditorHierarchyView({ isLight }) {
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <span className="text-[10px] font-mono font-bold text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-950 px-2 py-0.5 rounded border border-teal-200 dark:border-teal-800">
+                      <span className="text-[10px] font-mono font-bold text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-950 px-2 py-0.5  border border-teal-200 dark:border-teal-800">
                         {grp.id}
                       </span>
                       <h4 className="text-base font-bold text-slate-900 dark:text-slate-100 mt-1.5">{grp.name}</h4>
@@ -302,7 +302,7 @@ export default function AuditorHierarchyView({ isLight }) {
           }`}>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
               <div>
-                <span className="text-[10px] font-mono font-bold text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-950 px-2 py-0.5 rounded border border-teal-200">
+                <span className="text-[10px] font-mono font-bold text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-950 px-2 py-0.5  border border-teal-200">
                   {selectedHospital.id}
                 </span>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mt-1">{selectedHospital.name}</h3>
@@ -393,7 +393,7 @@ export default function AuditorHierarchyView({ isLight }) {
                         <td className="py-3 px-3 text-right">
                           <button
                             onClick={() => generateAuditCertificatePDF(AUDIT_TRAIL_LOGS[0], selectedHospital.name)}
-                            className="p-1.5 bg-teal-50 border border-teal-200 text-teal-700 rounded-lg hover:bg-teal-100 text-xs font-bold inline-flex items-center gap-1"
+                            className="p-1.5 bg-teal-50 border border-teal-200 text-teal-700  hover:bg-teal-100 text-xs font-bold inline-flex items-center gap-1"
                           >
                             <Download className="w-3.5 h-3.5" />
                             <span>PDF</span>
@@ -433,7 +433,7 @@ export default function AuditorHierarchyView({ isLight }) {
                         <td className="py-3 px-3 text-right">
                           <button
                             onClick={() => generateAuditCertificatePDF(AUDIT_TRAIL_LOGS[0], selectedHospital.name)}
-                            className="p-1.5 bg-teal-50 border border-teal-200 text-teal-700 rounded-lg hover:bg-teal-100 text-xs font-bold inline-flex items-center gap-1"
+                            className="p-1.5 bg-teal-50 border border-teal-200 text-teal-700  hover:bg-teal-100 text-xs font-bold inline-flex items-center gap-1"
                           >
                             <Download className="w-3.5 h-3.5" />
                             <span>PDF</span>
@@ -467,14 +467,14 @@ export default function AuditorHierarchyView({ isLight }) {
                         <td className="py-3 px-3 font-bold">{row.totalKg.toLocaleString()} kg</td>
                         <td className="py-3 px-3 text-emerald-600 font-bold">{row.passedPct}%</td>
                         <td className="py-3 px-3">
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300">
+                          <span className="text-[10px] font-bold px-2 py-0.5  bg-emerald-100 text-emerald-800 border border-emerald-300">
                             {row.cpcbStatus}
                           </span>
                         </td>
                         <td className="py-3 px-3 text-right">
                           <button
                             onClick={() => generateAuditCertificatePDF(AUDIT_TRAIL_LOGS[0], selectedHospital.name)}
-                            className="p-1.5 bg-teal-50 border border-teal-200 text-teal-700 rounded-lg hover:bg-teal-100 text-xs font-bold inline-flex items-center gap-1"
+                            className="p-1.5 bg-teal-50 border border-teal-200 text-teal-700  hover:bg-teal-100 text-xs font-bold inline-flex items-center gap-1"
                           >
                             <Download className="w-3.5 h-3.5" />
                             <span>PDF Report</span>
@@ -496,7 +496,7 @@ export default function AuditorHierarchyView({ isLight }) {
                   </div>
                   <button
                     onClick={handleExport5YearArchive}
-                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg shrink-0"
+                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-1.5  shrink-0"
                   >
                     Download Full 5-Year Package
                   </button>
@@ -525,7 +525,7 @@ export default function AuditorHierarchyView({ isLight }) {
                           <td className="py-3 px-3 text-right">
                             <button
                               onClick={() => generateAuditCertificatePDF(AUDIT_TRAIL_LOGS[0], selectedHospital.name)}
-                              className="p-1.5 bg-slate-100 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-200 text-xs font-bold inline-flex items-center gap-1"
+                              className="p-1.5 bg-slate-100 border border-slate-300 text-slate-700  hover:bg-slate-200 text-xs font-bold inline-flex items-center gap-1"
                             >
                               <Download className="w-3.5 h-3.5" />
                               <span>Export Year {row.year}</span>

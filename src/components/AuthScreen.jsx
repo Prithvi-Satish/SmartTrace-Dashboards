@@ -23,7 +23,7 @@ export default function AuthScreen({ isLight, activeView, setActiveView, theme, 
     }`}>
 
       {/* Ultra-Minimal Clean Login Container */}
-      <div className={`w-full max-w-md p-8 rounded-3xl border ${
+      <div className={`w-full max-w-md p-8  border ${
         isLight ? 'bg-white border-slate-200/90' : 'bg-[#111723] border-slate-800 text-slate-100'
       }`}>
         {/* Brand Header */}

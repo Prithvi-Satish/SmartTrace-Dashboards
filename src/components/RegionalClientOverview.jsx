@@ -20,11 +20,11 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             <div className="flex items-center space-x-2 mb-1.5">
-              <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300 border border-cyan-300 uppercase tracking-wider flex items-center gap-1">
+              <span className="text-[10px] font-extrabold px-2.5 py-0.5  bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300 border border-cyan-300 uppercase tracking-wider flex items-center gap-1">
                 <MapPin className="w-3 h-3 text-cyan-600" />
                 {currentRegion.name}
               </span>
-              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300">
+              <span className="text-[10px] font-bold px-2.5 py-0.5  bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300">
                 Company Admin Full Access
               </span>
             </div>
@@ -124,7 +124,7 @@ export default function RegionalClientOverview({ onSelectHospital, isLight }) {
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center space-x-2 mb-1">
-                    <span className="text-[10px] font-mono font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-200 dark:border-cyan-800">
+                    <span className="text-[10px] font-mono font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/60 px-2 py-0.5  border border-cyan-200 dark:border-cyan-800">
                       {hosp.id}
                     </span>
                     <span className="text-[10px] font-bold text-slate-500 flex items-center gap-1">

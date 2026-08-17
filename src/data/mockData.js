@@ -73,7 +73,111 @@ export const INITIAL_MACHINES = [
     latestHashSignature: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
 
     // Maintenance Records
-    maintenanceRecords: [
+    
+    // Machine Utilization Data (by time range)
+    totalOperatingHours: 3840,
+    utilizationByRange: {
+      '24h': {
+        label: 'Last 24 Hours', periodLabel: 'Today', chartSubLabel: 'Hourly (2-hr slots)',
+        activeHours: 12.5, uptimePct: 85,
+        data: [
+          { label: '02:00', hoursActive: 0.5, cyclesRun: 1 },
+          { label: '04:00', hoursActive: 0.8, cyclesRun: 1 },
+          { label: '06:00', hoursActive: 1.0, cyclesRun: 2 },
+          { label: '08:00', hoursActive: 1.5, cyclesRun: 2 },
+          { label: '10:00', hoursActive: 2.0, cyclesRun: 3 },
+          { label: '12:00', hoursActive: 1.2, cyclesRun: 2 },
+          { label: '14:00', hoursActive: 1.6, cyclesRun: 2 },
+          { label: '16:00', hoursActive: 1.5, cyclesRun: 2 },
+          { label: '18:00', hoursActive: 1.0, cyclesRun: 1 },
+          { label: '20:00', hoursActive: 0.8, cyclesRun: 1 },
+          { label: '22:00', hoursActive: 0.4, cyclesRun: 1 },
+          { label: '00:00', hoursActive: 0.2, cyclesRun: 0 },
+        ]
+      },
+      '7d': {
+        label: 'Last 7 Days', periodLabel: 'This Week', chartSubLabel: 'Daily',
+        activeHours: 98.2, uptimePct: 84,
+        data: [
+          { label: 'Mon', hoursActive: 15.0, cyclesRun: 20 },
+          { label: 'Tue', hoursActive: 16.5, cyclesRun: 22 },
+          { label: 'Wed', hoursActive: 13.0, cyclesRun: 17 },
+          { label: 'Thu', hoursActive: 16.0, cyclesRun: 21 },
+          { label: 'Fri', hoursActive: 18.0, cyclesRun: 24 },
+          { label: 'Sat', hoursActive: 10.5, cyclesRun: 13 },
+          { label: 'Sun', hoursActive: 9.2,  cyclesRun: 11 },
+        ]
+      },
+      '1m': {
+        label: 'Last Month', periodLabel: 'This Month', chartSubLabel: 'Weekly',
+        activeHours: 415, uptimePct: 83,
+        data: [
+          { label: 'Wk 1', hoursActive: 102, cyclesRun: 135 },
+          { label: 'Wk 2', hoursActive: 110, cyclesRun: 148 },
+          { label: 'Wk 3', hoursActive: 95,  cyclesRun: 122 },
+          { label: 'Wk 4', hoursActive: 108, cyclesRun: 141 },
+        ]
+      },
+      '3m': {
+        label: 'Last 3 Months', periodLabel: '3 Months', chartSubLabel: 'Monthly',
+        activeHours: 1150, uptimePct: 82,
+        data: [
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      '6m': {
+        label: 'Last 6 Months', periodLabel: '6 Months', chartSubLabel: 'Monthly',
+        activeHours: 2580, uptimePct: 84,
+        data: [
+          { label: 'Mar', hoursActive: 460, cyclesRun: 610 },
+          { label: 'Apr', hoursActive: 475, cyclesRun: 630 },
+          { label: 'May', hoursActive: 490, cyclesRun: 650 },
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      '1y': {
+        label: 'Last 1 Year', periodLabel: '1 Year', chartSubLabel: 'Monthly',
+        activeHours: 5240, uptimePct: 82,
+        data: [
+          { label: 'Sep', hoursActive: 430, cyclesRun: 570 },
+          { label: 'Oct', hoursActive: 450, cyclesRun: 595 },
+          { label: 'Nov', hoursActive: 465, cyclesRun: 615 },
+          { label: 'Dec', hoursActive: 410, cyclesRun: 540 },
+          { label: 'Jan', hoursActive: 470, cyclesRun: 625 },
+          { label: 'Feb', hoursActive: 445, cyclesRun: 590 },
+          { label: 'Mar', hoursActive: 460, cyclesRun: 610 },
+          { label: 'Apr', hoursActive: 475, cyclesRun: 630 },
+          { label: 'May', hoursActive: 490, cyclesRun: 650 },
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      'all': {
+        label: 'Since Installation', periodLabel: 'Since Install', chartSubLabel: 'Quarterly',
+        activeHours: 3840, uptimePct: 80,
+        data: [
+          { label: "Q2 '25", hoursActive: 1200, cyclesRun: 1580 },
+          { label: "Q3 '25", hoursActive: 1350, cyclesRun: 1780 },
+          { label: "Q4 '25", hoursActive: 1250, cyclesRun: 1650 },
+          { label: "Q1 '26", hoursActive: 1380, cyclesRun: 1820 },
+          { label: "Q2 '26", hoursActive: 1450, cyclesRun: 1910 },
+          { label: "Q3 '26", hoursActive: 395,  cyclesRun: 510  },
+        ]
+      },
+    },
+
+    // Downtime Records
+    downtimeRecords: [
+      { id: 'DT-2026-08', startTime: '2026-08-01 10:00', duration: '2h 15m', reason: 'Routine Maintenance', resolvedBy: 'M. Verma (ENG-14)', type: 'Planned' },
+      { id: 'DT-2026-07', startTime: '2026-07-15 14:30', duration: '4h 45m', reason: 'Unexpected Pressure Drop', resolvedBy: 'S. Patel (ENG-08)', type: 'Unplanned' },
+      { id: 'DT-2026-06', startTime: '2026-06-22 09:00', duration: '1h 30m', reason: 'Software Update', resolvedBy: 'R. Sharma (ENG-02)', type: 'Planned' }
+    ],
+maintenanceRecords: [
       { id: "MNT-2026-05", date: "2026-05-10", type: "Annual Calibration & IQ/OQ/PQ", engineer: "S. Patel (ENG-08)", status: "PASSED", docName: "IQ_OQ_PQ_Certificate_Unit01.pdf" },
       { id: "MNT-2026-02", date: "2026-02-14", type: "Vaporizer Nozzle Cleaning & Filter Replacement", engineer: "R. Sharma (ENG-02)", status: "PASSED", docName: "Maintenance_Log_2026_02.pdf" },
       { id: "MNT-2025-11", date: "2025-11-05", type: "Sensor Calibration (Pressure & Temp)", engineer: "S. Patel (ENG-08)", status: "PASSED", docName: "Calibration_Report_Nov2025.pdf" }
@@ -125,7 +229,111 @@ export const INITIAL_MACHINES = [
     hardwareKeyId: "ATECC608A-ECDSA-KEY-1120",
     latestHashSignature: "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
 
-    maintenanceRecords: [
+    
+    // Machine Utilization Data (by time range)
+    totalOperatingHours: 3840,
+    utilizationByRange: {
+      '24h': {
+        label: 'Last 24 Hours', periodLabel: 'Today', chartSubLabel: 'Hourly (2-hr slots)',
+        activeHours: 12.5, uptimePct: 85,
+        data: [
+          { label: '02:00', hoursActive: 0.5, cyclesRun: 1 },
+          { label: '04:00', hoursActive: 0.8, cyclesRun: 1 },
+          { label: '06:00', hoursActive: 1.0, cyclesRun: 2 },
+          { label: '08:00', hoursActive: 1.5, cyclesRun: 2 },
+          { label: '10:00', hoursActive: 2.0, cyclesRun: 3 },
+          { label: '12:00', hoursActive: 1.2, cyclesRun: 2 },
+          { label: '14:00', hoursActive: 1.6, cyclesRun: 2 },
+          { label: '16:00', hoursActive: 1.5, cyclesRun: 2 },
+          { label: '18:00', hoursActive: 1.0, cyclesRun: 1 },
+          { label: '20:00', hoursActive: 0.8, cyclesRun: 1 },
+          { label: '22:00', hoursActive: 0.4, cyclesRun: 1 },
+          { label: '00:00', hoursActive: 0.2, cyclesRun: 0 },
+        ]
+      },
+      '7d': {
+        label: 'Last 7 Days', periodLabel: 'This Week', chartSubLabel: 'Daily',
+        activeHours: 98.2, uptimePct: 84,
+        data: [
+          { label: 'Mon', hoursActive: 15.0, cyclesRun: 20 },
+          { label: 'Tue', hoursActive: 16.5, cyclesRun: 22 },
+          { label: 'Wed', hoursActive: 13.0, cyclesRun: 17 },
+          { label: 'Thu', hoursActive: 16.0, cyclesRun: 21 },
+          { label: 'Fri', hoursActive: 18.0, cyclesRun: 24 },
+          { label: 'Sat', hoursActive: 10.5, cyclesRun: 13 },
+          { label: 'Sun', hoursActive: 9.2,  cyclesRun: 11 },
+        ]
+      },
+      '1m': {
+        label: 'Last Month', periodLabel: 'This Month', chartSubLabel: 'Weekly',
+        activeHours: 415, uptimePct: 83,
+        data: [
+          { label: 'Wk 1', hoursActive: 102, cyclesRun: 135 },
+          { label: 'Wk 2', hoursActive: 110, cyclesRun: 148 },
+          { label: 'Wk 3', hoursActive: 95,  cyclesRun: 122 },
+          { label: 'Wk 4', hoursActive: 108, cyclesRun: 141 },
+        ]
+      },
+      '3m': {
+        label: 'Last 3 Months', periodLabel: '3 Months', chartSubLabel: 'Monthly',
+        activeHours: 1150, uptimePct: 82,
+        data: [
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      '6m': {
+        label: 'Last 6 Months', periodLabel: '6 Months', chartSubLabel: 'Monthly',
+        activeHours: 2580, uptimePct: 84,
+        data: [
+          { label: 'Mar', hoursActive: 460, cyclesRun: 610 },
+          { label: 'Apr', hoursActive: 475, cyclesRun: 630 },
+          { label: 'May', hoursActive: 490, cyclesRun: 650 },
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      '1y': {
+        label: 'Last 1 Year', periodLabel: '1 Year', chartSubLabel: 'Monthly',
+        activeHours: 5240, uptimePct: 82,
+        data: [
+          { label: 'Sep', hoursActive: 430, cyclesRun: 570 },
+          { label: 'Oct', hoursActive: 450, cyclesRun: 595 },
+          { label: 'Nov', hoursActive: 465, cyclesRun: 615 },
+          { label: 'Dec', hoursActive: 410, cyclesRun: 540 },
+          { label: 'Jan', hoursActive: 470, cyclesRun: 625 },
+          { label: 'Feb', hoursActive: 445, cyclesRun: 590 },
+          { label: 'Mar', hoursActive: 460, cyclesRun: 610 },
+          { label: 'Apr', hoursActive: 475, cyclesRun: 630 },
+          { label: 'May', hoursActive: 490, cyclesRun: 650 },
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      'all': {
+        label: 'Since Installation', periodLabel: 'Since Install', chartSubLabel: 'Quarterly',
+        activeHours: 3840, uptimePct: 80,
+        data: [
+          { label: "Q2 '25", hoursActive: 1200, cyclesRun: 1580 },
+          { label: "Q3 '25", hoursActive: 1350, cyclesRun: 1780 },
+          { label: "Q4 '25", hoursActive: 1250, cyclesRun: 1650 },
+          { label: "Q1 '26", hoursActive: 1380, cyclesRun: 1820 },
+          { label: "Q2 '26", hoursActive: 1450, cyclesRun: 1910 },
+          { label: "Q3 '26", hoursActive: 395,  cyclesRun: 510  },
+        ]
+      },
+    },
+
+    // Downtime Records
+    downtimeRecords: [
+      { id: 'DT-2026-08', startTime: '2026-08-01 10:00', duration: '2h 15m', reason: 'Routine Maintenance', resolvedBy: 'M. Verma (ENG-14)', type: 'Planned' },
+      { id: 'DT-2026-07', startTime: '2026-07-15 14:30', duration: '4h 45m', reason: 'Unexpected Pressure Drop', resolvedBy: 'S. Patel (ENG-08)', type: 'Unplanned' },
+      { id: 'DT-2026-06', startTime: '2026-06-22 09:00', duration: '1h 30m', reason: 'Software Update', resolvedBy: 'R. Sharma (ENG-02)', type: 'Planned' }
+    ],
+maintenanceRecords: [
       { id: "MNT-2026-04", date: "2026-04-18", type: "Biannual Sensor & Pump Servicing", engineer: "M. Verma (ENG-14)", status: "PASSED", docName: "IQ_OQ_PQ_Certificate_Unit02.pdf" },
       { id: "MNT-2025-10", date: "2025-10-22", type: "Catalyst Filter Replacement", engineer: "R. Sharma (ENG-02)", status: "PASSED", docName: "Filter_Replacement_Oct2025.pdf" }
     ]
@@ -175,7 +383,111 @@ export const INITIAL_MACHINES = [
     hardwareKeyId: "ATECC608A-ECDSA-KEY-0892",
     latestHashSignature: "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969",
 
-    maintenanceRecords: [
+    
+    // Machine Utilization Data (by time range)
+    totalOperatingHours: 3840,
+    utilizationByRange: {
+      '24h': {
+        label: 'Last 24 Hours', periodLabel: 'Today', chartSubLabel: 'Hourly (2-hr slots)',
+        activeHours: 12.5, uptimePct: 85,
+        data: [
+          { label: '02:00', hoursActive: 0.5, cyclesRun: 1 },
+          { label: '04:00', hoursActive: 0.8, cyclesRun: 1 },
+          { label: '06:00', hoursActive: 1.0, cyclesRun: 2 },
+          { label: '08:00', hoursActive: 1.5, cyclesRun: 2 },
+          { label: '10:00', hoursActive: 2.0, cyclesRun: 3 },
+          { label: '12:00', hoursActive: 1.2, cyclesRun: 2 },
+          { label: '14:00', hoursActive: 1.6, cyclesRun: 2 },
+          { label: '16:00', hoursActive: 1.5, cyclesRun: 2 },
+          { label: '18:00', hoursActive: 1.0, cyclesRun: 1 },
+          { label: '20:00', hoursActive: 0.8, cyclesRun: 1 },
+          { label: '22:00', hoursActive: 0.4, cyclesRun: 1 },
+          { label: '00:00', hoursActive: 0.2, cyclesRun: 0 },
+        ]
+      },
+      '7d': {
+        label: 'Last 7 Days', periodLabel: 'This Week', chartSubLabel: 'Daily',
+        activeHours: 98.2, uptimePct: 84,
+        data: [
+          { label: 'Mon', hoursActive: 15.0, cyclesRun: 20 },
+          { label: 'Tue', hoursActive: 16.5, cyclesRun: 22 },
+          { label: 'Wed', hoursActive: 13.0, cyclesRun: 17 },
+          { label: 'Thu', hoursActive: 16.0, cyclesRun: 21 },
+          { label: 'Fri', hoursActive: 18.0, cyclesRun: 24 },
+          { label: 'Sat', hoursActive: 10.5, cyclesRun: 13 },
+          { label: 'Sun', hoursActive: 9.2,  cyclesRun: 11 },
+        ]
+      },
+      '1m': {
+        label: 'Last Month', periodLabel: 'This Month', chartSubLabel: 'Weekly',
+        activeHours: 415, uptimePct: 83,
+        data: [
+          { label: 'Wk 1', hoursActive: 102, cyclesRun: 135 },
+          { label: 'Wk 2', hoursActive: 110, cyclesRun: 148 },
+          { label: 'Wk 3', hoursActive: 95,  cyclesRun: 122 },
+          { label: 'Wk 4', hoursActive: 108, cyclesRun: 141 },
+        ]
+      },
+      '3m': {
+        label: 'Last 3 Months', periodLabel: '3 Months', chartSubLabel: 'Monthly',
+        activeHours: 1150, uptimePct: 82,
+        data: [
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      '6m': {
+        label: 'Last 6 Months', periodLabel: '6 Months', chartSubLabel: 'Monthly',
+        activeHours: 2580, uptimePct: 84,
+        data: [
+          { label: 'Mar', hoursActive: 460, cyclesRun: 610 },
+          { label: 'Apr', hoursActive: 475, cyclesRun: 630 },
+          { label: 'May', hoursActive: 490, cyclesRun: 650 },
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      '1y': {
+        label: 'Last 1 Year', periodLabel: '1 Year', chartSubLabel: 'Monthly',
+        activeHours: 5240, uptimePct: 82,
+        data: [
+          { label: 'Sep', hoursActive: 430, cyclesRun: 570 },
+          { label: 'Oct', hoursActive: 450, cyclesRun: 595 },
+          { label: 'Nov', hoursActive: 465, cyclesRun: 615 },
+          { label: 'Dec', hoursActive: 410, cyclesRun: 540 },
+          { label: 'Jan', hoursActive: 470, cyclesRun: 625 },
+          { label: 'Feb', hoursActive: 445, cyclesRun: 590 },
+          { label: 'Mar', hoursActive: 460, cyclesRun: 610 },
+          { label: 'Apr', hoursActive: 475, cyclesRun: 630 },
+          { label: 'May', hoursActive: 490, cyclesRun: 650 },
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      'all': {
+        label: 'Since Installation', periodLabel: 'Since Install', chartSubLabel: 'Quarterly',
+        activeHours: 3840, uptimePct: 80,
+        data: [
+          { label: "Q2 '25", hoursActive: 1200, cyclesRun: 1580 },
+          { label: "Q3 '25", hoursActive: 1350, cyclesRun: 1780 },
+          { label: "Q4 '25", hoursActive: 1250, cyclesRun: 1650 },
+          { label: "Q1 '26", hoursActive: 1380, cyclesRun: 1820 },
+          { label: "Q2 '26", hoursActive: 1450, cyclesRun: 1910 },
+          { label: "Q3 '26", hoursActive: 395,  cyclesRun: 510  },
+        ]
+      },
+    },
+
+    // Downtime Records
+    downtimeRecords: [
+      { id: 'DT-2026-08', startTime: '2026-08-01 10:00', duration: '2h 15m', reason: 'Routine Maintenance', resolvedBy: 'M. Verma (ENG-14)', type: 'Planned' },
+      { id: 'DT-2026-07', startTime: '2026-07-15 14:30', duration: '4h 45m', reason: 'Unexpected Pressure Drop', resolvedBy: 'S. Patel (ENG-08)', type: 'Unplanned' },
+      { id: 'DT-2026-06', startTime: '2026-06-22 09:00', duration: '1h 30m', reason: 'Software Update', resolvedBy: 'R. Sharma (ENG-02)', type: 'Planned' }
+    ],
+maintenanceRecords: [
       { id: "MNT-2026-06", date: "2026-06-01", type: "Commissioning & IQ/OQ/PQ Validation", engineer: "S. Patel (ENG-08)", status: "PASSED", docName: "Validation_Certificate_OT3.pdf" }
     ]
   },
@@ -224,7 +536,111 @@ export const INITIAL_MACHINES = [
     hardwareKeyId: "ATECC608A-ECDSA-KEY-0711",
     latestHashSignature: "cb5d7711f77b4f7a080dabe7498e7c8ec251441ea6fd7861925d6b9d77d86355",
 
-    maintenanceRecords: [
+    
+    // Machine Utilization Data (by time range)
+    totalOperatingHours: 3840,
+    utilizationByRange: {
+      '24h': {
+        label: 'Last 24 Hours', periodLabel: 'Today', chartSubLabel: 'Hourly (2-hr slots)',
+        activeHours: 12.5, uptimePct: 85,
+        data: [
+          { label: '02:00', hoursActive: 0.5, cyclesRun: 1 },
+          { label: '04:00', hoursActive: 0.8, cyclesRun: 1 },
+          { label: '06:00', hoursActive: 1.0, cyclesRun: 2 },
+          { label: '08:00', hoursActive: 1.5, cyclesRun: 2 },
+          { label: '10:00', hoursActive: 2.0, cyclesRun: 3 },
+          { label: '12:00', hoursActive: 1.2, cyclesRun: 2 },
+          { label: '14:00', hoursActive: 1.6, cyclesRun: 2 },
+          { label: '16:00', hoursActive: 1.5, cyclesRun: 2 },
+          { label: '18:00', hoursActive: 1.0, cyclesRun: 1 },
+          { label: '20:00', hoursActive: 0.8, cyclesRun: 1 },
+          { label: '22:00', hoursActive: 0.4, cyclesRun: 1 },
+          { label: '00:00', hoursActive: 0.2, cyclesRun: 0 },
+        ]
+      },
+      '7d': {
+        label: 'Last 7 Days', periodLabel: 'This Week', chartSubLabel: 'Daily',
+        activeHours: 98.2, uptimePct: 84,
+        data: [
+          { label: 'Mon', hoursActive: 15.0, cyclesRun: 20 },
+          { label: 'Tue', hoursActive: 16.5, cyclesRun: 22 },
+          { label: 'Wed', hoursActive: 13.0, cyclesRun: 17 },
+          { label: 'Thu', hoursActive: 16.0, cyclesRun: 21 },
+          { label: 'Fri', hoursActive: 18.0, cyclesRun: 24 },
+          { label: 'Sat', hoursActive: 10.5, cyclesRun: 13 },
+          { label: 'Sun', hoursActive: 9.2,  cyclesRun: 11 },
+        ]
+      },
+      '1m': {
+        label: 'Last Month', periodLabel: 'This Month', chartSubLabel: 'Weekly',
+        activeHours: 415, uptimePct: 83,
+        data: [
+          { label: 'Wk 1', hoursActive: 102, cyclesRun: 135 },
+          { label: 'Wk 2', hoursActive: 110, cyclesRun: 148 },
+          { label: 'Wk 3', hoursActive: 95,  cyclesRun: 122 },
+          { label: 'Wk 4', hoursActive: 108, cyclesRun: 141 },
+        ]
+      },
+      '3m': {
+        label: 'Last 3 Months', periodLabel: '3 Months', chartSubLabel: 'Monthly',
+        activeHours: 1150, uptimePct: 82,
+        data: [
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      '6m': {
+        label: 'Last 6 Months', periodLabel: '6 Months', chartSubLabel: 'Monthly',
+        activeHours: 2580, uptimePct: 84,
+        data: [
+          { label: 'Mar', hoursActive: 460, cyclesRun: 610 },
+          { label: 'Apr', hoursActive: 475, cyclesRun: 630 },
+          { label: 'May', hoursActive: 490, cyclesRun: 650 },
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      '1y': {
+        label: 'Last 1 Year', periodLabel: '1 Year', chartSubLabel: 'Monthly',
+        activeHours: 5240, uptimePct: 82,
+        data: [
+          { label: 'Sep', hoursActive: 430, cyclesRun: 570 },
+          { label: 'Oct', hoursActive: 450, cyclesRun: 595 },
+          { label: 'Nov', hoursActive: 465, cyclesRun: 615 },
+          { label: 'Dec', hoursActive: 410, cyclesRun: 540 },
+          { label: 'Jan', hoursActive: 470, cyclesRun: 625 },
+          { label: 'Feb', hoursActive: 445, cyclesRun: 590 },
+          { label: 'Mar', hoursActive: 460, cyclesRun: 610 },
+          { label: 'Apr', hoursActive: 475, cyclesRun: 630 },
+          { label: 'May', hoursActive: 490, cyclesRun: 650 },
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      'all': {
+        label: 'Since Installation', periodLabel: 'Since Install', chartSubLabel: 'Quarterly',
+        activeHours: 3840, uptimePct: 80,
+        data: [
+          { label: "Q2 '25", hoursActive: 1200, cyclesRun: 1580 },
+          { label: "Q3 '25", hoursActive: 1350, cyclesRun: 1780 },
+          { label: "Q4 '25", hoursActive: 1250, cyclesRun: 1650 },
+          { label: "Q1 '26", hoursActive: 1380, cyclesRun: 1820 },
+          { label: "Q2 '26", hoursActive: 1450, cyclesRun: 1910 },
+          { label: "Q3 '26", hoursActive: 395,  cyclesRun: 510  },
+        ]
+      },
+    },
+
+    // Downtime Records
+    downtimeRecords: [
+      { id: 'DT-2026-08', startTime: '2026-08-01 10:00', duration: '2h 15m', reason: 'Routine Maintenance', resolvedBy: 'M. Verma (ENG-14)', type: 'Planned' },
+      { id: 'DT-2026-07', startTime: '2026-07-15 14:30', duration: '4h 45m', reason: 'Unexpected Pressure Drop', resolvedBy: 'S. Patel (ENG-08)', type: 'Unplanned' },
+      { id: 'DT-2026-06', startTime: '2026-06-22 09:00', duration: '1h 30m', reason: 'Software Update', resolvedBy: 'R. Sharma (ENG-02)', type: 'Planned' }
+    ],
+maintenanceRecords: [
       { id: "MNT-2026-03", date: "2026-03-12", type: "Door Seal & Gasket Inspection", engineer: "R. Sharma (ENG-02)", status: "PASSED", docName: "Seal_Inspection_Log.pdf" }
     ]
   },
@@ -274,7 +690,111 @@ export const INITIAL_MACHINES = [
     hardwareKeyId: "ATECC608A-ECDSA-KEY-0012",
     latestHashSignature: "d41d8cd98f00b204e9800998ecf8427e997528e5352c8031d279d479e00eb2d8",
 
-    maintenanceRecords: [
+    
+    // Machine Utilization Data (by time range)
+    totalOperatingHours: 3840,
+    utilizationByRange: {
+      '24h': {
+        label: 'Last 24 Hours', periodLabel: 'Today', chartSubLabel: 'Hourly (2-hr slots)',
+        activeHours: 12.5, uptimePct: 85,
+        data: [
+          { label: '02:00', hoursActive: 0.5, cyclesRun: 1 },
+          { label: '04:00', hoursActive: 0.8, cyclesRun: 1 },
+          { label: '06:00', hoursActive: 1.0, cyclesRun: 2 },
+          { label: '08:00', hoursActive: 1.5, cyclesRun: 2 },
+          { label: '10:00', hoursActive: 2.0, cyclesRun: 3 },
+          { label: '12:00', hoursActive: 1.2, cyclesRun: 2 },
+          { label: '14:00', hoursActive: 1.6, cyclesRun: 2 },
+          { label: '16:00', hoursActive: 1.5, cyclesRun: 2 },
+          { label: '18:00', hoursActive: 1.0, cyclesRun: 1 },
+          { label: '20:00', hoursActive: 0.8, cyclesRun: 1 },
+          { label: '22:00', hoursActive: 0.4, cyclesRun: 1 },
+          { label: '00:00', hoursActive: 0.2, cyclesRun: 0 },
+        ]
+      },
+      '7d': {
+        label: 'Last 7 Days', periodLabel: 'This Week', chartSubLabel: 'Daily',
+        activeHours: 98.2, uptimePct: 84,
+        data: [
+          { label: 'Mon', hoursActive: 15.0, cyclesRun: 20 },
+          { label: 'Tue', hoursActive: 16.5, cyclesRun: 22 },
+          { label: 'Wed', hoursActive: 13.0, cyclesRun: 17 },
+          { label: 'Thu', hoursActive: 16.0, cyclesRun: 21 },
+          { label: 'Fri', hoursActive: 18.0, cyclesRun: 24 },
+          { label: 'Sat', hoursActive: 10.5, cyclesRun: 13 },
+          { label: 'Sun', hoursActive: 9.2,  cyclesRun: 11 },
+        ]
+      },
+      '1m': {
+        label: 'Last Month', periodLabel: 'This Month', chartSubLabel: 'Weekly',
+        activeHours: 415, uptimePct: 83,
+        data: [
+          { label: 'Wk 1', hoursActive: 102, cyclesRun: 135 },
+          { label: 'Wk 2', hoursActive: 110, cyclesRun: 148 },
+          { label: 'Wk 3', hoursActive: 95,  cyclesRun: 122 },
+          { label: 'Wk 4', hoursActive: 108, cyclesRun: 141 },
+        ]
+      },
+      '3m': {
+        label: 'Last 3 Months', periodLabel: '3 Months', chartSubLabel: 'Monthly',
+        activeHours: 1150, uptimePct: 82,
+        data: [
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      '6m': {
+        label: 'Last 6 Months', periodLabel: '6 Months', chartSubLabel: 'Monthly',
+        activeHours: 2580, uptimePct: 84,
+        data: [
+          { label: 'Mar', hoursActive: 460, cyclesRun: 610 },
+          { label: 'Apr', hoursActive: 475, cyclesRun: 630 },
+          { label: 'May', hoursActive: 490, cyclesRun: 650 },
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      '1y': {
+        label: 'Last 1 Year', periodLabel: '1 Year', chartSubLabel: 'Monthly',
+        activeHours: 5240, uptimePct: 82,
+        data: [
+          { label: 'Sep', hoursActive: 430, cyclesRun: 570 },
+          { label: 'Oct', hoursActive: 450, cyclesRun: 595 },
+          { label: 'Nov', hoursActive: 465, cyclesRun: 615 },
+          { label: 'Dec', hoursActive: 410, cyclesRun: 540 },
+          { label: 'Jan', hoursActive: 470, cyclesRun: 625 },
+          { label: 'Feb', hoursActive: 445, cyclesRun: 590 },
+          { label: 'Mar', hoursActive: 460, cyclesRun: 610 },
+          { label: 'Apr', hoursActive: 475, cyclesRun: 630 },
+          { label: 'May', hoursActive: 490, cyclesRun: 650 },
+          { label: 'Jun', hoursActive: 480, cyclesRun: 640 },
+          { label: 'Jul', hoursActive: 495, cyclesRun: 660 },
+          { label: 'Aug', hoursActive: 175, cyclesRun: 130 },
+        ]
+      },
+      'all': {
+        label: 'Since Installation', periodLabel: 'Since Install', chartSubLabel: 'Quarterly',
+        activeHours: 3840, uptimePct: 80,
+        data: [
+          { label: "Q2 '25", hoursActive: 1200, cyclesRun: 1580 },
+          { label: "Q3 '25", hoursActive: 1350, cyclesRun: 1780 },
+          { label: "Q4 '25", hoursActive: 1250, cyclesRun: 1650 },
+          { label: "Q1 '26", hoursActive: 1380, cyclesRun: 1820 },
+          { label: "Q2 '26", hoursActive: 1450, cyclesRun: 1910 },
+          { label: "Q3 '26", hoursActive: 395,  cyclesRun: 510  },
+        ]
+      },
+    },
+
+    // Downtime Records
+    downtimeRecords: [
+      { id: 'DT-2026-08', startTime: '2026-08-01 10:00', duration: '2h 15m', reason: 'Routine Maintenance', resolvedBy: 'M. Verma (ENG-14)', type: 'Planned' },
+      { id: 'DT-2026-07', startTime: '2026-07-15 14:30', duration: '4h 45m', reason: 'Unexpected Pressure Drop', resolvedBy: 'S. Patel (ENG-08)', type: 'Unplanned' },
+      { id: 'DT-2026-06', startTime: '2026-06-22 09:00', duration: '1h 30m', reason: 'Software Update', resolvedBy: 'R. Sharma (ENG-02)', type: 'Planned' }
+    ],
+maintenanceRecords: [
       { id: "MNT-2025-08", date: "2025-08-05", type: "Annual Calibration & IQ/OQ/PQ", engineer: "S. Patel (ENG-08)", status: "PASSED", docName: "Calibration_Cert_2025.pdf" },
       { id: "MNT-2025-02", date: "2025-02-19", type: "Vacuum Pump Replacement", engineer: "M. Verma (ENG-14)", status: "PASSED", docName: "Pump_Replacement_Report.pdf" }
     ]

@@ -150,23 +150,15 @@ export default function SidebarNav({
           )}
         </div>
 
-        {/* Desktop Collapse Toggle */}
-        <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className={`hidden lg:flex p-1.5 rounded-lg border text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-all ${
-            isLight ? 'bg-slate-100 hover:bg-slate-200 border-slate-300' : 'bg-slate-800 hover:bg-slate-700 border-slate-700'
-          }`}
-          title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-        >
-          {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-        </button>
-
-        {/* Mobile Close Button */}
+        {/* Universal Close Button */}
         <button
           onClick={() => setIsMobileOpen(false)}
-          className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+          className={`p-1.5 border text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-all ${
+            isLight ? 'bg-slate-100 hover:bg-slate-200 border-slate-300' : 'bg-slate-800 hover:bg-slate-700 border-slate-700'
+          }`}
+          title="Close Sidebar"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
       </div>
 
@@ -265,7 +257,7 @@ export default function SidebarNav({
             <img
               src={currentUser?.avatar}
               alt={currentUser?.name}
-              className="w-8 h-8 rounded-full object-cover border border-cyan-500 shrink-0"
+              className="w-8 h-8  object-cover border border-cyan-500 shrink-0"
             />
             {!isCollapsed && (
               <div className="overflow-hidden">
@@ -281,7 +273,7 @@ export default function SidebarNav({
 
           <button
             onClick={logout}
-            className="p-1.5 rounded-lg border border-rose-300 dark:border-rose-900/50 bg-rose-50 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/50 transition-all shrink-0"
+            className="p-1.5  border border-rose-300 dark:border-rose-900/50 bg-rose-50 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/50 transition-all shrink-0"
             title="Switch Role / Sign Out"
           >
             <LogOut className="w-4 h-4" />

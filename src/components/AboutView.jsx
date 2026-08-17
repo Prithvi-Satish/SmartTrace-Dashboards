@@ -16,7 +16,7 @@ export default function AboutView({ isLight }) {
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <h1 className="text-xl sm:text-2xl font-black tracking-tight">SmartTrace™ Telemetry System</h1>
-              <span className="bg-cyan-400/20 text-cyan-200 text-xs px-2.5 py-0.5 rounded-full font-mono font-bold border border-cyan-300/30">
+              <span className="bg-cyan-400/20 text-cyan-200 text-xs px-2.5 py-0.5  font-mono font-bold border border-cyan-300/30">
                 {APP_VERSION} Production Architecture
               </span>
             </div>
