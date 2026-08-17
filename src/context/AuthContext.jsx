@@ -48,43 +48,56 @@ export const DEMO_USERS = [
   }
 ];
 
+// Helpers: write auth to both storages for maximum persistence
+const writeAuth = (user) => {
+  const data = JSON.stringify(user);
+  try { localStorage.setItem('smarttrace_auth', 'true'); } catch (e) {}
+  try { localStorage.setItem('smarttrace_user', data); } catch (e) {}
+  try { sessionStorage.setItem('smarttrace_auth', 'true'); } catch (e) {}
+  try { sessionStorage.setItem('smarttrace_user', data); } catch (e) {}
+};
+
+const clearAuth = () => {
+  try { localStorage.removeItem('smarttrace_auth'); localStorage.removeItem('smarttrace_user'); } catch (e) {}
+  try { sessionStorage.removeItem('smarttrace_auth'); sessionStorage.removeItem('smarttrace_user'); } catch (e) {}
+};
+
+const readAuth = () => {
+  // Try localStorage first, fall back to sessionStorage
+  const isAuth =
+    localStorage.getItem('smarttrace_auth') === 'true' ||
+    sessionStorage.getItem('smarttrace_auth') === 'true';
+  const rawUser =
+    localStorage.getItem('smarttrace_user') ||
+    sessionStorage.getItem('smarttrace_user');
+  let user = null;
+  if (rawUser) { try { user = JSON.parse(rawUser); } catch (e) {} }
+  return { isAuth, user };
+};
+
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(() => {
-    const saved = localStorage.getItem('smarttrace_user');
-    if (saved) {
-      try { return JSON.parse(saved); } catch (e) {}
-    }
-    return DEMO_USERS[0];
+    const { user } = readAuth();
+    return user || DEMO_USERS[0];
   });
 
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('smarttrace_auth') === 'true';
+    const { isAuth } = readAuth();
+    return isAuth;
   });
 
   useEffect(() => {
-    if (isAuthenticated) {
-      localStorage.setItem('smarttrace_auth', 'true');
-      localStorage.setItem('smarttrace_user', JSON.stringify(currentUser));
-      if (window.location.hash !== '#portal') {
-        window.history.replaceState({ appPage: 'portal' }, '', '#portal');
-      }
-    } else {
-      localStorage.removeItem('smarttrace_auth');
-      localStorage.removeItem('smarttrace_user');
-      if (window.location.hash !== '#login') {
-        window.history.replaceState({ appPage: 'login' }, '', '#login');
-      }
+    if (isAuthenticated && currentUser) {
+      writeAuth(currentUser);
     }
   }, [isAuthenticated, currentUser]);
 
   const loginAs = (userId) => {
     const found = DEMO_USERS.find(u => u.id === userId);
     if (found) {
+      writeAuth(found);
       setCurrentUser(found);
       setIsAuthenticated(true);
-      localStorage.setItem('smarttrace_auth', 'true');
-      localStorage.setItem('smarttrace_user', JSON.stringify(found));
-      window.history.pushState({ appPage: 'portal', userId: found.id }, '', '#portal');
     }
   };
 
@@ -101,21 +114,16 @@ export function AuthProvider({ children }) {
       permissions: ['all_regional_hospitals']
     };
 
+    writeAuth(userToSave);
     setCurrentUser(userToSave);
     setIsAuthenticated(true);
-    localStorage.setItem('smarttrace_auth', 'true');
-    localStorage.setItem('smarttrace_user', JSON.stringify(userToSave));
-    window.history.pushState({ appPage: 'portal', userId: userToSave.id }, '', '#portal');
     return { success: true, user: userToSave };
   };
 
   const logout = () => {
+    clearAuth();
     setIsAuthenticated(false);
-    localStorage.removeItem('smarttrace_auth');
-    localStorage.removeItem('smarttrace_user');
-    if (window.location.hash !== '#login') {
-      window.history.pushState({ appPage: 'login' }, '', '#login');
-    }
+    setCurrentUser(DEMO_USERS[0]);
   };
 
   const hasPermission = (perm) => {

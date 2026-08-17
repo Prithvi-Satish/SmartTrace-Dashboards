@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import DeviceFrame from './components/DeviceFrame';
 import SidebarNav from './components/SidebarNav';
 import ComplianceDashboard from './components/ComplianceDashboard';
 import RegionalClientOverview from './components/RegionalClientOverview';
@@ -11,7 +12,7 @@ import ProfileView from './components/ProfileView';
 import DocsView from './components/DocsView';
 import SettingsModal from './components/SettingsModal';
 import AuthScreen from './components/AuthScreen';
-import { ShieldCheck, Cpu, ArrowLeft, Building2, Menu, Moon, Sun, Settings, LogOut, Smartphone, Tablet, Monitor } from 'lucide-react';
+import { ArrowLeft, Cpu } from 'lucide-react';
 
 function DashboardContent({ activeView, setActiveView, theme, setTheme }) {
   const { isAuthenticated, currentUser, logout } = useAuth();
@@ -26,7 +27,7 @@ function DashboardContent({ activeView, setActiveView, theme, setTheme }) {
   // Internal state for Company Admin drilldown
   const [selectedHospitalForAdmin, setSelectedHospitalForAdmin] = useState(null);
 
-  // Sync default activeNav based on currentUser role on initial login
+  // Sync default activeNav based on currentUser role on login
   useEffect(() => {
     if (currentUser?.role === 'company_admin') {
       setActiveNav('regional_overview');
@@ -41,33 +42,6 @@ function DashboardContent({ activeView, setActiveView, theme, setTheme }) {
     }
   }, [currentUser]);
 
-  // History popstate listener for mobile browser back button
-  useEffect(() => {
-    const handlePopStateAdmin = (e) => {
-      if (e.state && e.state.appPage === 'login') {
-        logout();
-      } else if (e.state && e.state.hospital) {
-        setSelectedHospitalForAdmin(e.state.hospital);
-      } else {
-        setSelectedHospitalForAdmin(null);
-      }
-    };
-    window.addEventListener('popstate', handlePopStateAdmin);
-    return () => window.removeEventListener('popstate', handlePopStateAdmin);
-  }, [logout]);
-
-  const handleSelectHospitalForAdmin = (hosp) => {
-    setSelectedHospitalForAdmin(hosp);
-    setActiveNav('hospital_telemetry');
-    window.history.pushState({ hospital: hosp }, '', `#hospital-${hosp.id}`);
-  };
-
-  const handleBackToRegionalList = () => {
-    setSelectedHospitalForAdmin(null);
-    setActiveNav('regional_overview');
-    window.history.pushState({ hospital: null }, '', '#regional-overview');
-  };
-
   useEffect(() => {
     if (isLight) {
       document.body.classList.add('light');
@@ -78,6 +52,17 @@ function DashboardContent({ activeView, setActiveView, theme, setTheme }) {
     }
   }, [isLight]);
 
+  const handleSelectHospitalForAdmin = (hosp) => {
+    setSelectedHospitalForAdmin(hosp);
+    setActiveNav('hospital_telemetry');
+  };
+
+  const handleBackToRegionalList = () => {
+    setSelectedHospitalForAdmin(null);
+    setActiveNav('regional_overview');
+  };
+
+  // Show login screen if not authenticated
   if (!isAuthenticated) {
     return (
       <AuthScreen
@@ -90,124 +75,113 @@ function DashboardContent({ activeView, setActiveView, theme, setTheme }) {
     );
   }
 
+  // Full authenticated layout: DeviceFrame (top header) + Sidebar + Content
   return (
-    <div className={`min-h-screen flex transition-colors duration-300 ${
-      isLight ? 'bg-slate-100 text-slate-900 light' : 'bg-[#070a10] text-slate-100 dark'
-    }`}>
-      {/* Sidebar Navigation */}
-      <SidebarNav
-        activeNav={activeNav}
-        setActiveNav={setActiveNav}
-        isCollapsed={isCollapsed}
-        setIsCollapsed={setIsCollapsed}
-        isMobileOpen={isMobileOpen}
-        setIsMobileOpen={setIsMobileOpen}
-        isLight={isLight}
-        setTheme={setTheme}
-        onOpenSettings={() => setShowSettingsModal(true)}
-      />
+    <DeviceFrame
+      activeView={activeView}
+      setActiveView={setActiveView}
+      theme={theme}
+      setTheme={setTheme}
+    >
+      <div className={`flex min-h-screen transition-colors duration-300 ${
+        isLight ? 'bg-slate-100 text-slate-900 light' : 'bg-[#070a10] text-slate-100 dark'
+      }`}>
+        {/* Sidebar Navigation */}
+        <SidebarNav
+          activeNav={activeNav}
+          setActiveNav={setActiveNav}
+          isCollapsed={isCollapsed}
+          setIsCollapsed={setIsCollapsed}
+          isMobileOpen={isMobileOpen}
+          setIsMobileOpen={setIsMobileOpen}
+          isLight={isLight}
+          setTheme={setTheme}
+          onOpenSettings={() => setShowSettingsModal(true)}
+        />
 
-      {/* Main Content Body */}
-      <div className="flex-1 flex flex-col min-w-0 min-h-screen overflow-x-hidden">
-        {/* Top Header Bar (Clean & Uncluttered) */}
-        <header className={`w-full px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 sticky top-0 z-20 border-b shadow-xs transition-colors ${
-          isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#0e1420] border-slate-800 text-slate-100'
-        }`}>
-          <div className="flex items-center space-x-3">
-            {/* Mobile Hamburger Menu Toggle */}
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+          {/* Mobile top bar */}
+          <header className={`w-full px-4 py-2.5 flex items-center justify-between gap-3 sticky top-0 z-20 border-b shadow-xs transition-colors md:hidden ${
+            isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#0e1420] border-slate-800 text-slate-100'
+          }`}>
             <button
               onClick={() => setIsMobileOpen(true)}
-              className="md:hidden p-2 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+              className="p-2 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
               title="Open Navigation Menu"
             >
-              <Menu className="w-5 h-5" />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </button>
-
-            <div>
-              <h1 className="font-bold text-sm sm:text-base text-slate-800 dark:text-slate-100">
-                SmartTrace™ Telemetry System
-              </h1>
+            <span className="font-bold text-sm text-slate-800 dark:text-slate-100">SmartTrace™</span>
+            <div className={`flex items-center space-x-1.5 text-xs font-semibold px-2.5 py-1 rounded-xl border ${
+              isLight ? 'bg-slate-50 text-slate-700 border-slate-200' : 'bg-[#090d16] text-slate-300 border-slate-800'
+            }`}>
+              <Cpu className="w-3.5 h-3.5 text-cyan-500" />
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             </div>
-          </div>
+          </header>
 
-          {/* Clean Right Ticker (No clutter!) */}
-          <div className={`flex items-center space-x-2 text-xs font-semibold px-3 py-1.5 rounded-xl border shrink-0 ${
-            isLight ? 'bg-slate-50 text-slate-700 border-slate-200 shadow-xs' : 'bg-[#090d16] text-slate-300 border-slate-800'
-          }`}>
-            <Cpu className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-            <span className="hidden sm:inline">Edge Mesh: <strong>22 Active</strong></span>
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          </div>
-        </header>
-
-        {/* Viewport Frame Container */}
-        <main className="flex-1 p-2 sm:p-4 overflow-x-hidden">
-          <div className="w-full max-w-md mx-auto transition-all duration-300">
-            {/* Breadcrumb Info Bar if in Drilldown */}
+          <main className="flex-1 p-3 sm:p-6 overflow-x-hidden">
+            {/* Drilldown Breadcrumb */}
             {selectedHospitalForAdmin && activeNav === 'hospital_telemetry' && (
               <div className="mb-4 p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-between">
                 <span className="text-xs font-bold text-cyan-800 dark:text-cyan-300">
-                  Drilled down into: <strong>{selectedHospitalForAdmin.name}</strong> ({selectedHospitalForAdmin.cpcbLicenseNo})
+                  Drilled into: <strong>{selectedHospitalForAdmin.name}</strong> ({selectedHospitalForAdmin.cpcbLicenseNo})
                 </span>
                 <button
                   onClick={handleBackToRegionalList}
                   className="px-3 py-1 rounded-xl text-xs font-bold bg-cyan-600 text-white flex items-center space-x-1"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
-                  <span>Back to Regional Overview</span>
+                  <span>Back to Regional</span>
                 </button>
               </div>
             )}
 
-            {/* SIDEBAR ACTIVE VIEW ROUTER */}
+            {/* View Router */}
             {activeNav === 'hospital_telemetry' && (
               <ComplianceDashboard isLight={isLight} hospital={selectedHospitalForAdmin} />
             )}
-
             {activeNav === 'regional_overview' && (
               <RegionalClientOverview onSelectHospital={handleSelectHospitalForAdmin} isLight={isLight} />
             )}
-
             {activeNav === 'auditor_hierarchy' && (
               <AuditorHierarchyView isLight={isLight} />
             )}
-
             {activeNav === 'maintenance_desk' && (
               <SoftwareAdminDashboard isLight={isLight} />
             )}
-
             {activeNav === 'statutory_forms' && (
               <StatutoryFormsDashboard isLight={isLight} />
             )}
-
             {activeNav === 'about' && (
               <AboutView isLight={isLight} />
             )}
-
             {activeNav === 'profile' && (
               <ProfileView isLight={isLight} />
             )}
-
             {activeNav === 'docs' && (
               <DocsView isLight={isLight} />
             )}
-          </div>
-        </main>
-      </div>
+          </main>
+        </div>
 
-      {/* Settings Modal */}
-      {showSettingsModal && (
-        <SettingsModal
-          onClose={() => setShowSettingsModal(false)}
-          isLight={isLight}
-        />
-      )}
-    </div>
+        {/* Settings Modal */}
+        {showSettingsModal && (
+          <SettingsModal
+            onClose={() => setShowSettingsModal(false)}
+            isLight={isLight}
+          />
+        )}
+      </div>
+    </DeviceFrame>
   );
 }
 
 export default function App() {
-  const [activeView, setActiveView] = useState('phone'); // Fixed Mobile View
+  const [activeView, setActiveView] = useState('desktop');
   const [theme, setTheme] = useState('light');
 
   return (
@@ -221,5 +195,3 @@ export default function App() {
     </AuthProvider>
   );
 }
-
-
