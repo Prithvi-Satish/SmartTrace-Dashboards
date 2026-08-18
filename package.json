@@ -1,7 +1,7 @@
 {
   "name": "smarttrace-dashboards",
   "private": true,
-  "version": "2.4.002",
+  "version": "2.5.000",
   "type": "module",
   "scripts": {
     "dev": "node ./node_modules/vite/bin/vite.js",
