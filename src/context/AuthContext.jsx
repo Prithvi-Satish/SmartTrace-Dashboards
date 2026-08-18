@@ -8,17 +8,27 @@ export const DEMO_USERS = [
     name: 'Dr. Rajesh Varma',
     email: 'admin@smarttrace.med',
     role: 'company_admin',
-    roleLabel: 'Company Regional Admin',
-    assignedRegion: 'Bangalore South (50km Zone)',
-    department: 'SmartTrace Regional Operations',
+    roleLabel: 'Company Admin',
+    department: 'Global Operations',
     avatar: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&auto=format&fit=crop&q=80',
-    permissions: ['all_regional_hospitals', 'view_telemetry', 'manage_client_configs', 'assign_devices']
+    permissions: ['all_global_access']
+  },
+  {
+    id: 'usr-chain-admin',
+    name: 'Sarah Jenkins',
+    email: 'chain@apollo.med',
+    role: 'chain_admin',
+    roleLabel: 'Hospital Chain Supervisor',
+    assignedRegion: 'Apollo Hospitals Group',
+    department: 'Regional Operations',
+    avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop&q=80',
+    permissions: ['chain_regional_access']
   },
   {
     id: 'usr-cpcb-auditor',
     name: 'Priya Sharma',
     email: 'auditor@cpcb.gov.in',
-    role: 'cpcb_auditor',
+    role: 'auditor',
     roleLabel: 'CPCB Government Auditor',
     assignedRegion: 'National / All Umbrella Vendors',
     department: 'Central Pollution Control Board',
@@ -26,25 +36,25 @@ export const DEMO_USERS = [
     permissions: ['global_audit_hierarchy', 'view_logs', 'verify_hashes', 'export_5yr_backup']
   },
   {
-    id: 'usr-statutory-officer',
+    id: 'usr-hosp-supervisor',
     name: 'Dr. Srinivas N.',
-    email: 'compliance@apollo.med',
-    role: 'statutory_officer',
-    roleLabel: 'KSPCB Nodal Compliance Officer',
-    assignedRegion: 'Bangalore South (Apollo Hospital)',
-    department: 'Hospital Infection Control & Statutory Compliance',
+    email: 'supervisor@apollo.med',
+    role: 'hospital_supervisor',
+    roleLabel: 'Hospital Supervisor',
+    assignedRegion: 'Apollo Hospital (Bangalore South)',
+    department: 'Facility Management',
     avatar: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=150&auto=format&fit=crop&q=80',
-    permissions: ['manage_statutory_forms', 'sign_manifests', 'file_form1', 'kspcb_xgn_upload']
+    permissions: ['manage_statutory_forms', 'hospital_telemetry_config']
   },
   {
-    id: 'usr-software-admin',
+    id: 'usr-hosp-admin',
     name: 'Arjun Mehta',
-    email: 'webadmin@smarttrace.med',
-    role: 'software_admin',
-    roleLabel: 'Platform Maintenance Admin',
-    department: 'Web Infrastructure & Support',
+    email: 'hospadmin@apollo.med',
+    role: 'hospital_admin',
+    roleLabel: 'Hospital Admin',
+    department: 'Machine Operations',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-    permissions: ['view_diagnostics', 'system_health', 'manage_support_tickets', 'release_logs']
+    permissions: ['view_hospital_telemetry']
   }
 ];
 
@@ -107,11 +117,11 @@ export function AuthProvider({ children }) {
       id: `usr-${Date.now()}`,
       name: email.split('@')[0],
       email: email,
-      role: 'company_admin',
-      roleLabel: 'Company Regional Admin',
-      department: 'Regional Operations',
+      role: 'hospital_admin',
+      roleLabel: 'Hospital Admin',
+      department: 'Machine Operations',
       avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
-      permissions: ['all_regional_hospitals']
+      permissions: ['view_hospital_telemetry']
     };
 
     writeAuth(userToSave);

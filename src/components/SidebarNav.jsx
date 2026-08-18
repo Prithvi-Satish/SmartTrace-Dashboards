@@ -43,7 +43,7 @@ export default function SidebarNav({
           icon: Activity,
           color: 'text-cyan-600 dark:text-cyan-400',
           activeBg: 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-500',
-          roles: ['company_admin']
+          roles: ['hospital_supervisor', 'hospital_admin']
         },
         {
           id: 'regional_overview',
@@ -52,7 +52,7 @@ export default function SidebarNav({
           icon: Building2,
           color: 'text-[#0097a7] dark:text-cyan-400',
           activeBg: 'bg-[#0097a7]/10 text-[#0097a7] dark:text-cyan-300 border-[#0097a7]',
-          roles: ['company_admin']
+          roles: ['company_admin', 'chain_admin', 'auditor']
         },
         {
           id: 'auditor_hierarchy',
@@ -61,7 +61,7 @@ export default function SidebarNav({
           icon: Globe,
           color: 'text-emerald-600 dark:text-emerald-400',
           activeBg: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500',
-          roles: ['cpcb_auditor']
+          roles: ['company_admin', 'chain_admin', 'auditor', 'hospital_supervisor']
         },
         {
           id: 'maintenance_desk',
@@ -70,7 +70,7 @@ export default function SidebarNav({
           icon: Wrench,
           color: 'text-purple-600 dark:text-purple-400',
           activeBg: 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500',
-          roles: ['software_admin']
+          roles: ['company_admin']
         },
         {
           id: 'statutory_forms',
@@ -79,7 +79,7 @@ export default function SidebarNav({
           icon: FileCheck,
           color: 'text-[#00875a] dark:text-emerald-400',
           activeBg: 'bg-[#00875a]/10 text-[#00875a] dark:text-emerald-300 border-[#00875a]',
-          roles: ['statutory_officer']
+          roles: ['company_admin', 'chain_admin', 'auditor', 'hospital_supervisor']
         }
       ]
     },

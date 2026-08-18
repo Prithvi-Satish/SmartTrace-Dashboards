@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# Custom ignored files
+RBAC_LEVELS

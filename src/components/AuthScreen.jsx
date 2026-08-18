@@ -105,9 +105,10 @@ export default function AuthScreen({ isLight, activeView, setActiveView, theme, 
           <p className="font-bold mb-1">Demo Role Logins:</p>
           <ul className="space-y-1">
             <li><strong className="text-slate-700 dark:text-slate-300">admin@smarttrace.med</strong> (Company Admin)</li>
+            <li><strong className="text-slate-700 dark:text-slate-300">chain@apollo.med</strong> (Chain Supervisor)</li>
             <li><strong className="text-slate-700 dark:text-slate-300">auditor@cpcb.gov.in</strong> (CPCB Auditor)</li>
-            <li><strong className="text-slate-700 dark:text-slate-300">compliance@apollo.med</strong> (Statutory Officer)</li>
-            <li><strong className="text-slate-700 dark:text-slate-300">webadmin@smarttrace.med</strong> (Software Admin)</li>
+            <li><strong className="text-slate-700 dark:text-slate-300">supervisor@apollo.med</strong> (Hospital Supervisor)</li>
+            <li><strong className="text-slate-700 dark:text-slate-300">hospadmin@apollo.med</strong> (Hospital Admin)</li>
           </ul>
         </div>
 

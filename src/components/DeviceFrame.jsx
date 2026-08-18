@@ -34,7 +34,11 @@ export default function DeviceFrame({ activeView, setActiveView, theme, setTheme
           <div>
             <h1 className="font-bold text-sm sm:text-base flex items-center gap-2 text-slate-800 dark:text-slate-100">
               <span>SmartTrace™ Telemetry System</span>
+              <span className="bg-cyan-100 text-cyan-800 text-[10px] px-1.5 py-0.5 rounded font-mono ml-2 dark:bg-cyan-900/30 dark:text-cyan-300">
+                v{APP_VERSION}
+              </span>
             </h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">ABIOT-E-SAFE Platform</p>
           </div>
         </div>
 

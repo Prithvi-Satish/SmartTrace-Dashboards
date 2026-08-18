@@ -29,14 +29,8 @@ function DashboardContent({ activeView, setActiveView, theme, setTheme }) {
 
   // Sync default activeNav based on currentUser role on login
   useEffect(() => {
-    if (currentUser?.role === 'company_admin') {
+    if (['company_admin', 'chain_admin', 'auditor'].includes(currentUser?.role)) {
       setActiveNav('regional_overview');
-    } else if (currentUser?.role === 'cpcb_auditor') {
-      setActiveNav('auditor_hierarchy');
-    } else if (currentUser?.role === 'statutory_officer') {
-      setActiveNav('statutory_forms');
-    } else if (currentUser?.role === 'software_admin') {
-      setActiveNav('maintenance_desk');
     } else {
       setActiveNav('hospital_telemetry');
     }
@@ -107,7 +101,7 @@ function DashboardContent({ activeView, setActiveView, theme, setTheme }) {
             {selectedHospitalForAdmin && activeNav === 'hospital_telemetry' && (
               <div className="mb-4 p-3  bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-between">
                 <span className="text-xs font-bold text-cyan-800 dark:text-cyan-300">
-                  Drilled into: <strong>{selectedHospitalForAdmin.name}</strong> ({selectedHospitalForAdmin.cpcbLicenseNo})
+                  Viewing: <strong>{selectedHospitalForAdmin.name}</strong> ({selectedHospitalForAdmin.cpcbLicenseNo})
                 </span>
                 <button
                   onClick={handleBackToRegionalList}
