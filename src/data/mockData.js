@@ -52,7 +52,7 @@ export const INITIAL_MACHINES = [
     installationDate: "2025-04-02",
     firmwareVersion: "v3.4.12-secure",
     softwareVersion: "SmartTrace-Edge-v2.8",
-    hospitalId: "APOLLO-BLR-04",
+    hospitalId: "HOSP-APOLLO-BG",
     gpsCoordinates: "12.9716° N, 77.5946° E",
 
     // Component Health (Digital Twin)
@@ -211,7 +211,7 @@ maintenanceRecords: [
     installationDate: "2025-07-01",
     firmwareVersion: "v3.4.12-secure",
     softwareVersion: "SmartTrace-Edge-v2.8",
-    hospitalId: "APOLLO-BLR-04",
+    hospitalId: "HOSP-APOLLO-BG",
     gpsCoordinates: "12.9718° N, 77.5948° E",
 
     pumpHealth: 82,
@@ -365,7 +365,7 @@ maintenanceRecords: [
     installationDate: "2025-08-25",
     firmwareVersion: "v3.4.15-secure",
     softwareVersion: "SmartTrace-Edge-v2.8",
-    hospitalId: "APOLLO-BLR-04",
+    hospitalId: "HOSP-APOLLO-BG",
     gpsCoordinates: "12.9720° N, 77.5950° E",
 
     pumpHealth: 96,
@@ -518,7 +518,7 @@ maintenanceRecords: [
     installationDate: "2025-09-20",
     firmwareVersion: "v3.4.12-secure",
     softwareVersion: "SmartTrace-Edge-v2.8",
-    hospitalId: "APOLLO-BLR-04",
+    hospitalId: "HOSP-APOLLO-BG",
     gpsCoordinates: "12.9715° N, 77.5942° E",
 
     pumpHealth: 90,
@@ -672,7 +672,7 @@ maintenanceRecords: [
     installationDate: "2024-11-15",
     firmwareVersion: "v3.2.0-secure",
     softwareVersion: "SmartTrace-Edge-v2.5",
-    hospitalId: "APOLLO-BLR-04",
+    hospitalId: "HOSP-APOLLO-BG",
     gpsCoordinates: "12.9712° N, 77.5940° E",
 
     pumpHealth: 74,

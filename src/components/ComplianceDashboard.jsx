@@ -30,10 +30,32 @@ import { useAuth } from '../context/AuthContext';
 import MachineDetailModal from './MachineDetailModal';
 import { generateAuditCertificatePDF } from '../utils/pdfGenerator';
 
-export default function ComplianceDashboard({ isLight }) {
+export default function ComplianceDashboard({ isLight, hospital }) {
   const { currentUser, hasPermission } = useAuth();
-  const [machines, setMachines] = useState(INITIAL_MACHINES);
-  const [logs, setLogs] = useState(AUDIT_TRAIL_LOGS);
+  
+  const targetHospitalId = hospital?.id || "HOSP-APOLLO-BG";
+  const displayHospitalName = hospital?.name || COMPLIANCE_METRICS.hospitalName;
+  const displayLicenseNo = hospital?.cpcbLicenseNo || COMPLIANCE_METRICS.cpcbLicenseNo;
+
+  const [machines, setMachines] = useState(() => INITIAL_MACHINES.filter(m => m.hospitalId === targetHospitalId));
+  const [logs, setLogs] = useState(() => {
+    const validMachineIds = INITIAL_MACHINES.filter(m => m.hospitalId === targetHospitalId).map(m => m.id);
+    return AUDIT_TRAIL_LOGS.filter(l => validMachineIds.includes(l.machineId));
+  });
+
+  React.useEffect(() => {
+    const newMachines = INITIAL_MACHINES.filter(m => m.hospitalId === targetHospitalId);
+    const validMachineIds = newMachines.map(m => m.id);
+    const newLogs = AUDIT_TRAIL_LOGS.filter(l => validMachineIds.includes(l.machineId));
+    
+    setMachines(newMachines);
+    setLogs(newLogs);
+    // Reset selections when hospital changes
+    setSelectedMachine(null);
+    setSelectedReportLog(null);
+    setShowReportModal(false);
+  }, [hospital, targetHospitalId]);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
@@ -69,7 +91,9 @@ export default function ComplianceDashboard({ isLight }) {
       return;
     }
     const targetLog = log || filteredLogs[0];
-    generateAuditCertificatePDF(targetLog, COMPLIANCE_METRICS.hospitalName);
+    if (targetLog) {
+      generateAuditCertificatePDF(targetLog, displayHospitalName);
+    }
   };
 
   const handleOpenReportModal = (log) => {
@@ -190,11 +214,16 @@ export default function ComplianceDashboard({ isLight }) {
             </p>
           </div>
           <span className="text-[10px] font-bold px-2 py-0.5  bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300 w-max">
-            5 Machines Live
+            {machines.length} Machines Live
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {machines.length === 0 ? (
+          <div className="p-8 text-center text-slate-500 text-xs">
+            No telemetry data connected for {displayHospitalName} yet. Connect devices to view data.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {machines.map((machine) => (
             <div
               key={machine.id}
@@ -342,6 +371,13 @@ export default function ComplianceDashboard({ isLight }) {
               </tr>
             </thead>
             <tbody className={`divide-y ${isLight ? 'divide-slate-200' : 'divide-slate-800/60'}`}>
+              {filteredLogs.length === 0 && (
+                <tr>
+                  <td colSpan="8" className="py-8 text-center text-slate-500">
+                    No audit logs available for {displayHospitalName}.
+                  </td>
+                </tr>
+              )}
               {filteredLogs.map((log) => (
                 <tr key={log.cycleId} className={`transition-colors ${isLight ? 'hover:bg-slate-50' : 'hover:bg-slate-800/40'}`}>
                   <td className="py-3 px-3 font-mono font-bold text-cyan-700 dark:text-cyan-400">{log.cycleId}</td>
@@ -463,7 +499,7 @@ export default function ComplianceDashboard({ isLight }) {
                     }`}>
                     {selectedReportLog?.cpcbStatus === 'FLAGGED' ? '🚨 FLAGGED BREACH' : '✓ VERIFIED COMPLIANT'}
                   </span>
-                  <p className="text-[10px] text-slate-500 mt-1">License: {COMPLIANCE_METRICS.cpcbLicenseNo}</p>
+                  <p className="text-[10px] text-slate-500 mt-1">License: {displayLicenseNo}</p>
                 </div>
               </div>
 
@@ -489,7 +525,7 @@ export default function ComplianceDashboard({ isLight }) {
               <div className="grid grid-cols-2 gap-4 bg-slate-50 p-3  border border-slate-200 text-[11px]">
                 <div>
                   <span className="text-slate-500 block">Healthcare Facility:</span>
-                  <strong className="text-slate-900">{COMPLIANCE_METRICS.hospitalName}</strong>
+                  <strong className="text-slate-900">{displayHospitalName}</strong>
                 </div>
                 <div>
                   <span className="text-slate-500 block">Cycle Record ID:</span>
@@ -537,7 +573,7 @@ export default function ComplianceDashboard({ isLight }) {
               {canDownload ? (
                 <button
                   onClick={() => {
-                    generateAuditCertificatePDF(selectedReportLog, COMPLIANCE_METRICS.hospitalName);
+                    generateAuditCertificatePDF(selectedReportLog, displayHospitalName);
                     setShowReportModal(false);
                   }}
                   className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-1.5  flex items-center space-x-1.5 shadow-sm"

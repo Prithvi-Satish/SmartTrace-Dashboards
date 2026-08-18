@@ -38,7 +38,7 @@ export default function SidebarNav({
       items: [
         {
           id: 'hospital_telemetry',
-          label: '1. Hospital Telemetry',
+          label: 'Hospital Telemetry',
           subtitle: 'Machine Digital Twin & Cycles',
           icon: Activity,
           color: 'text-cyan-600 dark:text-cyan-400',
@@ -47,7 +47,7 @@ export default function SidebarNav({
         },
         {
           id: 'regional_overview',
-          label: '2. Regional Operations',
+          label: 'Regional Operations',
           subtitle: '50km Regional Client Network',
           icon: Building2,
           color: 'text-[#0097a7] dark:text-cyan-400',
@@ -56,7 +56,7 @@ export default function SidebarNav({
         },
         {
           id: 'auditor_hierarchy',
-          label: '3. CPCB Auditor View',
+          label: 'CPCB Auditor View',
           subtitle: 'National Multi-Tier Hierarchy',
           icon: Globe,
           color: 'text-emerald-600 dark:text-emerald-400',
@@ -65,7 +65,7 @@ export default function SidebarNav({
         },
         {
           id: 'maintenance_desk',
-          label: '4. Maintenance Desk',
+          label: 'Maintenance Desk',
           subtitle: 'Device Diagnostics & Tickets',
           icon: Wrench,
           color: 'text-purple-600 dark:text-purple-400',
@@ -74,7 +74,7 @@ export default function SidebarNav({
         },
         {
           id: 'statutory_forms',
-          label: '5. Statutory Forms (KSPCB)',
+          label: 'Statutory Forms (KSPCB)',
           subtitle: 'BMWM 2016 Forms I–VI Vault',
           icon: FileCheck,
           color: 'text-[#00875a] dark:text-emerald-400',
