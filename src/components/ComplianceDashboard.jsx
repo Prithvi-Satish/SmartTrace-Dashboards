@@ -267,6 +267,7 @@ export default function ComplianceDashboard({ isLight, hospital }) {
             </div>
           ))}
         </div>
+        )}
       </div>
 
       {/* Bag Traceability Pipeline */}
