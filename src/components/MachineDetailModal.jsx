@@ -21,9 +21,9 @@ import {
   Radio,
   Lock
 } from 'lucide-react';
-import { CYCLE_PHASES } from '../data/mockData';
+import { CYCLE_PHASES, AUDIT_TRAIL_LOGS } from '../data/mockData';
 
-export default function MachineDetailModal({ machine, onClose, isLight }) {
+export default function MachineDetailModal({ machine, onClose, isLight, isAuditorMode = false }) {
   const { hasPermission, currentUser } = useAuth();
   const canVerifyHashes = hasPermission('verify_hashes');
   const [activeTab, setActiveTab] = useState('overview'); // 'overview', 'phases', 'health', 'maintenance'
@@ -205,7 +205,7 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
               </div>
 
               {/* Machine Utilization Card */}
-              {machine.utilizationByRange && (() => {
+              {machine.utilizationByRange ? (() => {
                 const rangeOptions = [
                   { value: '24h',  label: 'Last 24 Hours' },
                   { value: '7d',   label: 'Last 7 Days' },
@@ -329,7 +329,12 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                     </div>
                   </div>
                 );
-              })()}
+              })() : null}
+              {(!isAuditorMode && !machine.utilizationByRange) && (
+                <div className={`p-8 text-center border shadow-sm text-xs ${isLight ? 'bg-slate-50 border-slate-200 text-slate-500' : 'bg-[#090d16] border-slate-800 text-slate-400'}`}>
+                  No utilization history available for this device yet.
+                </div>
+              )}
 
               {/* IoT Connectivity & Security Card */}
               <div className={`p-4  border shadow-sm ${
@@ -381,55 +386,158 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
           )}
 
           {/* TAB 2: 20-STEP CYCLE STEPPER */}
-          {activeTab === 'phases' && (
+          {!isAuditorMode && activeTab === 'phases' && (
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between flex-wrap gap-2">
                 <div>
                   <h4 className="text-xs font-bold">Active Cycle 20-Step PRD Workflow</h4>
                   <p className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
                     Current Phase: <strong className="text-cyan-600 dark:text-cyan-400">{machine.phase}</strong> ({machine.progressPct}% Complete)
                   </p>
                 </div>
-                <span className="text-xs font-bold px-2.5 py-1  bg-cyan-600 text-white">
-                  Rem: {machine.cycleTimeRemaining}
-                </span>
+                {machine.status === 'Connection Lost' ? (
+                  <span className="text-xs font-bold px-2.5 py-1 bg-amber-500 text-white animate-pulse">
+                    Connection lost : reconnecting
+                  </span>
+                ) : (
+                  <span className="text-xs font-bold px-2.5 py-1 bg-cyan-600 text-white">
+                    Rem: {machine.cycleTimeRemaining}
+                  </span>
+                )}
               </div>
 
-              {/* 20 Step Stepper Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+              {machine.status === 'Offline' ? (
+                <div className={`p-10 border border-dashed flex flex-col items-center justify-center text-center ${isLight ? 'border-slate-300 text-slate-500' : 'border-slate-700 text-slate-400'}`}>
+                  <Radio className="w-8 h-8 mb-3 opacity-50" />
+                  <span className="text-sm font-bold block mb-1">Device Offline</span>
+                  <span className="text-xs">Real-time telemetry unavailable. Last synced: {machine.lastPacketReceived || 'Unknown'}</span>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
                 {CYCLE_PHASES.map((phaseName, index) => {
                   const stepNum = index + 1;
                   const isCurrent = stepNum === machine.currentPhaseStep;
-                  const isCompleted = stepNum < machine.currentPhaseStep;
+                  const isPredicted = machine.status === 'Connection Lost' && stepNum === machine.predictedPhaseStep;
+                  const isCompleted = stepNum < (machine.predictedPhaseStep || machine.currentPhaseStep);
 
                   return (
                     <div
                       key={phaseName}
-                      className={`p-2.5  border text-xs flex items-center space-x-2 transition-all ${
-                        isCurrent
+                      className={`p-2.5  border text-xs flex flex-col justify-center space-y-1 transition-all ${
+                        isCurrent && machine.status !== 'Connection Lost'
                           ? 'bg-cyan-600 text-white border-cyan-500 font-bold shadow-md shadow-cyan-600/30 ring-2 ring-cyan-400/40'
+                          : isPredicted
+                          ? isLight ? 'bg-emerald-100 text-emerald-900 border-emerald-400 font-bold' : 'bg-emerald-900/40 text-emerald-300 border-emerald-500/50 font-bold'
                           : isCompleted
                           ? isLight ? 'bg-emerald-50 text-emerald-800 border-emerald-300' : 'bg-emerald-950/30 text-emerald-300 border-emerald-800/50'
                           : isLight ? 'bg-slate-50 text-slate-400 border-slate-200' : 'bg-[#090d16] text-slate-600 border-slate-800/60'
                       }`}
                     >
-                      <div className={`w-5 h-5  flex items-center justify-center text-[10px] font-bold shrink-0 ${
-                        isCurrent ? 'bg-white text-cyan-700' : isCompleted ? 'bg-emerald-500 text-white' : 'bg-slate-300 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                      }`}>
-                        {isCompleted ? '✓' : stepNum}
+                      <div className="flex items-center space-x-2">
+                        <div className={`w-5 h-5 flex items-center justify-center text-[10px] font-bold shrink-0 ${
+                          (isCurrent && machine.status !== 'Connection Lost') ? 'bg-white text-cyan-700' :
+                          isPredicted ? 'bg-emerald-600 text-white' :
+                          isCompleted ? 'bg-emerald-500 text-white' :
+                          'bg-slate-300 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                        }`}>
+                          {isCompleted ? '✓' : stepNum}
+                        </div>
+                        <span className="truncate">{phaseName.split('. ')[1]}</span>
                       </div>
-                      <span className="truncate">{phaseName.split('. ')[1]}</span>
+                      {isPredicted && (
+                        <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                          Expected completed phase
+                        </span>
+                      )}
                     </div>
                   );
                 })}
+              </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB: MACHINE LOGS (Auditor Mode) */}
+          {activeTab === 'logs' && isAuditorMode && (
+            <div className="space-y-4">
+              <div className={`p-4 border shadow-sm ${isLight ? 'bg-white border-slate-200' : 'bg-[#111723] border-slate-800'}`}>
+                <h4 className="text-sm font-bold flex items-center space-x-2 mb-1">
+                  <FileText className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+                  <span>Cycle Immutable Audit Log</span>
+                </h4>
+                <p className="text-[11px] text-slate-500 mb-4">Historical record of all sterilization cycles completed by {machine.serialNumber}</p>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr className="border-b bg-slate-50 dark:bg-[#090d16] text-slate-600 dark:text-slate-400 font-bold">
+                        <th className="py-2.5 px-3">Date / Time</th>
+                        <th className="py-2.5 px-3">Cycle ID</th>
+                        <th className="py-2.5 px-3">Operator</th>
+                        <th className="py-2.5 px-3">Parameters</th>
+                        <th className="py-2.5 px-3">Status</th>
+                        <th className="py-2.5 px-3">Hash Signature</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                      {(() => {
+                        const machineLogs = AUDIT_TRAIL_LOGS.filter(l => l.machineId === machine.id);
+                        if (machineLogs.length === 0) {
+                          return (
+                            <tr>
+                              <td colSpan="6" className="py-8 text-center text-slate-500 font-bold">No historical cycles logged.</td>
+                            </tr>
+                          );
+                        }
+                        return machineLogs.map((log) => (
+                          <tr key={log.cycleId} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                            <td className="py-3 px-3 font-mono text-slate-800 dark:text-slate-200">{log.startTime}</td>
+                            <td className="py-3 px-3 font-mono font-bold text-cyan-700 dark:text-cyan-400">{log.cycleId}</td>
+                            <td className="py-3 px-3">{log.operator}</td>
+                            <td className="py-3 px-3">
+                              <div className="text-[10px] text-slate-500 flex flex-col gap-0.5">
+                                <span>Bag: {log.bagCategory}</span>
+                                <span>Dur: {log.duration}</span>
+                              </div>
+                            </td>
+                            <td className="py-3 px-3">
+                              {log.cpcbStatus === 'PASSED' ? (
+                                <span className="flex items-center space-x-1 text-emerald-600 font-bold bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 w-max">
+                                  <CheckCircle2 className="w-3.5 h-3.5" />
+                                  <span>Passed</span>
+                                </span>
+                              ) : (
+                                <span className="flex items-center space-x-1 text-rose-600 font-bold bg-rose-50 dark:bg-rose-900/30 px-2 py-0.5 w-max">
+                                  <AlertTriangle className="w-3.5 h-3.5" />
+                                  <span>Failed</span>
+                                </span>
+                              )}
+                            </td>
+                            <td className="py-3 px-3">
+                              <span className="font-mono text-[10px] bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 text-slate-500 rounded truncate block max-w-[120px]" title={log.hashChain}>
+                                {log.hashChain}
+                              </span>
+                            </td>
+                          </tr>
+                        ));
+                      })()}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           )}
 
           {/* TAB 3: COMPONENT HEALTH */}
-          {activeTab === 'health' && (
+          {!isAuditorMode && activeTab === 'health' && (
             <div className="space-y-4">
-              <h4 className="text-xs font-bold">Real-Time Component Health & Predictive Maintenance</h4>
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <h4 className="text-xs font-bold">Real-Time Component Health & Predictive Maintenance</h4>
+                {machine.status === 'Offline' && (
+                  <span className="text-[10px] bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400 px-2 py-0.5">
+                    Last Known State
+                  </span>
+                )}
+              </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {/* Vacuum Pump */}
@@ -496,6 +604,51 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
                   <span className="text-[10px] text-slate-500">Service Threshold: 10,000</span>
                 </div>
               </div>
+
+              {!isAuditorMode && (
+                <>
+                  <div className={`p-4 border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'}`}>
+                    <h4 className="text-xs font-bold flex items-center space-x-2 mb-4">
+                      <Thermometer className="w-4 h-4 text-rose-500" />
+                      <span>Live Chamber Diagnostics</span>
+                    </h4>
+                    {/* Environment Rings Grid */}
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                      <div className="flex flex-col items-center">
+                        <div className="relative w-16 h-16 rounded-full border-4 border-slate-200 dark:border-slate-800 flex items-center justify-center mb-2 overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-t from-rose-500/20 to-transparent"></div>
+                          <span className="font-bold text-sm text-slate-900 dark:text-slate-100">{machine.temperature || '--'}°C</span>
+                        </div>
+                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Chamber Temp</span>
+                      </div>
+                      
+                      <div className="flex flex-col items-center">
+                        <div className="relative w-16 h-16 rounded-full border-4 border-slate-200 dark:border-slate-800 flex items-center justify-center mb-2 overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent"></div>
+                          <span className="font-bold text-sm text-slate-900 dark:text-slate-100">{machine.pressure || '--'} bar</span>
+                        </div>
+                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Pressure</span>
+                      </div>
+
+                      <div className="flex flex-col items-center">
+                        <div className="relative w-16 h-16 rounded-full border-4 border-slate-200 dark:border-slate-800 flex items-center justify-center mb-2 overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 to-transparent"></div>
+                          <span className="font-bold text-sm text-slate-900 dark:text-slate-100">{machine.h2o2 || '--'} ppm</span>
+                        </div>
+                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">H2O2 Injection</span>
+                      </div>
+
+                      <div className="flex flex-col items-center">
+                        <div className="relative w-16 h-16 rounded-full border-4 border-slate-200 dark:border-slate-800 flex items-center justify-center mb-2 overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-t from-teal-500/20 to-transparent"></div>
+                          <span className="font-bold text-sm text-slate-900 dark:text-slate-100">{machine.residualH2o2 || '--'} ppm</span>
+                        </div>
+                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Residual Vent</span>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
 
@@ -514,44 +667,50 @@ export default function MachineDetailModal({ machine, onClose, isLight }) {
               </div>
 
               <div className="space-y-2">
-                {machine.maintenanceRecords.map((record) => (
-                  <div
-                    key={record.id}
-                    className={`p-3  border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${
-                      isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 ">
-                        <FileText className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <div className="flex items-center space-x-2">
-                          <span className="font-bold">{record.type}</span>
-                          <span className="text-[10px] font-mono text-slate-500">({record.id})</span>
+                {machine.maintenanceRecords && machine.maintenanceRecords.length > 0 ? (
+                  machine.maintenanceRecords.map((record) => (
+                    <div
+                      key={record.id}
+                      className={`p-3  border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${
+                        isLight ? 'bg-slate-50 border-slate-200' : 'bg-[#090d16] border-slate-800'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="p-2 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 ">
+                          <FileText className="w-4 h-4" />
                         </div>
-                        <p className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
-                          Performed on {record.date} by {record.engineer}
-                        </p>
+                        <div>
+                          <div className="flex items-center space-x-2">
+                            <span className="font-bold">{record.type}</span>
+                            <span className="text-[10px] font-mono text-slate-500">({record.id})</span>
+                          </div>
+                          <p className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                            Performed on {record.date} by {record.engineer}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-2 shrink-0">
+                        <span className="text-[10px] font-bold px-2 py-0.5  bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300">
+                          {record.status}
+                        </span>
+                        <button
+                          onClick={() => handleDownloadDoc(record.docName)}
+                          className={`p-1.5  border transition-colors ${
+                            isLight ? 'hover:bg-slate-200 text-slate-700 border-slate-300' : 'hover:bg-slate-800 text-slate-300 border-slate-700'
+                          }`}
+                          title="Download Certificate PDF"
+                        >
+                          <Download className="w-3.5 h-3.5" />
+                        </button>
                       </div>
                     </div>
-
-                    <div className="flex items-center space-x-2 shrink-0">
-                      <span className="text-[10px] font-bold px-2 py-0.5  bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300">
-                        {record.status}
-                      </span>
-                      <button
-                        onClick={() => handleDownloadDoc(record.docName)}
-                        className={`p-1.5  border transition-colors ${
-                          isLight ? 'hover:bg-slate-200 text-slate-700 border-slate-300' : 'hover:bg-slate-800 text-slate-300 border-slate-700'
-                        }`}
-                        title="Download Certificate PDF"
-                      >
-                        <Download className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
+                  ))
+                ) : (
+                  <div className={`p-8 text-center border shadow-sm text-xs ${isLight ? 'bg-slate-50 border-slate-200 text-slate-500' : 'bg-[#090d16] border-slate-800 text-slate-400'}`}>
+                    No maintenance records available for this device yet.
                   </div>
-                ))}
+                )}
               </div>
 
               {/* Downtime Section */}

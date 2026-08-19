@@ -43,6 +43,15 @@ export default function ComplianceDashboard({ isLight, hospital }) {
     return AUDIT_TRAIL_LOGS.filter(l => validMachineIds.includes(l.machineId));
   });
 
+  const hasMachines = machines.length > 0;
+  const isApollo = targetHospitalId === "HOSP-APOLLO-BG";
+  
+  const displayOverallScore = hospital?.complianceScore || (isApollo ? COMPLIANCE_METRICS.overallScore : 0);
+  const displayPassRate = isApollo ? COMPLIANCE_METRICS.cpcbRulePassRate : (hospital ? 0 : COMPLIANCE_METRICS.cpcbRulePassRate);
+  const displayBagIntegrity = isApollo ? COMPLIANCE_METRICS.aiBagIntegrityPct : (hospital ? 0 : COMPLIANCE_METRICS.aiBagIntegrityPct);
+  const displayMonthlyWaste = hospital?.monthlyWasteKg || (isApollo ? COMPLIANCE_METRICS.totalWasteTreatedMonthKg : 0);
+  const displayDailyAvg = displayMonthlyWaste ? Math.round(displayMonthlyWaste / 30) : 0;
+
   React.useEffect(() => {
     const newMachines = INITIAL_MACHINES.filter(m => m.hospitalId === targetHospitalId);
     const validMachineIds = newMachines.map(m => m.id);
@@ -155,7 +164,7 @@ export default function ComplianceDashboard({ isLight, hospital }) {
             <Award className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
           <div className="mt-2">
-            <span className="text-3xl font-black text-emerald-700 dark:text-emerald-400">{COMPLIANCE_METRICS.overallScore}%</span>
+            <span className="text-3xl font-black text-emerald-700 dark:text-emerald-400">{displayOverallScore}%</span>
             <p className="text-[10px] text-emerald-800 dark:text-emerald-300/80 font-medium mt-0.5">NABH & CPCB Grade A+</p>
           </div>
         </div>
@@ -168,7 +177,7 @@ export default function ComplianceDashboard({ isLight, hospital }) {
             <CheckCircle2 className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
           </div>
           <div className="mt-2">
-            <span className="text-3xl font-black">{COMPLIANCE_METRICS.cpcbRulePassRate}%</span>
+            <span className="text-3xl font-black">{displayPassRate}%</span>
             <p className={`text-[10px] ${isLight ? 'text-slate-500' : 'text-slate-400'} mt-0.5`}>Zero unhandled breaches</p>
           </div>
         </div>
@@ -181,7 +190,7 @@ export default function ComplianceDashboard({ isLight, hospital }) {
             <Sparkles className="w-4 h-4 text-purple-600 dark:text-purple-400" />
           </div>
           <div className="mt-2">
-            <span className="text-3xl font-black">{COMPLIANCE_METRICS.aiBagIntegrityPct}%</span>
+            <span className="text-3xl font-black">{displayBagIntegrity}%</span>
             <p className="text-[10px] text-purple-700 dark:text-purple-300 font-medium mt-0.5">Automated visual check</p>
           </div>
         </div>
@@ -194,8 +203,8 @@ export default function ComplianceDashboard({ isLight, hospital }) {
             <Building2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
           </div>
           <div className="mt-2">
-            <span className="text-2xl font-black">{COMPLIANCE_METRICS.totalWasteTreatedMonthKg.toLocaleString()} <span className={`text-xs font-normal ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>kg</span></span>
-            <p className={`text-[10px] ${isLight ? 'text-slate-500' : 'text-slate-400'} mt-0.5`}>Avg {COMPLIANCE_METRICS.dailyAverageKg} kg / day</p>
+            <span className="text-2xl font-black">{displayMonthlyWaste.toLocaleString()} <span className={`text-xs font-normal ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>kg</span></span>
+            <p className={`text-[10px] ${isLight ? 'text-slate-500' : 'text-slate-400'} mt-0.5`}>Avg {displayDailyAvg} kg / day</p>
           </div>
         </div>
       </div>
@@ -230,7 +239,11 @@ export default function ComplianceDashboard({ isLight, hospital }) {
               onClick={() => setSelectedMachine(machine)}
               className={`p-3.5  border cursor-pointer transition-all hover:scale-[1.01] hover:shadow-lg ${machine.status === 'Alarm'
                 ? isLight ? 'bg-rose-50/60 border-rose-300 hover:border-rose-400' : 'bg-rose-950/20 border-rose-800/60 hover:border-rose-500'
-                : isLight ? 'bg-slate-50 hover:bg-slate-100 border-slate-200' : 'bg-[#090d16] hover:bg-slate-900 border-slate-800'
+                : machine.status === 'Connection Lost' || machine.status === 'Offline'
+                  ? isLight ? 'bg-slate-100 border-slate-300 opacity-80' : 'bg-slate-900/60 border-slate-700 opacity-80'
+                  : machine.status === 'Maintenance'
+                    ? isLight ? 'bg-amber-50/60 border-amber-300' : 'bg-amber-950/20 border-amber-800/60'
+                    : isLight ? 'bg-slate-50 hover:bg-slate-100 border-slate-200' : 'bg-[#090d16] hover:bg-slate-900 border-slate-800'
                 }`}
             >
               <div className="flex items-start justify-between">
@@ -239,22 +252,39 @@ export default function ComplianceDashboard({ isLight, hospital }) {
                   <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">{machine.name}</h4>
                   <p className="text-[10px] text-slate-500 truncate">{machine.department}</p>
                 </div>
-                <span className={`text-[10px] font-bold px-2 py-0.5  shrink-0 ${machine.status === 'Running' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300' :
+                <span className={`text-[10px] font-bold px-2 py-0.5  shrink-0 text-center flex flex-col justify-center items-center ${
+                  machine.status === 'Running' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300' :
                   machine.status === 'Alarm' ? 'bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300' :
+                  machine.status === 'Connection Lost' || machine.status === 'Offline' ? 'bg-slate-300 text-slate-800 dark:bg-slate-700 dark:text-slate-300 animate-pulse' :
+                  machine.status === 'Maintenance' ? 'bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300' :
                     'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
                   }`}>
-                  {machine.status}
+                  {machine.status === 'Connection Lost' ? 'Reconnecting...' : machine.status}
                 </span>
               </div>
 
               <div className="mt-2.5 pt-2 border-t border-slate-200 dark:border-slate-800 text-[11px] space-y-1">
-                <div className="flex justify-between">
-                  <span className="text-slate-500">Current Phase:</span>
-                  <span className="font-bold text-cyan-600 dark:text-cyan-400 truncate max-w-[140px]">{machine.phase}</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-500">Status / Phase:</span>
+                  <span className={`font-bold truncate max-w-[140px] ${
+                    machine.status === 'Offline' ? 'text-slate-500' :
+                    machine.status === 'Connection Lost' ? 'text-emerald-600/60 dark:text-emerald-400/60 italic' :
+                    'text-cyan-600 dark:text-cyan-400'
+                  }`}>
+                    {machine.status === 'Connection Lost' ? (
+                      <span className="flex items-center gap-1" title="Expected Phase">
+                        {machine.predictedPhase || machine.phase} <span className="bg-emerald-100 text-emerald-800 text-[8px] px-1 rounded-full not-italic">Predicted</span>
+                      </span>
+                    ) : (
+                      machine.phase
+                    )}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Installed Date:</span>
-                  <span className="font-mono">{machine.installationDate}</span>
+                  <span className="text-slate-500">Last Packet:</span>
+                  <span className={`font-mono ${machine.status === 'Connection Lost' || machine.status === 'Offline' ? 'text-rose-600 dark:text-rose-400' : 'text-slate-700 dark:text-slate-300'}`}>
+                    {machine.lastPacketReceived || "Unknown"}
+                  </span>
                 </div>
               </div>
 

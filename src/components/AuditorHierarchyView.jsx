@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { UMBRELLA_GROUPS, REGIONAL_HOSPITALS, ARCHIVE_5YEAR_LOGS, AUDIT_TRAIL_LOGS } from '../data/mockData';
-import { Globe, Building2, Layers, Calendar, FileText, Download, ShieldCheck, ChevronRight, ArrowLeft, Eye, Award, CheckCircle2, Lock, Home } from 'lucide-react';
+import { UMBRELLA_GROUPS, REGIONAL_HOSPITALS, ARCHIVE_5YEAR_LOGS, AUDIT_TRAIL_LOGS, INITIAL_MACHINES } from '../data/mockData';
+import { Globe, Building2, Layers, Calendar, FileText, Download, ShieldCheck, ChevronRight, ArrowLeft, Eye, Award, CheckCircle2, Lock, Home, Network, ShieldAlert, Cpu } from 'lucide-react';
 import { generateAuditCertificatePDF } from '../utils/pdfGenerator';
+import MachineDetailModal from './MachineDetailModal';
 
 export default function AuditorHierarchyView({ isLight }) {
   // Navigation Levels: 'global' -> 'umbrella' -> 'hospital'
   const [level, setLevel] = useState('global');
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [selectedHospital, setSelectedHospital] = useState(null);
-  const [timePeriod, setTimePeriod] = useState('monthly'); // 'daily', 'weekly', 'monthly', 'yearly'
+  const [selectedAuditorMachine, setSelectedAuditorMachine] = useState(null);
+  const [timePeriod, setTimePeriod] = useState('monthly'); // 'daily', 'weekly', 'monthly', 'yearly', 'machine'
 
   // Sync browser back/forward history buttons (popstate)
   useEffect(() => {
@@ -59,11 +61,37 @@ export default function AuditorHierarchyView({ isLight }) {
 
   return (
     <div className="space-y-5">
-      {/* CPCB Government Auditor Top Banner & Breadcrumb Hierarchy Tracker */}
-      <div className={`p-5 border ${
-        isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
-      }`}>
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+      {/* Header & Global Breadcrumbs */}
+      <div className="sticky top-0 z-10 -mx-3 px-3 py-3 sm:-mx-6 sm:px-6 bg-slate-100/90 dark:bg-[#070a10]/90 backdrop-blur-md mb-2">
+        <div className={`p-4 border mb-5 flex flex-col md:flex-row md:items-center gap-3 ${
+          isLight ? 'bg-white border-slate-200/80 text-slate-900' : 'bg-[#111622] border-slate-800 text-slate-100'
+        }`}>
+          {/* Quick Jump & Level Back Buttons */}
+          {level !== 'global' && (
+            <div className="flex items-center space-x-2 shrink-0 md:mr-2">
+              <button
+                onClick={() => {
+                  if (level === 'hospital') goToUmbrella();
+                  else if (level === 'umbrella') goToGlobal();
+                }}
+                className={`p-2 border transition-colors ${
+                  isLight ? 'bg-white hover:bg-slate-100 border-slate-300 text-slate-700' : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200'
+                }`}
+                title="Back One Level"
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </button>
+              
+              <button
+                onClick={goToGlobal}
+                className="p-2 border border-teal-300 dark:border-teal-800/80 bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 hover:bg-teal-100 transition-all"
+                title="Jump to Global National Level"
+              >
+                <Home className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+
           <div>
             <div className="flex items-center space-x-2 mb-2">
               <span className="text-[10px] font-extrabold px-3 py-0.5  bg-emerald-600 text-white uppercase tracking-wider flex items-center gap-1">
@@ -75,28 +103,20 @@ export default function AuditorHierarchyView({ isLight }) {
               </span>
             </div>
 
-            {/* Interactive Breadcrumb Path */}
-            <div className="flex items-center space-x-1.5 text-xs font-semibold text-slate-500">
-              <button
-                onClick={goToGlobal}
-                className={`hover:underline flex items-center gap-1 ${level === 'global' ? 'text-teal-600 font-bold' : ''}`}
-              >
-                <Globe className="w-3.5 h-3.5" />
-                <span>National Overview</span>
-              </button>
-
+            <h2 className="text-lg font-bold flex items-center space-x-2">
+              <Network className="w-5 h-5 text-teal-600" />
+              <span>Hierarchical Audit Explorer</span>
+            </h2>
+            <div className="text-xs text-slate-500 mt-1 flex items-center space-x-1.5 font-mono">
+              <span className={level === 'global' ? 'text-teal-600 font-bold' : ''}>Global Data Trust</span>
+              
               {selectedGroup && (
                 <>
                   <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-                  <button
-                    onClick={goToUmbrella}
-                    className={`hover:underline ${level === 'umbrella' ? 'text-teal-600 font-bold' : ''}`}
-                  >
-                    {selectedGroup.name}
-                  </button>
+                  <span className={level === 'umbrella' ? 'text-teal-600 font-bold' : ''}>{selectedGroup.name}</span>
                 </>
               )}
-
+              
               {selectedHospital && (
                 <>
                   <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
@@ -105,33 +125,6 @@ export default function AuditorHierarchyView({ isLight }) {
               )}
             </div>
           </div>
-
-          {/* Quick Jump & Level Back Buttons */}
-          {level !== 'global' && (
-            <div className="flex items-center space-x-2 self-start md:self-center">
-              <button
-                onClick={goToGlobal}
-                className="px-3 py-1.5 border border-teal-300 dark:border-teal-800/80 bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 hover:bg-teal-100 text-xs font-bold flex items-center space-x-1.5 transition-all"
-                title="Jump all the way back to Global National Level"
-              >
-                <Home className="w-3.5 h-3.5" />
-                <span>Jump to Global Level</span>
-              </button>
-
-              <button
-                onClick={() => {
-                  if (level === 'hospital') goToUmbrella();
-                  else if (level === 'umbrella') goToGlobal();
-                }}
-                className={`px-3 py-1.5 border text-xs font-bold flex items-center space-x-1.5 transition-all ${
-                  isLight ? 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-700' : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200'
-                }`}
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Back One Level</span>
-              </button>
-            </div>
-          )}
         </div>
       </div>
 
@@ -264,7 +257,7 @@ export default function AuditorHierarchyView({ isLight }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {REGIONAL_HOSPITALS.map((hosp) => (
+            {REGIONAL_HOSPITALS.filter(h => h.groupId === selectedGroup.id).map((hosp) => (
               <div
                 key={hosp.id}
                 onClick={() => handleSelectHospital(hosp)}
@@ -324,6 +317,15 @@ export default function AuditorHierarchyView({ isLight }) {
           <div className={`p-1.5 border flex items-center gap-1.5 text-xs font-bold ${
             isLight ? 'bg-white border-slate-200/80' : 'bg-[#111622] border-slate-800'
           }`}>
+            <button
+              onClick={() => setTimePeriod('machine')}
+              className={`flex-1 py-2 transition-all ${
+                timePeriod === 'machine' ? 'bg-teal-600 text-white ' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400'
+              }`}
+            >
+              ⚙️ Machine Cycle Logs
+            </button>
+
             <button
               onClick={() => setTimePeriod('daily')}
               className={`flex-1 py-2 transition-all ${
@@ -405,6 +407,73 @@ export default function AuditorHierarchyView({ isLight }) {
                 </table>
               </div>
             )}
+
+            {timePeriod === 'machine' && (() => {
+              const hospitalMachines = INITIAL_MACHINES.filter(m => m.hospitalId === selectedHospital.id);
+              return (
+                <div className="space-y-4">
+                  <div className={`p-4 border shadow-sm ${isLight ? 'bg-white border-slate-200' : 'bg-[#111723] border-slate-800'}`}>
+                    <h3 className={`text-xs font-bold flex items-center gap-1.5 ${isLight ? 'text-slate-800' : 'text-slate-200'}`}>
+                      <Cpu className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+                      Facility Sterilization Fleet (Click Machine to Inspect Immutable Logs)
+                    </h3>
+                    <p className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-slate-400'} mt-1`}>
+                      Detailed audit trail logs and historical maintenance records.
+                    </p>
+                  </div>
+
+                  {hospitalMachines.length === 0 ? (
+                    <div className="p-8 text-center text-slate-500 text-xs">
+                      No telemetry data connected for {selectedHospital.name} yet.
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {hospitalMachines.map((machine) => (
+                        <div
+                          key={machine.id}
+                          onClick={() => setSelectedAuditorMachine(machine)}
+                          className={`p-3.5 border cursor-pointer transition-all hover:scale-[1.01] hover:shadow-lg ${
+                            isLight ? 'bg-slate-50 hover:bg-slate-100 border-slate-200' : 'bg-[#090d16] hover:bg-slate-900 border-slate-800'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between">
+                            <div>
+                              <div className="flex items-center space-x-2">
+                                <span className={`w-2 h-2 rounded-full ${
+                                  machine.status === 'Running' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' :
+                                  machine.status === 'Alarm' ? 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.5)] animate-pulse' :
+                                  'bg-slate-400'
+                                }`} />
+                                <h4 className="font-bold text-sm text-slate-900 dark:text-slate-100">{machine.name}</h4>
+                              </div>
+                              <p className="text-[10px] font-mono text-cyan-700 dark:text-cyan-500 mt-0.5">{machine.id} • {machine.department}</p>
+                            </div>
+                            <span className={`text-[10px] font-bold px-1.5 py-0.5 ${
+                              machine.status === 'Running' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300' :
+                              machine.status === 'Alarm' ? 'bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300' :
+                              'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                            }`}>
+                              {machine.status}
+                            </span>
+                          </div>
+                          
+                          <div className="mt-3 grid grid-cols-2 gap-2 text-[10px]">
+                            <div className={`p-1.5 border ${isLight ? 'bg-white border-slate-200 text-slate-600' : 'bg-[#111622] border-slate-800 text-slate-400'}`}>
+                              <span className="block opacity-70">Cycles Completed</span>
+                              <strong className="text-slate-900 dark:text-slate-100">{machine.doorCycles.toLocaleString()}</strong>
+                            </div>
+                            <div className={`p-1.5 border ${isLight ? 'bg-white border-slate-200 text-slate-600' : 'bg-[#111622] border-slate-800 text-slate-400'}`}>
+                              <span className="block opacity-70">Op Hours</span>
+                              <strong className="text-slate-900 dark:text-slate-100">{machine.totalOperatingHours.toLocaleString()}</strong>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
 
             {timePeriod === 'weekly' && (
               <div className="overflow-x-auto">
@@ -540,6 +609,15 @@ export default function AuditorHierarchyView({ isLight }) {
             )}
           </div>
         </div>
+      )}
+
+      {selectedAuditorMachine && (
+        <MachineDetailModal 
+          machine={selectedAuditorMachine} 
+          onClose={() => setSelectedAuditorMachine(null)} 
+          isLight={isLight} 
+          isAuditorMode={true} 
+        />
       )}
     </div>
   );

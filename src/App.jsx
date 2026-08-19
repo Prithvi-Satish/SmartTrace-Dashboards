@@ -26,6 +26,7 @@ function DashboardContent({ activeView, setActiveView, theme, setTheme }) {
 
   // Internal state for Company Admin drilldown
   const [selectedHospitalForAdmin, setSelectedHospitalForAdmin] = useState(null);
+  const [selectedGroupForAdmin, setSelectedGroupForAdmin] = useState(null);
 
   // Sync default activeNav based on currentUser role on login
   useEffect(() => {
@@ -99,17 +100,19 @@ function DashboardContent({ activeView, setActiveView, theme, setTheme }) {
           <main className="flex-1 p-3 sm:p-6 overflow-x-hidden">
             {/* Drilldown Breadcrumb */}
             {selectedHospitalForAdmin && activeNav === 'hospital_telemetry' && (
-              <div className="mb-4 p-3  bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-between">
+              <div className="mb-4 p-3  bg-cyan-500/10 border border-cyan-500/30 flex items-center space-x-3">
+                <button
+                  onClick={handleBackToRegionalList}
+                  className={`p-2 border transition-colors ${
+                    isLight ? 'bg-white border-cyan-200 hover:bg-cyan-50 text-cyan-700' : 'bg-cyan-950/30 border-cyan-800 hover:bg-cyan-900/50 text-cyan-400'
+                  }`}
+                  title="Back to Regional Overview"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                </button>
                 <span className="text-xs font-bold text-cyan-800 dark:text-cyan-300">
                   Viewing: <strong>{selectedHospitalForAdmin.name}</strong> ({selectedHospitalForAdmin.cpcbLicenseNo})
                 </span>
-                <button
-                  onClick={handleBackToRegionalList}
-                  className="px-3 py-1  text-xs font-bold bg-cyan-600 text-white flex items-center space-x-1"
-                >
-                  <ArrowLeft className="w-3.5 h-3.5" />
-                  <span>Back to Regional</span>
-                </button>
               </div>
             )}
 
@@ -118,7 +121,12 @@ function DashboardContent({ activeView, setActiveView, theme, setTheme }) {
               <ComplianceDashboard isLight={isLight} hospital={selectedHospitalForAdmin} />
             )}
             {activeNav === 'regional_overview' && (
-              <RegionalClientOverview onSelectHospital={handleSelectHospitalForAdmin} isLight={isLight} />
+              <RegionalClientOverview 
+                onSelectHospital={handleSelectHospitalForAdmin} 
+                isLight={isLight} 
+                selectedGroup={selectedGroupForAdmin}
+                setSelectedGroup={setSelectedGroupForAdmin}
+              />
             )}
             {activeNav === 'auditor_hierarchy' && (
               <AuditorHierarchyView isLight={isLight} />
